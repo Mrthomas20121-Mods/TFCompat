@@ -1,0 +1,16 @@
+[
+{
+  "modid": "tfcompat",
+  "name": "TFCompat",
+  "description": "Add TFC Integrations to mods",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/Mrthomas20121/TFCompat",
+  "updateUrl": "",
+  "authorList": ["Mrthomas20121"],
+  "credits": "TFC and Mekanism devs for their help.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
