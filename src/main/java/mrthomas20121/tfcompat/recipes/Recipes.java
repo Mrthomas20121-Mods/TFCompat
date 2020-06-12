@@ -16,8 +16,8 @@ public abstract class Recipes
     {
         return new ItemStack(block, stack);
     }
-    protected static FluidStack getFluid(String fluid, int stack)
+    protected static FluidStack getFluid(String fluid, int amount)
     {
-        return new FluidStack(FluidRegistry.getFluid(fluid), stack);
+        return new FluidStack(FluidRegistry.getFluid(fluid), amount);
     }
 }

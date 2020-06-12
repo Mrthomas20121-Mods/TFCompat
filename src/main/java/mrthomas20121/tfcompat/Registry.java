@@ -12,14 +12,14 @@ import mrthomas20121.tfcompat.recipes.PyrotechRecipes;
 public class Registry 
 {
 	@SubscribeEvent
-    public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+    public static void onRegisterRecipesEvent(RegistryEvent.Register<IRecipe> event) {
         if(isModLoaded("mekanism")) 
         {
             MekanismRecipes.recipes();
         }
         if(isModLoaded("pyrotech")) 
         {
-            PyrotechRecipes.recipes();
+            PyrotechRecipes.init();
         }
     }
     private static boolean isModLoaded(String mod)
