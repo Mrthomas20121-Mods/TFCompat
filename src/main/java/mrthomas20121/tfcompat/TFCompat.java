@@ -12,7 +12,7 @@ public class TFCompat
 {
     public static final String MODID = "tfcompat";
     public static final String NAME = "TFCompat";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.2";
 
     private static Logger logger;
 	
