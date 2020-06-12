@@ -1,4 +1,4 @@
-package mrthomas20121.tfcompat;
+package mrthomas20121.tfcompat.recipes;
 
 import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Metal;
@@ -19,7 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import mekanism.common.recipe.RecipeHandler;
 
-public class MekanismRecipes
+public class MekanismRecipes extends Recipes
 {
     public static void recipes() 
     {
@@ -92,17 +92,5 @@ public class MekanismRecipes
     private static void EvaporationRecipes() 
     {
         RecipeHandler.addThermalEvaporationRecipe(getFluid("salt_water", 1), getFluid("brine", 1));
-    }
-    private static ItemStack getStack(Item item, int stack) 
-    {
-        return new ItemStack(item, stack);
-    }
-    private static ItemStack getStack(Block block, int stack) 
-    {
-        return new ItemStack(block, stack);
-    }
-    private static FluidStack getFluid(String fluid, int stack)
-    {
-        return new FluidStack(FluidRegistry.getFluid(fluid), stack);
     }
 }
