@@ -18,13 +18,13 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 repositories {
-    maven { // TOP
-        name 'tterrag maven'
-        url "http://maven.tterrag.com/"
+    maven {
+        name "tterrag maven"
+        url 'http://maven.tterrag.com/'
     }
 }
 
-version = "1.0.2"
+version = "1.0.4"
 group = 'mrthomas20121.tfcompat'
 archivesBaseName = 'tfccompat'
 
