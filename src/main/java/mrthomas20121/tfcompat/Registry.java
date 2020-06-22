@@ -4,6 +4,7 @@ import mrthomas20121.tfcompat.recipes.BWMRecipes;
 import mrthomas20121.tfcompat.recipes.ImprovedBackpacksRecipes;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -49,6 +50,7 @@ public class Registry
             ((IForgeRegistryModifiable<IRecipe>) r).remove(new ResourceLocation("tfc:gunpowder"));
             ((IForgeRegistryModifiable<IRecipe>) r).remove(new ResourceLocation("tfc:gunpowder_graphite"));
         }
+        
     }
 
     @SubscribeEvent
@@ -69,7 +71,10 @@ public class Registry
     public static void onRegisterKnappingRecipeEvent(RegistryEvent.Register<KnappingRecipe> event)
     {
         IForgeRegistry<KnappingRecipe> r = event.getRegistry();
-        PyrotechRecipes.pyrotechKnappingRecipes(r);
+        if(isModLoaded("pyrotech"))
+		{
+			PyrotechRecipes.pyrotechKnappingRecipes(r);
+		}
 
     }
 

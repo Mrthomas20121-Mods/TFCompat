@@ -7,12 +7,20 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = TFCompat.MODID, name = TFCompat.NAME, version = TFCompat.VERSION)
+@Mod(modid = TFCompat.MODID, name = TFCompat.NAME, version = TFCompat.VERSION+
+"required-after:forge@[14.23.5.2847,);"
++ "required-after:tfc;"
++ "required-after:tfcmetallum@[1.3.0,);"
++ "required-after:tfctech@[1.2.13,);"
++ "after:betterwithmods;"
++ "after:pyrotech;"
++ "after:mekanism;"
++ "after:improvedbackpacks;")
 public class TFCompat
 {
     public static final String MODID = "tfcompat";
     public static final String NAME = "TFCompat";
-    public static final String VERSION = "1.0.4";
+    public static final String VERSION = "1.0.5";
 
     private static Logger logger;
 	
