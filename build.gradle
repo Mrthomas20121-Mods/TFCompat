@@ -22,9 +22,13 @@ repositories {
         name "tterrag maven"
         url 'http://maven.tterrag.com/'
     }
+    maven {
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
+    }
 }
 
-version = "1.0.5"
+version = "1.0.7"
 group = 'mrthomas20121.tfcompat'
 archivesBaseName = 'tfccompat'
 
