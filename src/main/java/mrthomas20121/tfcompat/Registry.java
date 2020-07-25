@@ -1,18 +1,14 @@
 package mrthomas20121.tfcompat;
 
-import mrthomas20121.tfcompat.recipes.BWMRecipes;
-import mrthomas20121.tfcompat.recipes.ImprovedBackpacksRecipes;
+import mrthomas20121.tfcompat.recipes.*;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import mrthomas20121.tfcompat.recipes.MekanismRecipes;
-import mrthomas20121.tfcompat.recipes.PyrotechRecipes;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
@@ -50,7 +46,10 @@ public class Registry
             ((IForgeRegistryModifiable<IRecipe>) r).remove(new ResourceLocation("tfc:gunpowder"));
             ((IForgeRegistryModifiable<IRecipe>) r).remove(new ResourceLocation("tfc:gunpowder_graphite"));
         }
-        
+        if(isModLoaded("thermalexpansion"))
+        {
+            ThermalRecipes.init();
+        }
     }
 
     @SubscribeEvent

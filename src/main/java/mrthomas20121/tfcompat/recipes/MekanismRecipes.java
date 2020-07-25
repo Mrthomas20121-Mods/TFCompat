@@ -31,7 +31,7 @@ public class MekanismRecipes extends Recipes
     {
         for(Tree tree : TFCRegistries.TREES.getValuesCollection()) 
         {
-            RecipeHandler.addPrecisionSawmillRecipe(getStack(BlockLogTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 6), getStack(TechItems.WOOD_POWDER, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(getStack(BlockLogTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 8), getStack(TechItems.WOOD_POWDER, 1), 0.2D);
             RecipeHandler.addPrecisionSawmillRecipe(getStack(BlockPlanksTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 3), getStack(TechItems.WOOD_POWDER, 1), 0.2D);
             RecipeHandler.addPrecisionSawmillRecipe(getStack(BlockDoorTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 4), getStack(TechItems.WOOD_POWDER, 1), 0.2D);
             RecipeHandler.addPrecisionSawmillRecipe(getStack(BlockTrapDoorWoodTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 4), getStack(TechItems.WOOD_POWDER, 1), 0.2D);
