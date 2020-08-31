@@ -16,6 +16,7 @@ import java.util.List;
 
 public abstract class Recipes
 {
+
     protected static ItemStack getStack(Item item, int stack)
     {
         return new ItemStack(item, stack);

@@ -1,22 +1,32 @@
 package mrthomas20121.tfcompat.recipes;
 
+import cofh.thermalexpansion.util.managers.machine.RefineryManager;
+import cofh.thermalexpansion.util.managers.machine.ExtruderManager;
 import cofh.thermalexpansion.util.managers.machine.FurnaceManager;
 import cofh.thermalexpansion.util.managers.machine.PrecipitatorManager;
 import cofh.thermalexpansion.util.managers.machine.PulverizerManager;
 import cofh.thermalexpansion.util.managers.machine.SawmillManager;
+import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.quern.QuernRecipe;
 import net.dries007.tfc.api.registries.TFCRegistries;
+import net.dries007.tfc.api.types.Rock;
 import net.dries007.tfc.api.types.Tree;
 import net.dries007.tfc.objects.blocks.BlocksTFC;
+import net.dries007.tfc.objects.blocks.stone.BlockRockVariant;
 import net.dries007.tfc.objects.blocks.wood.*;
 import net.dries007.tfc.objects.inventory.ingredient.IIngredient;
 import net.dries007.tfc.objects.items.wood.ItemLumberTFC;
+import net.dries007.tfc.util.calendar.ICalendar;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import tfctech.objects.items.TechItems;
+
+import java.util.ArrayList;
 
 public class ThermalRecipes extends Recipes {
     public static void init()
@@ -25,6 +35,31 @@ public class ThermalRecipes extends Recipes {
         PulverizerRecipes();
         SawmillRecipes();
         PrecipiratorRecipes();
+        ExtruderRecipes();
+    }
+    public static void postInit()
+    {
+        BarrelStillRecipes();
+    }
+
+    private static void BarrelStillRecipes()
+    {
+        RefineryManager.RefineryRecipe[] recipes = RefineryManager.getRecipeList();
+        for(RefineryManager.RefineryRecipe recipe : recipes)
+        {
+            FluidStack input = recipe.getInput();
+            FluidStack output = recipe.getOutputFluid();
+            ItemStack outputItem = recipe.getOutputItem();
+            TFCRegistries.BARREL.register(new BarrelRecipe(IIngredient.of(input), IIngredient.of(ItemStack.EMPTY), output, outputItem.isEmpty() ? ItemStack.EMPTY : outputItem, 61*ICalendar.TICKS_IN_DAY).setRegistryName("still_"+input.getFluid().getName()));
+        }
+    }
+    private static void ExtruderRecipes()
+    {
+        for(Rock rock : TFCRegistries.ROCKS.getValuesCollection())
+        {
+            ExtruderManager.addRecipeIgneous(1000, new ItemStack(BlockRockVariant.get(rock, Rock.Type.RAW)), FluidRegistry.getFluidStack("lava", 1000), FluidRegistry.getFluidStack("fresh_water", 1000));
+            ExtruderManager.addRecipeSedimentary(1000, new ItemStack(BlockRockVariant.get(rock, Rock.Type.SAND)), FluidRegistry.getFluidStack("lava", 1000), FluidRegistry.getFluidStack("fresh_water", 1000));
+        }
     }
     private static void PrecipiratorRecipes()
     {

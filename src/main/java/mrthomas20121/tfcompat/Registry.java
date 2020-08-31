@@ -1,8 +1,13 @@
 package mrthomas20121.tfcompat;
 
+import mrthomas20121.rocksalt.utils.MetalUtils;
+import mrthomas20121.rocksalt.utils.OredictUtils;
 import mrthomas20121.tfcompat.recipes.*;
+import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
+import net.dries007.tfc.api.types.Metal;
+import net.dries007.tfc.util.Helpers;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -15,6 +20,40 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 @Mod.EventBusSubscriber(modid = TFCompat.MODID)
 public class Registry 
 {
+    public static Metal soulforge_steel = Helpers.getNull();
+    public static Metal signalum = Helpers.getNull();
+    public static Metal lumium = Helpers.getNull();
+    public static Metal enderium = Helpers.getNull();
+    public static Metal refined_obsidian = Helpers.getNull();
+    public static Metal refined_glowstone = Helpers.getNull();
+    public static Metal thaumium = Helpers.getNull();
+    public static Metal voidMetal = Helpers.getNull();
+    public static Metal starmetal = Helpers.getNull();
+
+    public static void preInit()
+    {
+        if(isModLoaded("betterwithmods"))
+        {
+            soulforge_steel = MetalUtils.registerMetal("soulforge_steel", Metal.Tier.TIER_IV, true, 1500, 1300, 0x0);
+        }
+        if(isModLoaded("thermalexpansion"))
+        {
+            signalum = MetalUtils.registerMetal("signalum", Metal.Tier.TIER_V, true, 1500, 1300, 0x0);
+            lumium = MetalUtils.registerMetal("lumium", Metal.Tier.TIER_V, true, 1500, 1300, 0x0);
+            enderium = MetalUtils.registerMetal("enderium", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
+        }
+        if(isModLoaded("mekanism"))
+        {
+            refined_obsidian = MetalUtils.registerMetal("refined_obsidian", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
+            refined_glowstone = MetalUtils.registerMetal("refined_glowstone", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
+        }
+        if(isModLoaded("thaumcraft"))
+        {
+            thaumium = MetalUtils.registerMetal("thaumium", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
+            voidMetal = MetalUtils.registerMetal("void_metal", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
+        }
+    }
+
     public static void init()
     {
         if(isModLoaded("pyrotech"))
@@ -24,6 +63,21 @@ public class Registry
         if(isModLoaded("improvedbackpacks"))
         {
             ImprovedBackpacksRecipes.initHeating();
+        }
+        if(isModLoaded("thaumcraft"))
+        {
+            OredictUtils.add(voidMetal, "void");
+        }
+        if(isModLoaded("mekanism"))
+        {
+            OredictUtils.add(refined_glowstone, "glowstone");
+        }
+    }
+    public static void postInit()
+    {
+        if(Loader.isModLoaded("thermalexpansion"))
+        {
+            ThermalRecipes.postInit();
         }
     }
 
@@ -64,6 +118,11 @@ public class Registry
         {
             ImprovedBackpacksRecipes.HeatRecipes(r);
         }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterBarrelRecipeEvent(RegistryEvent.Register<BarrelRecipe> event)
+    {
     }
 
     @SubscribeEvent
