@@ -1,5 +1,7 @@
 package mrthomas20121.tfcompat;
 
+import mrthomas20121.tfcompat.library.ModuleCore;
+import mrthomas20121.tfcompat.library.ModuleManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -12,7 +14,7 @@ public class TFCompat
 {
     public static final String MODID = "tfcompat";
     public static final String NAME = "TFCompat";
-    public static final String VERSION = "1.1.0";
+    public static final String VERSION = "1.1.1";
     public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);"
             + "required-after:rocksalt@[1.0.1,);"
             + "required-after:tfc;"
@@ -36,17 +38,29 @@ public class TFCompat
     public void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
-        Registry.preInit();
+
+        ModuleManager.initModules();
+
+        for(ModuleCore module : ModuleManager.getModules())
+        {
+            module.preInit(event);
+        }
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        Registry.init();
+        for(ModuleCore module : ModuleManager.getModules())
+        {
+            module.init(event);
+        }
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        Registry.postInit();
+        for(ModuleCore module : ModuleManager.getModules())
+        {
+            module.postInit(event);
+        }
     }
 }
