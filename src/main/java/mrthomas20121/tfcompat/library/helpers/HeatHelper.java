@@ -6,6 +6,7 @@ import net.dries007.tfc.api.capability.heat.CapabilityItemHeat;
 import net.dries007.tfc.api.capability.heat.ItemHeatHandler;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipeSimple;
+import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.objects.inventory.ingredient.IIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +29,6 @@ public class HeatHelper {
     }
     public static HeatRecipe addRecipe(String recipeName, ItemStack stack, ItemStack output, int transformTemp)
     {
-        return new HeatRecipeSimple(IIngredient.of(stack), output, transformTemp).setRegistryName(TFCUtils.getLoc(recipeName));
+        return new HeatRecipeSimple(IIngredient.of(stack), output, transformTemp, Metal.Tier.TIER_I).setRegistryName(TFCUtils.getLoc(recipeName));
     }
 }
