@@ -9,6 +9,8 @@ import mrthomas20121.tfcompat.library.helpers.HeatHelper;
 import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import mrthomas20121.tfcompat.library.recipes.IKnappingRecipe;
 import mrthomas20121.tfcompat.library.ModuleCore;
+import mrthomas20121.tfcompat.library.recipes.IRecipeRemoval;
+import mrthomas20121.tfcompat.library.recipes.RecipeCore;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipeSimple;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
@@ -26,8 +28,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 
-public class PyrotechModule extends ModuleCore implements IHeatRecipe, IKnappingRecipe {
+public class PyrotechModule extends ModuleCore implements IHeatRecipe, IKnappingRecipe, IRecipeRemoval {
+
+    private RecipeCore recipes = new PyrotechRecipes();
 
     public PyrotechModule()
     {
@@ -55,7 +60,15 @@ public class PyrotechModule extends ModuleCore implements IHeatRecipe, IKnapping
 
     @Override
     public void initRecipes(IForgeRegistry<IRecipe> r) {
+        recipes.registerRecipes(r);
+    }
 
+    @Override
+    public void removal(IForgeRegistry<IRecipe> r) {
+        IForgeRegistryModifiable<IRecipe> registry = (IForgeRegistryModifiable<IRecipe>)r;
+
+        registry.remove(new ResourceLocation("pyrotech:tool/unfired_clay_shears"));
+        registry.remove(new ResourceLocation("pyrotech:bucket/bucket_clay_unfired"));
     }
 
     private void registerHammers() {

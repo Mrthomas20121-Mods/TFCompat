@@ -28,7 +28,7 @@ public class ThermalExpansionModule extends ModuleCore {
 
     @Override
     public void init(FMLInitializationEvent event) {
-
+        recipes.registerRecipes(null);
     }
 
     @Override
@@ -38,6 +38,5 @@ public class ThermalExpansionModule extends ModuleCore {
 
     @Override
     public void initRecipes(IForgeRegistry<IRecipe> r) {
-        recipes.registerRecipes(r);
     }
 }
