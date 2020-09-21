@@ -3,13 +3,17 @@ package mrthomas20121.tfcompat.library;
 import mrthomas20121.tfcompat.TFCompat;
 import mrthomas20121.tfcompat.compat.actuallyadditions.ActuallyAdditionsModule;
 import mrthomas20121.tfcompat.compat.betterwithmods.BetterWithModsModule;
+import mrthomas20121.tfcompat.compat.ceramics.CeramicsModule;
 import mrthomas20121.tfcompat.compat.forestry.ForestryModule;
 import mrthomas20121.tfcompat.compat.mekanism.MekanismModule;
 import mrthomas20121.tfcompat.compat.pyrotech.PyrotechModule;
 import mrthomas20121.tfcompat.compat.thaumcraft.ThaumcraftModule;
 import mrthomas20121.tfcompat.compat.thermalexpansion.ThermalExpansionModule;
+import mrthomas20121.tfcompat.library.recipes.IBarrelRecipe;
 import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
+import mrthomas20121.tfcompat.library.recipes.IKnappingRecipe;
 import mrthomas20121.tfcompat.library.recipes.IRecipeRemoval;
+import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
 import net.minecraft.item.crafting.IRecipe;
@@ -35,29 +39,20 @@ public class ModuleManager
         }
     }
 
-    public static void registerModules(ModuleCore... mods)
-    {
-        for(ModuleCore module : mods)
-        {
-            registerModule(module);
-        }
-    }
-
     public static ArrayList<ModuleCore> getModules() {
         return modules;
     }
 
     public static void initModules()
     {
-        registerModules(
-                new ActuallyAdditionsModule(),
-                new BetterWithModsModule(),
-                new ForestryModule(),
-                new MekanismModule(),
-                new PyrotechModule(),
-                new ThaumcraftModule(),
-                new ThermalExpansionModule()
-        );
+        registerModule(new ActuallyAdditionsModule());
+        registerModule(new BetterWithModsModule());
+        registerModule(new CeramicsModule());
+        registerModule(new ForestryModule());
+        registerModule(new MekanismModule());
+        registerModule(new PyrotechModule());
+        registerModule(new ThaumcraftModule());
+        registerModule(new ThermalExpansionModule());
     }
 
     @SubscribeEvent
@@ -89,5 +84,26 @@ public class ModuleManager
     @SubscribeEvent
     public static void onRegisterKnappingRecipeEvent(RegistryEvent.Register<KnappingRecipe> event)
     {
+        IForgeRegistry<KnappingRecipe> r = event.getRegistry();
+        for(ModuleCore module : modules)
+        {
+            if(module instanceof IKnappingRecipe)
+            {
+                ((IKnappingRecipe) module).initKnappingRecipes(event.getRegistry());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterBarrelRecipeEvent(RegistryEvent.Register<BarrelRecipe> event)
+    {
+        IForgeRegistry<BarrelRecipe> r = event.getRegistry();
+        for(ModuleCore module : modules)
+        {
+            if(module instanceof IBarrelRecipe)
+            {
+                ((IBarrelRecipe) module).initBarrelRecipes(event.getRegistry());
+            }
+        }
     }
 }
