@@ -1,7 +1,10 @@
 package mrthomas20121.tfcompat;
 
+import mrthomas20121.tfcompat.compat.rustic.RusticModule;
 import mrthomas20121.tfcompat.library.ModuleCore;
 import mrthomas20121.tfcompat.library.ModuleManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -44,6 +47,10 @@ public class TFCompat
         for(ModuleCore module : ModuleManager.getModules())
         {
             module.preInit(event);
+        }
+        if(Loader.isModLoaded("rustic"))
+        {
+            MinecraftForge.EVENT_BUS.register(RusticModule.class);
         }
     }
 
