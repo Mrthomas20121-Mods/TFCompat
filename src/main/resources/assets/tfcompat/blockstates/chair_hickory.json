@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "tfcompat:chair_hickory"
+    },
+    "facing=east": {
+      "model": "tfcompat:chair_hickory",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "tfcompat:chair_hickory",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "tfcompat:chair_hickory",
+      "y": 270
+    }
+  }
+}
