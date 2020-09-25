@@ -5,6 +5,7 @@ import mrthomas20121.tfcompat.compat.actuallyadditions.ActuallyAdditionsModule;
 import mrthomas20121.tfcompat.compat.betterwithmods.BetterWithModsModule;
 import mrthomas20121.tfcompat.compat.ceramics.CeramicsModule;
 import mrthomas20121.tfcompat.compat.forestry.ForestryModule;
+import mrthomas20121.tfcompat.compat.improvedbackpacks.ImprovedBackpacksModule;
 import mrthomas20121.tfcompat.compat.mekanism.MekanismModule;
 import mrthomas20121.tfcompat.compat.pyrotech.PyrotechModule;
 import mrthomas20121.tfcompat.compat.thaumcraft.ThaumcraftModule;
@@ -33,7 +34,7 @@ public class ModuleManager
 
     public static void registerModule(ModuleCore module)
     {
-        if(Loader.isModLoaded(module.getDep()))
+        if(isLoaded(module.getDep()))
         {
             modules.add(module);
         }
@@ -49,6 +50,7 @@ public class ModuleManager
         registerModule(new BetterWithModsModule());
         registerModule(new CeramicsModule());
         registerModule(new ForestryModule());
+        registerModule(new ImprovedBackpacksModule());
         registerModule(new MekanismModule());
         registerModule(new PyrotechModule());
         registerModule(new ThaumcraftModule());
@@ -105,5 +107,10 @@ public class ModuleManager
                 ((IBarrelRecipe) module).initBarrelRecipes(event.getRegistry());
             }
         }
+    }
+
+    private static boolean isLoaded(String modName)
+    {
+        return Loader.isModLoaded(modName);
     }
 }
