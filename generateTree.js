@@ -19,7 +19,8 @@ let WOOD_TYPES = {
     'sycamore': 'normal',
     'white_cedar': 'tall',
     'willow': 'willow',
-    'kapok': 'jungle'
+    'kapok': 'jungle',
+    'heava': ''
 }
 
 
@@ -37,7 +38,7 @@ function genTableModel(woodType)
     const blockInventoryModel = getInventoryModel(tfcWood)
     const blockLegModel = getLegModel(tfcWood)
     const blockTopModel = getTopModel(tfcWood)
-    const itemTableModel = getTableModel()
+    const itemTableModel = getItemModel(name)
     const blockStateModel = getBlockStateModel(name)
 
     fs.writeFileSync(`${folder}/models/block/${name}_inventory.json`, JSON.stringify(blockInventoryModel, null, 2))
@@ -65,11 +66,6 @@ function genBlockstates(name, path)
     const model = getBlock(name)
 
     fs.writeFileSync(`${path}/blockstates/${name}.json`, JSON.stringify(model, null, 2))
-}
-
-function getTableModel()
-{
-    return {	"parent": "rusticbopwoods:block/table_cherry_inventory"	}
 }
 
 function getBlockStateModel(name)
