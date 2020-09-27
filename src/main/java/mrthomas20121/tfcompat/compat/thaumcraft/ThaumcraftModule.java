@@ -2,6 +2,8 @@ package mrthomas20121.tfcompat.compat.thaumcraft;
 
 import mrthomas20121.rocksalt.utils.MetalUtils;
 import mrthomas20121.rocksalt.utils.OredictUtils;
+import mrthomas20121.tfcompat.compat.ArmorMaterialsTFCompat;
+import mrthomas20121.tfcompat.compat.ToolMaterialsTFCompat;
 import mrthomas20121.tfcompat.library.helpers.HeatHelper;
 import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import mrthomas20121.tfcompat.library.ModuleCore;
@@ -24,8 +26,8 @@ public class ThaumcraftModule extends ModuleCore implements IHeatRecipe {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        MetalUtils.registerMetal("thaumium", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
-        MetalUtils.registerMetal("void_metal", Metal.Tier.TIER_VI, true, 1500, 1300, 0x0);
+        MetalUtils.registerMetal("thaumium", Metal.Tier.TIER_IV, true, 1500, 1300, 0x5A4B8B, ToolMaterialsTFCompat.thaumium, ArmorMaterialsTFCompat.thaumium);
+        MetalUtils.registerMetal("void_metal", Metal.Tier.TIER_VI, true, 1500, 1300, 0x2D1847);
     }
 
     @Override

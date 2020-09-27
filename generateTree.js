@@ -20,7 +20,7 @@ let WOOD_TYPES = {
     'white_cedar': 'tall',
     'willow': 'willow',
     'kapok': 'jungle',
-    'heava': ''
+    'hevea': ''
 }
 
 
@@ -28,6 +28,73 @@ for(let woodType of Object.keys(WOOD_TYPES))
 {
     genChairModel(woodType)
     genTableModel(woodType)
+    generateRecipes(woodType)
+	//console.log(`tile.rustic.chair_${woodType}.name=${getName(woodType)} Chair`)
+	//console.log(`tile.rustic.table_${woodType}.name=${getName(woodType)} Table`)
+}
+
+function generateRecipes(woodType)
+{
+    let chairJSON = {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+            "A  ",
+            "AAA",
+            "B B"
+        ],
+        "key": {
+            "A": {
+                "item": `tfc:wood/planks/${woodType}`,
+            },
+            "B": {
+                "type": "forge:ore_dict",
+                "ore": "stickWood"
+            }
+        },
+        "result": {
+            "item": `tfcompat:chair_${woodType}`,
+            "count": 4
+        }
+    }
+    let tableJSON = {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+            "AAA",
+            "B B"
+        ],
+        "key": {
+            "A": {
+                "item": `tfc:wood/planks/${woodType}`,
+            },
+            "B": {
+                "type": "forge:ore_dict",
+                "ore": "stickWood"
+            }
+        },
+        "result": {
+            "item": `tfcompat:table_${woodType}`,
+            "count": 2
+        }
+    }
+    fs.writeFileSync(`./src/main/resources/assets/tfcompat/recipes/rustic/chair/${woodType}.json`, JSON.stringify(chairJSON, null, 2))
+    fs.writeFileSync(`./src/main/resources/assets/tfcompat/recipes/rustic/table/${woodType}.json`, JSON.stringify(tableJSON, null, 2))
+}
+
+function getName(woodType)
+{
+	if(woodType.includes("_"))
+	{
+		let types = woodType.split("_");
+		let res = ""
+		for(let wood of types)
+		{
+			res = res + " " + wood[0].toUpperCase() + wood.substring(1)
+		}
+		return res;
+	}
+	else {
+		return woodType[0].toUpperCase() + woodType.substring(1)
+	}
 }
 
 function genTableModel(woodType)
@@ -38,7 +105,7 @@ function genTableModel(woodType)
     const blockInventoryModel = getInventoryModel(tfcWood)
     const blockLegModel = getLegModel(tfcWood)
     const blockTopModel = getTopModel(tfcWood)
-    const itemTableModel = getItemModel(name)
+    const itemTableModel = getTableItemModel(name)
     const blockStateModel = getBlockStateModel(name)
 
     fs.writeFileSync(`${folder}/models/block/${name}_inventory.json`, JSON.stringify(blockInventoryModel, null, 2))
@@ -289,6 +356,9 @@ function getBlock(name)
 
 function getItemModel(name) {
     return {	"parent": `tfcompat:block/${name}`	}
+}
+function getTableItemModel(name) {
+    return {	"parent": `tfcompat:block/${name}_inventory`	}
 }
 
 function getBlockModel(woodLoc)

@@ -38,16 +38,15 @@ os.chdir('src/main/resources/assets/tfc/')
 # False - Generate only non tools (ingot, double ingot, sheet, etc..)
 
 METAL_TYPES = {
-	'soulforge_steel':False,
-	'signalum':False,
-	'lumium':False,
-	'enderium':False,
+	'soulforged_steel':False,
+	'signalum':True,
+	'lumium':True,
+	'enderium':True,
 	'refined_obsidian':False,
 	'refined_glowstone':False,
-	'thaumium':False,
+	'thaumium':True,
 	'void_metal':False,
-
-}  # + uranium, lead, platinum if base TFC removes it
+}
 
 METAL_ITEMS = {
     # 'unshaped': False, Special
@@ -59,6 +58,7 @@ METAL_ITEMS = {
     'sheet': False,
     'double_sheet': False,
     'anvil': True,
+    'trapdoor': False,
     'tuyere': True,
     'lamp': False,
     'pick': True,
@@ -253,7 +253,6 @@ for key in METAL_TYPES:
         'facing': {'up': {}, 'down': {'model': "tfc:lamp/down"}}
     })
 
-
 # METAL SHEETS
 for key in METAL_TYPES:
     blockstate(('sheet', key), 'tfc:empty', textures={
@@ -277,13 +276,16 @@ for item_type, tool_item in METAL_ITEMS.items():
         if item_type == 'anvil':
             model(('item', 'metal', 'anvil', metal), 'tfc:item/metal/anvil/transformations',
                   {'all': 'tfc:blocks/metal/%s' % metal})
+        elif item_type == 'trapdoor':
+            model(('item', 'metal', 'trapdoor', metal), 'block/trapdoor_bottom',
+                  {'texture': 'tfc:blocks/trapdoor/%s' % metal})
         else:
             parent = 'item/handheld' if item_type in TOOLS else 'item/generated'
             if item_type in ['knife', 'javelin']:
                 parent = 'tfc:item/handheld_flipped'
-            item(('metal', item_type, metal), 'tfc:items/metal/%s/%s' % (item_type.replace('unfinished_', ''), metal),
+            item(('metal', item_type, metal), 'tfc:items/metal/%s/%s' % (item_type, metal),
                  parent=parent)
-
+				 
 # TOOLS RECIPES
 for tool_head, tool in RECIPE_ITEMS.items():
     for metal, tool_metal in METAL_TYPES.items():
@@ -302,52 +304,23 @@ _heads = [x + '_head' for x in TOOLS] + [x + '_blade' for x in TOOLS]
 for item_type in METAL_ITEMS:
     if item_type not in _heads:
         continue
+    # unfired molds
+    item(('ceramics', 'unfired', 'mold', item_type), 'tfc:items/ceramics/unfired/mold/%s' % item_type)
+    # fired, empty molds
+    item(('ceramics', 'fired', 'mold', item_type, 'empty'), 'tfc:items/ceramics/fired/mold/%s/empty' % item_type)
     # fired, filled molds
-    for metal in ('mithril', 'nickel_silver'):
+    for metal in ('copper', 'bronze', 'black_bronze', 'bismuth_bronze'):
         item(('ceramics', 'fired', 'mold', item_type, metal),
              'tfc:items/ceramics/fired/mold/%s/%s' % (item_type, metal))
 del _heads
 
+# unfired ingot molds
+item(('ceramics', 'unfired', 'mold', 'ingot'), 'tfc:items/ceramics/unfired/mold/ingot')
+# fired ingot molds for all metals
+_ingotMetals = {}  # metal name -> texture
 for metal in METAL_TYPES.keys():
-    item(('ceramics', 'fired', 'mold', 'ingot', metal), 'tfc:items/ceramics/fired/mold/ingot/' + metal)
+    _ingotMetals[metal] = metal
 
-#
-# lang entries
-#
-
-def Lang() :
-    result = []
-	
-    for metal_type, hasTool in  METAL_TYPES.items() :
-
-        result.append('\n# Metal items')
-
-        result.append('fluid.{}=Molten {}'.format(metal_type, metal_type.replace('_', ' ').title() ))
-        for metal_item, special in METAL_ITEMS.items() :
-            if(hasTool and metal_item != "lamp") :
-                result.append('item.tfc.metal.{}.{}.name={} {}'.format(metal_item, metal_type, metal_type.replace('_', ' ').title(), metal_item.replace('_', ' ').title().replace('Pick', 'Pickaxe').replace('Propick', 'Prospector\'s Pickaxe') ))
-            elif metal_item == 'lamp':
-                result.append('tile.tfc.lamp.{}.name={} Lamp'.format(metal_type, metal_type.replace('_', ' ').title()) )
-                result.append('tile.tfc.lamp.{}.filled.name=%s {} Lamp'.format(metal_type, metal_type.replace('_', ' ').title()) )
-            elif metal_item in ['ingot', 'double_ingot', 'scrap', 'dust','nugget', 'sheet', 'double_sheet', 'tuyere'] :
-                result.append('item.tfc.metal.{}.{}.name={} {}'.format(metal_item, metal_type, metal_type.replace('_', ' ').title(), metal_item.replace('_', ' ').title() ))
-            if(metal_item == 'ingot') :
-                result.append('item.tfc.ceramics.fired.mold.{}.{}.name={} {}'.format(metal_item,metal_type, 'Unshaped', metal_type.replace('_', ' ').title() ))
-            else :
-                result.append('item.tfc.ceramics.fired.mold.{}.{}.name={} {}'.format(metal_item, metal_type, metal_item.replace('_', ' ').title(), metal_type.replace('_', ' ').title() ))
-        result.append('item.tfc.metal.shield.{}.name={} Shield'.format(metal_type, metal_type.replace('_', ' ').title() ))
-        if(metal_type in ['aluminium', 'ardite', 'cobalt', 'boron', 'magnesium', 'thorium', 'manganese']) :
-            result.append('item.tfc.bloom.unrefined.{}.name=Raw {} Bloom'.format(metal_type, metal_type.replace('_', ' ').title() ))
-            result.append('item.tfc.bloom.refined.{}.name=Refined {} Bloom'.format(metal_type, metal_type.replace('_', ' ').title() ))
-    result.append('\n# Metal types')
-    for metal_type, hasTool in  METAL_TYPES.items() :
-        result.append('tfc.types.metal.{}={}'.format(metal_type, metal_type.replace('_', ' ').title() ))
-
-    result.append('\n# Veins')
-
-    f = os.path.join('lang', 'en_us.lang')
-    file = open(f, 'w')
-    file.write('\n'.join(map(str,result)))
-    file.close()
-
-Lang()
+for metal, texture in _ingotMetals.items():
+    item(('ceramics', 'fired', 'mold', 'ingot', metal), 'tfc:items/ceramics/fired/mold/ingot/' + texture)
+del _ingotMetals
