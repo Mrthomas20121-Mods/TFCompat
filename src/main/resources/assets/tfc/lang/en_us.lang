@@ -53,7 +53,7 @@ item.tfc.metal.unfinished_greaves.thaumium.name=Unfinished Thaumium Greaves
 item.tfc.metal.boots.thaumium.name=Thaumium Boots
 item.tfc.metal.unfinished_boots.thaumium.name=Unfinished Thaumium Boots
 # molds
-item.tfc.ceramics.mold.ingot.thaumium.name=Unshaped Thaumium
+item.tfc.ceramics.fired.mold.ingot.thaumium.name=Unshaped Thaumium
 
 # metals 
 tfc.types.metal.lumium=Lumium
@@ -110,7 +110,7 @@ item.tfc.metal.unfinished_greaves.lumium.name=Unfinished Lumium Greaves
 item.tfc.metal.boots.lumium.name=Lumium Boots
 item.tfc.metal.unfinished_boots.lumium.name=Unfinished Lumium Boots
 # molds
-item.tfc.ceramics.mold.ingot.lumium.name=Unshaped Lumium
+item.tfc.ceramics.fired.mold.ingot.lumium.name=Unshaped Lumium
 
 # metals 
 tfc.types.metal.signalum=Signalum
@@ -167,7 +167,7 @@ item.tfc.metal.unfinished_greaves.signalum.name=Unfinished Signalum Greaves
 item.tfc.metal.boots.signalum.name=Signalum Boots
 item.tfc.metal.unfinished_boots.signalum.name=Unfinished Signalum Boots
 # molds
-item.tfc.ceramics.mold.ingot.signalum.name=Unshaped Signalum
+item.tfc.ceramics.fired.mold.ingot.signalum.name=Unshaped Signalum
 
 # metals 
 tfc.types.metal.enderium=Enderium
@@ -224,7 +224,7 @@ item.tfc.metal.unfinished_greaves.enderium.name=Unfinished Enderium Greaves
 item.tfc.metal.boots.enderium.name=Enderium Boots
 item.tfc.metal.unfinished_boots.enderium.name=Unfinished Enderium Boots
 # molds
-item.tfc.ceramics.mold.ingot.enderium.name=Unshaped Enderium
+item.tfc.ceramics.fired.mold.ingot.enderium.name=Unshaped Enderium
 
 # metals 
 tfc.types.metal.void_metal=Void Metal
@@ -241,7 +241,7 @@ item.tfc.metal.dust.void_metal.name= Void Metal dust
 item.tfc.metal.nugget.void_metal.name= Void Metal nugget
 item.tfc.metal.lamp.void_metal.name= Void Metal lamp
 # molds
-item.tfc.ceramics.mold.ingot.void_metal.name=Unshaped  Void Metal
+item.tfc.ceramics.fired.mold.ingot.void_metal.name=Unshaped  Void Metal
 
 # metals 
 tfc.types.metal.refined_glowstone=Refined Glowstone
@@ -258,7 +258,7 @@ item.tfc.metal.dust.refined_glowstone.name= Refined Glowstone dust
 item.tfc.metal.nugget.refined_glowstone.name= Refined Glowstone nugget
 item.tfc.metal.lamp.refined_glowstone.name= Refined Glowstone lamp
 # molds
-item.tfc.ceramics.mold.ingot.refined_glowstone.name=Unshaped  Refined Glowstone
+item.tfc.ceramics.fired.mold.ingot.refined_glowstone.name=Unshaped  Refined Glowstone
 
 # metals 
 tfc.types.metal.refined_obsidian= Refined Obsidian
@@ -275,7 +275,7 @@ item.tfc.metal.dust.refined_obsidian.name= Refined Obsidian dust
 item.tfc.metal.nugget.refined_obsidian.name= Refined Obsidian nugget
 item.tfc.metal.lamp.refined_obsidian.name= Refined Obsidian lamp
 # molds
-item.tfc.ceramics.mold.ingot.refined_obsidian.name=Unshaped  Refined Obsidian
+item.tfc.ceramics.fired.mold.ingot.refined_obsidian.name=Unshaped  Refined Obsidian
 
 # metals 
 tfc.types.metal.soulforged_steel=Soulforged Steel 
@@ -292,4 +292,4 @@ item.tfc.metal.dust.soulforged_steel.name=Soulforged Steel  dust
 item.tfc.metal.nugget.soulforged_steel.name=Soulforged Steel  nugget
 item.tfc.metal.lamp.soulforged_steel.name=Soulforged Steel  lamp
 # molds
-item.tfc.ceramics.mold.ingot.soulforged_steel.name=Unshaped Soulforged Steel 
+item.tfc.ceramics.fired.mold.ingot.soulforged_steel.name=Unshaped Soulforged Steel 
