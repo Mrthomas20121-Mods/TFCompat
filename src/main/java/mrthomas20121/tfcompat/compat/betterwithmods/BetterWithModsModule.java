@@ -5,6 +5,7 @@ import mrthomas20121.tfcompat.library.ModuleCore;
 import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.objects.Powder;
 import net.dries007.tfc.objects.items.ItemPowder;
+import net.dries007.tfc.util.Helpers;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -14,7 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class BetterWithModsModule extends ModuleCore {
 
-    private BetterWithModsRecipes recipeModule = new BetterWithModsRecipes();
+    private BetterWithModsRecipes recipeModule = Helpers.getNull();
 
     public BetterWithModsModule()
     {
@@ -23,6 +24,7 @@ public class BetterWithModsModule extends ModuleCore {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
+        recipeModule = new BetterWithModsRecipes();
         MetalUtils.registerMetal("soulforged_steel", Metal.Tier.TIER_IV, true, 1500, 1300, 0x0);
     }
 

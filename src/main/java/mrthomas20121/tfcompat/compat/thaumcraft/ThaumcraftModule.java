@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-import thaumcraft.api.items.ItemsTC;
 
 public class ThaumcraftModule extends ModuleCore implements IHeatRecipe {
 
@@ -48,6 +47,6 @@ public class ThaumcraftModule extends ModuleCore implements IHeatRecipe {
 
     @Override
     public void initHeatRecipes(IForgeRegistry<HeatRecipe> r) {
-        r.register(HeatHelper.addRecipe("cinnabar_to_quicksilver", "gemCinnabar", new ItemStack(ItemsTC.quicksilver), 500));
+        ThaumcraftRecipes.instance.initHeatRecipes(r);
     }
 }

@@ -6,6 +6,7 @@ import mrthomas20121.tfcompat.library.ModuleCore;
 import mrthomas20121.tfcompat.library.recipes.IRecipeRemoval;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
+import net.dries007.tfc.util.Helpers;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,7 +17,7 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 public class PyrotechModule extends ModuleCore implements IHeatRecipe, IKnappingRecipe, IRecipeRemoval {
 
-    private PyrotechRecipes recipes = new PyrotechRecipes();
+    private PyrotechRecipes recipes = Helpers.getNull();
 
     public PyrotechModule()
     {
@@ -25,7 +26,7 @@ public class PyrotechModule extends ModuleCore implements IHeatRecipe, IKnapping
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-
+        recipes = new PyrotechRecipes();
     }
 
     @Override

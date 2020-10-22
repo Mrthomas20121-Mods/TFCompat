@@ -23,7 +23,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
-import tfctech.objects.items.TechItems;
 
 public class BetterWithModsRecipes implements RecipeCore, IRecipeRemoval {
 
@@ -63,7 +62,7 @@ public class BetterWithModsRecipes implements RecipeCore, IRecipeRemoval {
     {
         for(Tree tree : TFCRegistries.TREES.getValuesCollection())
         {
-            BWRegistry.WOOD_SAW.addRecipe(new BlockIngredient(Lists.newArrayList(new ItemStack(BlockLogTFC.get(tree), 1, 4), new ItemStack(BlockLogTFC.get(tree), 1, 5), new ItemStack(BlockLogTFC.get(tree), 1, 6))), Lists.newArrayList(new ItemStack(ItemLumberTFC.get(tree), 8), getStack(TechItems.WOOD_POWDER, 1)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockIngredient(Lists.newArrayList(new ItemStack(BlockLogTFC.get(tree), 1, 4), new ItemStack(BlockLogTFC.get(tree), 1, 5), new ItemStack(BlockLogTFC.get(tree), 1, 6))), Lists.newArrayList(new ItemStack(ItemLumberTFC.get(tree), 8), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST)));
         }
     }
     private void cauldronRecipes()
