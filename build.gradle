@@ -15,6 +15,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 repositories {
     maven {
+        // top
         name "tterrag maven"
         url 'http://maven.tterrag.com/'
     }
@@ -23,13 +24,19 @@ repositories {
         url = "http://maven.covers1624.net"
     }
     maven {
+        // tech reborn
         name = "Modmuss50 maven"
         url = "http://maven.modmuss50.me/"
     }
     maven {
-        // location of the maven that hosts JEI files
+        // JEI, Tinkers
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // CraftTweaker2
+        name "Jared"
+        url "http://maven.blamejared.com/"
     }
 }
 
@@ -49,9 +56,9 @@ minecraft {
 }
 
 dependencies {
-    compile "mezz.jei:jei_1.12.2:4.15.0.291"
-    compile "TechReborn:TechReborn-1.12.2:2.24.1.1017:universal"
-    compile "RebornCore:RebornCore-1.12.2:3.15.5.467:universal"
+    compile 'mezz.jei:jei_1.12.2:4.15.0.293'
+    compile 'TechReborn:TechReborn-1.12.2:2.27.3.1084'
+    compile 'RebornCore:RebornCore-1.12.2:3.19.4.529'
     compile fileTree(include: ["*.jar"], dir: "libs")
 }
 
