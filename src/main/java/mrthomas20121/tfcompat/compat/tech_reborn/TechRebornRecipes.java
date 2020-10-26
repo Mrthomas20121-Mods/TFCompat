@@ -1,6 +1,7 @@
 package mrthomas20121.tfcompat.compat.tech_reborn;
 
 import mrthomas20121.rocksalt.utils.FluidUtils;
+import mrthomas20121.rocksalt.utils.TFCUtils;
 import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import mrthomas20121.tfcompat.library.recipes.RecipeCore;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
@@ -9,6 +10,8 @@ import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.api.types.Ore;
 import net.dries007.tfc.api.types.Tree;
 import net.dries007.tfc.objects.blocks.wood.BlockLogTFC;
+import net.dries007.tfc.objects.blocks.wood.BlockSaplingTFC;
+import net.dries007.tfc.objects.items.ItemsTFC;
 import net.dries007.tfc.objects.items.metal.ItemMetal;
 import net.dries007.tfc.objects.items.metal.ItemOreTFC;
 import net.dries007.tfc.objects.items.metal.ItemSmallOre;
@@ -16,10 +19,12 @@ import net.dries007.tfc.objects.items.wood.ItemLumberTFC;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.registries.IForgeRegistry;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.recipe.Recipes;
 import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
+import techreborn.init.ModItems;
 import techreborn.init.recipes.IndustrialSawmillRecipes;
 import techreborn.init.recipes.WireMillRecipes;
 import tfctech.objects.items.metal.ItemTechMetal;
@@ -84,7 +89,12 @@ public class TechRebornRecipes implements RecipeCore, IHeatRecipe {
 
     private void extractorRecipes()
     {
-
+        if(Loader.isModLoaded("tfctech"))
+        {
+            Tree hevea = TFCRegistries.TREES.getValue(TFCUtils.getLoc("hevea"));
+            BlockSaplingTFC heave_sap = BlockSaplingTFC.get(hevea);
+            Recipes.extractor.createRecipe().withInput(new ItemStack(heave_sap, 1)).withOutput(new ItemStack(ModItems.PARTS, 1, 32)).register();
+        }
     }
 
     private void compressorRecipes()
