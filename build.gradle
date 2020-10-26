@@ -52,13 +52,13 @@ minecraft {
     runDir = "run"
 
     mappings = "stable_39"
-    //useDepAts = true
+    useDepAts = true
 }
 
 dependencies {
     compile 'mezz.jei:jei_1.12.2:4.15.0.293'
-    compile 'TechReborn:TechReborn-1.12.2:2.27.3.1084'
-    compile 'RebornCore:RebornCore-1.12.2:3.19.4.529'
+    compile 'TechReborn:TechReborn-ModCompatibility-1.12.2:+:universal'
+    compile 'RebornCore:RebornCore-1.12.2:+:universal'
     compile fileTree(include: ["*.jar"], dir: "libs")
 }
 
