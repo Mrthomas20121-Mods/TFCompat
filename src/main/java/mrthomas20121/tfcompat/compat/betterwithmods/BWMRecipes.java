@@ -4,8 +4,11 @@ import betterwithmods.common.BWRegistry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.block.recipe.BlockIngredient;
 import com.google.common.collect.Lists;
-import mrthomas20121.tfcompat.library.recipes.IRecipeRemoval;
-import mrthomas20121.tfcompat.library.recipes.RecipeCore;
+import mrthomas20121.tfcompat.library.RecipeRegistry;
+import net.dries007.tfc.api.recipes.anvil.AnvilRecipe;
+import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
+import net.dries007.tfc.api.recipes.heat.HeatRecipe;
+import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
 import net.dries007.tfc.api.recipes.quern.QuernRecipe;
 import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Tree;
@@ -20,23 +23,39 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreIngredient;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryModifiable;
 
-public class BetterWithModsRecipes implements RecipeCore, IRecipeRemoval {
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
-    @Override
-    public void registerRecipes(IForgeRegistry<IRecipe> r) {
-        millstoneRecipes();
-        sawRecipes();
-        cauldronRecipes();
+public class BWMRecipes extends RecipeRegistry {
+
+    public BWMRecipes()
+    {
+        super("bwm_registry");
     }
 
     @Override
-    public void removal(IForgeRegistry<IRecipe> r) {
-        ((IForgeRegistryModifiable<IRecipe>) r).remove(new ResourceLocation("tfc:gunpowder"));
-        ((IForgeRegistryModifiable<IRecipe>) r).remove(new ResourceLocation("tfc:gunpowder_graphite"));
+    public void init(FMLInitializationEvent event) {
+
+    }
+
+    @Nonnull
+    @Override
+    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
+        recipes.add(new ResourceLocation("tfc:gunpowder"));
+        recipes.add(new ResourceLocation("tfc:gunpowder_graphite"));
+        return recipes;
+    }
+
+    @Nonnull
+    @Override
+    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+        millstoneRecipes();
+        sawRecipes();
+        cauldronRecipes();
+        return recipes;
     }
 
     private void millstoneRecipes()
@@ -47,15 +66,15 @@ public class BetterWithModsRecipes implements RecipeCore, IRecipeRemoval {
             NonNullList<ItemStack> outputs = recipe.getOutputs();
             ItemStack output = outputs.get(0);
             NonNullList<ItemStack> stacks = ingredient.get(0).getValidIngredients();
-            if(!stacks.contains(getStack(Items.BONE, 1)) || !stacks.contains(getStack(Blocks.BONE_BLOCK, 1)) )
+            if(!stacks.contains(new ItemStack(Items.BONE, 1)) || !stacks.contains(new ItemStack(Blocks.BONE_BLOCK, 1)) )
             {
-                BWRegistry.MILLSTONE.addMillRecipe(convertStacks(stacks), output);
+                BWRegistry.MILLSTONE.addMillRecipe(this.convertStacks(stacks), output);
             }
         }
         // TFC Hides
         for(ItemAnimalHide.HideSize hideSize : ItemAnimalHide.HideSize.values())
         {
-            BWRegistry.MILLSTONE.addMillRecipe(getStack(ItemAnimalHide.get(ItemAnimalHide.HideType.SOAKED, hideSize), 1), getStack(ItemAnimalHide.get(ItemAnimalHide.HideType.SCRAPED, hideSize), 1));
+            BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(ItemAnimalHide.get(ItemAnimalHide.HideType.SOAKED, hideSize), 1), new ItemStack(ItemAnimalHide.get(ItemAnimalHide.HideType.SCRAPED, hideSize), 1));
         }
     }
     private void sawRecipes()
@@ -67,7 +86,7 @@ public class BetterWithModsRecipes implements RecipeCore, IRecipeRemoval {
     }
     private void cauldronRecipes()
     {
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(new OreIngredient("dustSulfur"), new OreIngredient("dustSaltpeter"), new OreIngredient("dustCarbon"), new OreIngredient("dustGraphite")), getStack(Items.GUNPOWDER, 4));
-        BWRegistry.CAULDRON.addStokedRecipe(getStack(ItemsTFC.QUIVER, 1), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GLUE));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(new OreIngredient("dustSulfur"), new OreIngredient("dustSaltpeter"), new OreIngredient("dustCarbon"), new OreIngredient("dustGraphite")), new ItemStack(Items.GUNPOWDER, 4));
+        BWRegistry.CAULDRON.addStokedRecipe(new ItemStack(ItemsTFC.QUIVER, 1), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GLUE));
     }
 }

@@ -1,7 +1,8 @@
 package mrthomas20121.tfcompat.compat.thermalexpansion;
 
 import cofh.thermalexpansion.util.managers.machine.*;
-import mrthomas20121.tfcompat.library.recipes.RecipeCore;
+import mrthomas20121.tfcompat.TFCompatConfig;
+import mrthomas20121.tfcompat.library.RecipeRegistry;
 import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.quern.QuernRecipe;
@@ -21,19 +22,31 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.IForgeRegistry;
 import tfctech.objects.items.TechItems;
 
-public class ThermalExpansionRecipes implements RecipeCore {
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
+public class ThermalRegistry extends RecipeRegistry {
+
+    public ThermalRegistry()
+    {
+        super("thermal_registry");
+    }
+
+    @Nonnull
     @Override
-    public void registerRecipes(IForgeRegistry<IRecipe> r) {
-        barrelStillRecipes();
+    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+        if(TFCompatConfig.DefaultConfig.thermal_refinery_recipes)
+        {
+            barrelStillRecipes();
+        }
         extruderRecipes();
         precipiratorRecipes();
         pulverizerRecipes();
         sawmillRecipes();
         redstoneFurnaceRecipes();
+        return super.addRecipes(recipes);
     }
 
     private void barrelStillRecipes()
@@ -57,23 +70,23 @@ public class ThermalExpansionRecipes implements RecipeCore {
     }
     private void precipiratorRecipes()
     {
-        PrecipitatorManager.addRecipe(800, new ItemStack(Items.SNOWBALL, 4), getFluid("fresh_water", 500));
-        PrecipitatorManager.addRecipe(800, new ItemStack(Blocks.SNOW, 1), getFluid("fresh_water", 500));
-        PrecipitatorManager.addRecipe(800, new ItemStack(Blocks.SNOW_LAYER, 2), getFluid("fresh_water", 500));
-        PrecipitatorManager.addRecipe(1600, new ItemStack(Blocks.ICE, 1), getFluid("fresh_water", 1000));
-        PrecipitatorManager.addRecipe(1600, new ItemStack(Blocks.PACKED_ICE, 1), getFluid("fresh_water", 1000));
-        PrecipitatorManager.addRecipe(1600, new ItemStack(BlocksTFC.SEA_ICE, 1), getFluid("salt_water", 1000));
+        PrecipitatorManager.addRecipe(800, new ItemStack(Items.SNOWBALL, 4), FluidRegistry.getFluidStack("fresh_water", 500));
+        PrecipitatorManager.addRecipe(800, new ItemStack(Blocks.SNOW, 1), FluidRegistry.getFluidStack("fresh_water", 500));
+        PrecipitatorManager.addRecipe(800, new ItemStack(Blocks.SNOW_LAYER, 2), FluidRegistry.getFluidStack("fresh_water", 500));
+        PrecipitatorManager.addRecipe(1600, new ItemStack(Blocks.ICE, 1), FluidRegistry.getFluidStack("fresh_water", 1000));
+        PrecipitatorManager.addRecipe(1600, new ItemStack(Blocks.PACKED_ICE, 1), FluidRegistry.getFluidStack("fresh_water", 1000));
+        PrecipitatorManager.addRecipe(1600, new ItemStack(BlocksTFC.SEA_ICE, 1), FluidRegistry.getFluidStack("salt_water", 1000));
     }
     private void sawmillRecipes()
     {
         for(Tree tree : TFCRegistries.TREES.getValuesCollection())
         {
-            SawmillManager.addRecipe(1000, getStack(BlockLogTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 8), getStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,getStack(BlockPlanksTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 3), getStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,getStack(BlockDoorTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 4), getStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,getStack(BlockTrapDoorWoodTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 4), getStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,getStack(BlockFenceTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 3), getStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,getStack(BlockFenceGateTFC.get(tree), 1), getStack(ItemLumberTFC.get(tree), 4), getStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockLogTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 8), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
 
 
         }

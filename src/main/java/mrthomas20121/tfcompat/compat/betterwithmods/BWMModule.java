@@ -13,18 +13,16 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class BetterWithModsModule extends ModuleCore {
+public class BWMModule extends ModuleCore {
 
-    private BetterWithModsRecipes recipeModule = Helpers.getNull();
-
-    public BetterWithModsModule()
+    public BWMModule()
     {
-        super("module_bwm", "betterwithmods");
+        super("betterwithmods");
     }
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        recipeModule = new BetterWithModsRecipes();
+        this.addRegistry(new BWMRecipes());
         MetalUtils.registerMetal("soulforged_steel", Metal.Tier.TIER_IV, true, 1500, 1300, 0x0);
     }
 
@@ -37,10 +35,5 @@ public class BetterWithModsModule extends ModuleCore {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
 
-    }
-
-    @Override
-    public void initRecipes(IForgeRegistry<IRecipe> r) {
-        recipeModule.registerRecipes(r);
     }
 }

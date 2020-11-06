@@ -4,20 +4,15 @@ import mrthomas20121.rocksalt.utils.OreUtils;
 import mrthomas20121.rocksalt.utils.VeinLoader;
 import mrthomas20121.tfcompat.TFCompat;
 import mrthomas20121.tfcompat.library.ModuleCore;
-import mrthomas20121.tfcompat.library.recipes.RecipeCore;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
-public class ActuallyAdditionsModule extends ModuleCore {
+public class AAModule extends ModuleCore {
 
-    private RecipeCore recipeModule = new ActuallyAdditionsRecipes();
-
-    public ActuallyAdditionsModule()
+    public AAModule()
     {
-        super("module_aa", "actuallyadditions");
+        super("actuallyadditions");
     }
 
     @Override
@@ -34,10 +29,5 @@ public class ActuallyAdditionsModule extends ModuleCore {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
 
-    }
-
-    @Override
-    public void initRecipes(IForgeRegistry<IRecipe> r) {
-        recipeModule.registerRecipes(r);
     }
 }

@@ -8,13 +8,10 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.AnvilRecipe;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CompactingBinRecipe;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.SoakingPotRecipe;
 import com.codetaylor.mc.pyrotech.modules.tool.ModuleTool;
-import mrthomas20121.rocksalt.utils.CraftingUtils;
 import mrthomas20121.tfcompat.TFCompat;
+import mrthomas20121.tfcompat.library.RecipeRegistry;
 import mrthomas20121.tfcompat.library.helpers.HeatHelper;
 import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
-import mrthomas20121.tfcompat.library.recipes.IKnappingRecipe;
-import mrthomas20121.tfcompat.library.recipes.IRecipeRemoval;
-import mrthomas20121.tfcompat.library.recipes.RecipeCore;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipeSimple;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
@@ -37,6 +34,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -44,7 +42,16 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import tfctech.objects.items.TechItems;
 
-public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe, IKnappingRecipe {
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+
+@SuppressWarnings("ConstantConditions")
+public class PyrotechRegistry extends RecipeRegistry {
+
+    public PyrotechRegistry()
+    {
+        super("pyrotech_registry");
+    }
 
     public void init(FMLInitializationEvent event) {
         registerHammers();
@@ -52,76 +59,73 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
         HeatHelper.addItemHeat(ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack(), 600, 580);
         HeatHelper.addItemHeat(new ItemStack(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), 1500, 1700);
         HeatHelper.addItemHeat(new ItemStack(ModuleTool.Items.UNFIRED_CLAY_SHEARS), 1500, 1700);
+
+        HeatHelper.addItemHeat(ItemMaterial.EnumType.REFRACTORY_BRICK.asStack(), 600, 580);
+        HeatHelper.addItemHeat(new ItemStack(ModuleBucket.Items.BUCKET_CLAY), 1500, 1700);
+        HeatHelper.addItemHeat(new ItemStack(ModuleTool.Items.CLAY_SHEARS), 1500, 1700);
     }
 
+    @Nonnull
     @Override
-    public void initHeatRecipes(IForgeRegistry<HeatRecipe> r) {
-        r.register(new HeatRecipeSimple(IIngredient.of(ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack()), ItemMaterial.EnumType.REFRACTORY_BRICK.asStack(), 480).setRegistryName(new ResourceLocation(TFCompat.MODID, "unfired_refractory_brick")));
-        r.register(new HeatRecipeSimple(IIngredient.of(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), new ItemStack(ModuleBucket.Items.BUCKET_CLAY, 1), 1500).setRegistryName(new ResourceLocation(TFCompat.MODID, "unfired_clay_bucket")));
-        r.register(new HeatRecipeSimple(IIngredient.of(ModuleTool.Items.UNFIRED_CLAY_SHEARS), new ItemStack(ModuleTool.Items.CLAY_SHEARS, 1), 1500).setRegistryName(new ResourceLocation(TFCompat.MODID, "unfired_clay_shears")));
+    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes) {
+        recipes.add(new HeatRecipeSimple(IIngredient.of(ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack()), ItemMaterial.EnumType.REFRACTORY_BRICK.asStack(), 480).setRegistryName(new ResourceLocation(TFCompat.MODID, "unfired_refractory_brick")));
+        recipes.add(new HeatRecipeSimple(IIngredient.of(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), new ItemStack(ModuleBucket.Items.BUCKET_CLAY, 1), 1500).setRegistryName(new ResourceLocation(TFCompat.MODID, "unfired_clay_bucket")));
+        recipes.add(new HeatRecipeSimple(IIngredient.of(ModuleTool.Items.UNFIRED_CLAY_SHEARS), new ItemStack(ModuleTool.Items.CLAY_SHEARS, 1), 1500).setRegistryName(new ResourceLocation(TFCompat.MODID, "unfired_clay_shears")));
+        return super.addHeatRecipes(recipes);
     }
 
+    @Nonnull
     @Override
-    public void initKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
-        r.register(new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), "X   X", "X   X", "X   X", "XX XX", "  X  ").setRegistryName("pyrotech_unfired_clay_bucket"));
-        r.register(new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleTool.Items.UNFIRED_CLAY_SHEARS), "XX  X", "X  X ", " XX  ", " XX X", "X  XX").setRegistryName("pyrotech_unfired_clay_shears"));
+    public ArrayList<KnappingRecipe> addKnappingRecipes(ArrayList<KnappingRecipe> recipes) {
+        recipes.add(new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), "X   X", "X   X", "X   X", "XX XX", "  X  ").setRegistryName("pyrotech_unfired_clay_bucket"));
+        recipes.add(new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleTool.Items.UNFIRED_CLAY_SHEARS), "XX  X", "X  X ", " XX  ", " XX X", "X  XX").setRegistryName("pyrotech_unfired_clay_shears"));
+        return super.addKnappingRecipes(recipes);
     }
 
+    @Nonnull
     @Override
-    public void registerRecipes(IForgeRegistry<IRecipe> r) {
+    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
         AnvilRecipes(ModuleTechBasic.Registries.ANVIL_RECIPE);
         SoakingPotRecipes(ModuleTechBasic.Registries.SOAKING_POT_RECIPE);
         CompactingBinRecipes(ModuleTechBasic.Registries.COMPACTING_BIN_RECIPE);
+        return super.addRecipes(recipes);
     }
 
+    @Nonnull
     @Override
-    public void removal(IForgeRegistry<IRecipe> r) {
-        CraftingUtils.removeRecipe(r,new ResourceLocation("pyrotech:bucket/bucket_clay_unfired"));
-        CraftingUtils.removeRecipe(r, new ResourceLocation("pyrotech:tool/unfired_clay_shears"));
+    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
+        recipes.add(new ResourceLocation("pyrotech:bucket/bucket_clay_unfired"));
+        recipes.add(new ResourceLocation("pyrotech:tool/unfired_clay_shears"));
+        return super.removeRecipes(recipes);
     }
 
     private void registerHammers() {
         for(Metal metal : TFCRegistries.METALS.getValuesCollection())
         {
-            if(metal.isToolMetal()) {
+            if(metal.isToolMetal() || metal.isArmorMetal()) {
                 Item hammer = ItemMetal.get(metal, Metal.ItemType.HAMMER);
                 PyrotechAPI.registerHammer(hammer, metal.getToolMetal().getHarvestLevel());
             }
         }
     }
 
-    private void CompactingBinRecipes(IForgeRegistryModifiable<CompactingBinRecipe> r)
+    private void CompactingBinRecipes(IForgeRegistry<CompactingBinRecipe> r)
     {
-        r.register(createBinRecipe(
-                "tfc_fire_clay",
-                getStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("tfc:fire_clay_block")), 1),
-                getStack(ItemsTFC.FIRE_CLAY, 4),
-                4
-                )
-        );
-        r.register(createBinRecipe(
-                "tfc_thatch",
-                getStack(BlocksTFC.THATCH, 1),
-                getStack(ItemsTFC.STRAW, 4),
-                4
-                )
-        );
+        // fire clay to clay
+        registerBinRecipe(r,"tfc_fire_clay", new ItemStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("tfc:fire_clay_block")), 1), new ItemStack(ItemsTFC.FIRE_CLAY, 4),4);
+
+        // straw to thatch
+        registerBinRecipe(r,"tfc_thatch", new ItemStack(BlocksTFC.THATCH, 1), new ItemStack(ItemsTFC.STRAW, 4), 4);
         for(Rock rock : TFCRegistries.ROCKS.getValuesCollection())
         {
             ItemRock itemRock = ItemRock.get(rock);
             BlockRockVariant gravel = BlockRockVariant.get(rock, Rock.Type.GRAVEL);
-            r.register(createBinRecipe(
-                    "tfc_"+rock.getRegistryName().getPath()+"_"+Rock.Type.GRAVEL.name(),
-                    getStack(gravel, 1),
-                    getStack(itemRock, 8),
-                    4
-                    )
-            );
+            registerBinRecipe(r, "tfc_gravel_"+rock.getRegistryName().getPath(), new ItemStack(gravel, 1), new ItemStack(itemRock, 8),4);
         }
 
     }
 
-    private void AnvilRecipes(IForgeRegistryModifiable<AnvilRecipe> r)
+    private void AnvilRecipes(IForgeRegistry<AnvilRecipe> r)
     {
         for(Rock rock : TFCRegistries.ROCKS.getValuesCollection())
         {
@@ -134,48 +138,48 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
             BlockSlabTFC.Half brickSlab = BlockSlabTFC.Half.get(rock, Rock.Type.BRICKS);
             r.register(createAnvilRecipe(
                     "cobble_slab_"+rock.getRegistryName().getPath(),
-                    getStack(cobbleSlab, 2),
-                    getStack(cobble, 1),
+                    new ItemStack(cobbleSlab, 2),
+                    new ItemStack(cobble, 1),
                     8,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.GRANITE)
             );
             r.register(createAnvilRecipe(
                     "ironclad_cobble_slab_"+rock.getRegistryName().getPath(),
-                    getStack(cobbleSlab, 2),
-                    getStack(cobble, 1),
+                    new ItemStack(cobbleSlab, 2),
+                    new ItemStack(cobble, 1),
                     7,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.IRONCLAD)
             );
             r.register(createAnvilRecipe(
                     "smooth_slab_"+rock.getRegistryName().getPath(),
-                    getStack(smoothSlab, 2),
-                    getStack(smooth, 1),
+                    new ItemStack(smoothSlab, 2),
+                    new ItemStack(smooth, 1),
                     8,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.GRANITE)
             );
             r.register(createAnvilRecipe(
                     "ironclad_smooth_slab_"+rock.getRegistryName().getPath(),
-                    getStack(smoothSlab, 2),
-                    getStack(smooth, 1),
+                    new ItemStack(smoothSlab, 2),
+                    new ItemStack(smooth, 1),
                     7,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.IRONCLAD)
             );
             r.register(createAnvilRecipe(
                     "brick_slab_"+rock.getRegistryName().getPath(),
-                    getStack(brickSlab, 2),
-                    getStack(brick, 1),
+                    new ItemStack(brickSlab, 2),
+                    new ItemStack(brick, 1),
                     8,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.GRANITE)
             );
             r.register(createAnvilRecipe(
                     "ironclad_brick_slab_"+rock.getRegistryName().getPath(),
-                    getStack(brickSlab, 2),
-                    getStack(brick, 1),
+                    new ItemStack(brickSlab, 2),
+                    new ItemStack(brick, 1),
                     7,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.IRONCLAD)
@@ -183,7 +187,7 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
             r.register(createAnvilRecipe(
                     "refractory_brick_"+rock.getRegistryName().getPath(),
                     ItemMaterial.EnumType.BRICK_STONE.asStack(2),
-                    getStack(brickSlab, 2),
+                    new ItemStack(brickSlab, 2),
                     4,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.GRANITE)
@@ -191,7 +195,7 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
             r.register(createAnvilRecipe(
                     "ironclad_refractory_brick_"+rock.getRegistryName().getPath(),
                     ItemMaterial.EnumType.BRICK_STONE.asStack(2),
-                    getStack(brickSlab, 1),
+                    new ItemStack(brickSlab, 1),
                     4,
                     AnvilRecipe.EnumType.PICKAXE,
                     AnvilRecipe.EnumTier.IRONCLAD)
@@ -207,16 +211,16 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
                         ItemBrickTFC brickTFC = ItemBrickTFC.get(rock);
                         r.register(createAnvilRecipe(
                                 rock.getRegistryName().getPath()+"_from_"+type.name(),
-                                getStack(brickTFC, 4),
-                                getStack(variant, 1),
+                                new ItemStack(brickTFC, 4),
+                                new ItemStack(variant, 1),
                                 8,
                                 AnvilRecipe.EnumType.HAMMER,
                                 AnvilRecipe.EnumTier.GRANITE)
                         );
                         r.register(createAnvilRecipe(
                                 "ironclad_"+rock.getRegistryName().getPath()+"_from_"+type.name(),
-                                getStack(brickTFC, 5),
-                                getStack(variant, 1),
+                                new ItemStack(brickTFC, 5),
+                                new ItemStack(variant, 1),
                                 7,
                                 AnvilRecipe.EnumType.HAMMER,
                                 AnvilRecipe.EnumTier.IRONCLAD)
@@ -227,16 +231,16 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
                         ItemBrickTFC brickTFC = ItemBrickTFC.get(rock);
                         r.register(createAnvilRecipe(
                                 rock.getRegistryName().getPath()+"_"+type.name(),
-                                getStack(Items.CLAY_BALL, 4),
-                                getStack(variant, 1),
+                                new ItemStack(Items.CLAY_BALL, 4),
+                                new ItemStack(variant, 1),
                                 8,
                                 AnvilRecipe.EnumType.HAMMER,
                                 AnvilRecipe.EnumTier.GRANITE)
                         );
                         r.register(createAnvilRecipe(
                                 "ironclad_"+rock.getRegistryName().getPath()+"_"+type.name(),
-                                getStack(Items.CLAY_BALL, 4),
-                                getStack(variant, 1),
+                                new ItemStack(Items.CLAY_BALL, 4),
+                                new ItemStack(variant, 1),
                                 7,
                                 AnvilRecipe.EnumType.HAMMER,
                                 AnvilRecipe.EnumTier.IRONCLAD)
@@ -246,16 +250,16 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
                     {
                         r.register(createAnvilRecipe(
                                 rock.getRegistryName().getPath()+"_from_"+type.name(),
-                                getStack(itemRock, 6),
-                                getStack(variant, 1),
+                                new ItemStack(itemRock, 6),
+                                new ItemStack(variant, 1),
                                 8,
                                 AnvilRecipe.EnumType.HAMMER,
                                 AnvilRecipe.EnumTier.GRANITE)
                         );
                         r.register(createAnvilRecipe(
                                 "ironclad_"+rock.getRegistryName().getPath()+"_from_"+type.name(),
-                                getStack(itemRock, 6),
-                                getStack(variant, 1),
+                                new ItemStack(itemRock, 6),
+                                new ItemStack(variant, 1),
                                 8,
                                 AnvilRecipe.EnumType.HAMMER,
                                 AnvilRecipe.EnumTier.IRONCLAD)
@@ -267,7 +271,7 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
         for(Metal metal : TFCRegistries.METALS.getValuesCollection())
         {
 
-            if(!checkMetal(metal))
+            if(checkMetal(metal))
             {
                 Item double_ingot = ItemMetal.get(metal, Metal.ItemType.DOUBLE_INGOT);
                 Item ingot = ItemMetal.get(metal, Metal.ItemType.INGOT);
@@ -277,16 +281,16 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
 
                 r.register(createAnvilRecipe(
                         metal.getRegistryName().getPath()+"_ingot_tfc",
-                        getStack(ingot, 2),
-                        getStack(double_ingot, 1),
+                        new ItemStack(ingot, 2),
+                        new ItemStack(double_ingot, 1),
                         8,
                         AnvilRecipe.EnumType.HAMMER,
                         AnvilRecipe.EnumTier.IRONCLAD)
                 );
                 r.register(createAnvilRecipe(
                         metal.getRegistryName().getPath()+"_sheet_tfc",
-                        getStack(sheet, 2),
-                        getStack(double_sheet, 1),
+                        new ItemStack(sheet, 2),
+                        new ItemStack(double_sheet, 1),
                         8,
                         AnvilRecipe.EnumType.HAMMER,
                         AnvilRecipe.EnumTier.IRONCLAD)
@@ -294,48 +298,44 @@ public class PyrotechRecipes implements RecipeCore, IRecipeRemoval, IHeatRecipe,
             }
         }
     }
+
     private void SoakingPotRecipes(IForgeRegistryModifiable<SoakingPotRecipe> r)
     {
         r.register(createSoakingPotRecipe(
                 "tfc_tech_slaked_lime",
                 ItemMaterial.EnumType.SLAKED_LIME.asStack(1),
                 Ingredient.fromItem(TechItems.LIME),
-                getFluid("fresh_water", 125),
+                FluidRegistry.getFluidStack("fresh_water", 125),
+                false,
                 7
         ));
 
     }
-    private static CompactingBinRecipe createBinRecipe(String registryName, ItemStack output, ItemStack input, int time)
+    private static void registerBinRecipe(IForgeRegistry<CompactingBinRecipe> r, String registryName, ItemStack output, ItemStack input, int time)
     {
         CompactingBinRecipe recipe = new CompactingBinRecipe(output, Ingredient.fromStacks(input), time);
         recipe.setRegistryName(registryName);
-        return recipe;
+        r.register(recipe);
     }
+
     private static AnvilRecipe createAnvilRecipe(String registryName, ItemStack output, ItemStack input, int hit, AnvilRecipe.EnumType type, AnvilRecipe.EnumTier tier)
     {
         AnvilRecipe recipe = new AnvilRecipe(output, Ingredient.fromStacks(input), hit, type, tier);
         recipe.setRegistryName(TFCompat.MODID, registryName);
         return recipe;
     }
-    private static SoakingPotRecipe createSoakingPotRecipe(String registryName, ItemStack output, Ingredient inputItem, FluidStack inputFluid, int timeTicks)
+
+
+    private static SoakingPotRecipe createSoakingPotRecipe(String registryName, ItemStack output, Ingredient inputItem, FluidStack inputFluid, boolean campfire, int timeTicks)
     {
-        SoakingPotRecipe recipe = new SoakingPotRecipe(output, inputItem, inputFluid, timeTicks);
+        SoakingPotRecipe recipe = new SoakingPotRecipe(output, inputItem, inputFluid, campfire, timeTicks);
         recipe.setRegistryName(registryName);
         return recipe;
     }
+
     private static boolean checkMetal(Metal metal)
     {
         String metal_name = metal.getRegistryName().getPath();
-        String[] metalsExtrusion = { "unknown", "high_carbon_steel", "high_carbon_red_steel", "high_carbon_blue_steel", "high_carbon_black_steel", "weak_steel", "weak_blue_steel", "weak_red_steel", "weak_black_steel" };
-        boolean res = false;
-        for(String m : metalsExtrusion)
-        {
-            if(metal_name.contains(m))
-            {
-                res = true;
-                break;
-            }
-        }
-        return res;
+        return !(metal == Metal.UNKNOWN || metal_name.contains("high") || metal_name.contains("weak"));
     }
 }

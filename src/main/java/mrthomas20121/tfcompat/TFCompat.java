@@ -1,5 +1,6 @@
 package mrthomas20121.tfcompat;
 
+import mrthomas20121.tfcompat.client.GuiHandler;
 import mrthomas20121.tfcompat.compat.rustic.RusticModule;
 import mrthomas20121.tfcompat.library.ModuleCore;
 import mrthomas20121.tfcompat.library.ModuleManager;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = TFCompat.MODID, name = TFCompat.NAME, version = TFCompat.VERSION, dependencies = TFCompat.DEPENDENCIES)
@@ -29,6 +31,9 @@ public class TFCompat
             + "after:improvedbackpacks;"
             + "after:thermalexpansion;"
             + "after:thaumcraft;";
+
+    @Mod.Instance
+    public static TFCompat instance;
 
     private static Logger logger;
 	
@@ -61,6 +66,8 @@ public class TFCompat
         {
             module.init(event);
         }
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }
 
     @EventHandler

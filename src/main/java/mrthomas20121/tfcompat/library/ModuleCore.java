@@ -1,24 +1,37 @@
 package mrthomas20121.tfcompat.library;
 
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.ArrayList;
 
 public abstract class ModuleCore {
 
-    private String name;
     private String dep;
+    private RecipeRegistry registry;
 
-    public ModuleCore(String name, String dep)
+    public ModuleCore(String dep)
     {
-        this.name = name;
         this.dep = dep;
     }
 
-    public String getName() {
-        return name;
+    public ModuleCore(String dep, RecipeRegistry registry)
+    {
+        this(dep);
+        this.registry = registry;
+    }
+
+    public void addRegistry(RecipeRegistry registry)
+    {
+        this.registry = registry;
+    }
+
+    public RecipeRegistry getRegistry() {
+        return registry;
     }
 
     public String getDep()
@@ -31,6 +44,4 @@ public abstract class ModuleCore {
     public abstract void init(FMLInitializationEvent event);
 
     public abstract void postInit(FMLPostInitializationEvent event);
-
-    public abstract void initRecipes(IForgeRegistry<IRecipe> r);
 }
