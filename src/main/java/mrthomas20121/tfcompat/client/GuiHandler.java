@@ -21,10 +21,12 @@ import javax.annotation.Nullable;
 
 public class GuiHandler implements IGuiHandler {
 
-    private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather.png");
+    private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather_button.png");
     private static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation("ceramics:textures/blocks/porcelain_raw.png");
-    private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay.png");
-    private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay.png");
+    private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
+    private static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
+    private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
+    private static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
 
     public static void openGui(World world, BlockPos pos, EntityPlayer player, Type type)
     {
