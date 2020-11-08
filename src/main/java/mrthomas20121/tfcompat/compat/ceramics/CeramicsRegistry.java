@@ -1,6 +1,9 @@
 package mrthomas20121.tfcompat.compat.ceramics;
 
 import knightminer.ceramics.Ceramics;
+import mrthomas20121.tfcompat.TFCompat;
+import mrthomas20121.tfcompat.api.knapping.Types;
+import mrthomas20121.tfcompat.client.GuiHandler;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import mrthomas20121.tfcompat.library.helpers.BarrelHelper;
 import mrthomas20121.tfcompat.library.helpers.HeatHelper;
@@ -8,10 +11,16 @@ import mrthomas20121.tfcompat.library.helpers.KnappingHelper;
 import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
+import net.dries007.tfc.api.recipes.knapping.KnappingRecipeSimple;
 import net.dries007.tfc.objects.fluids.FluidsTFC;
+import net.dries007.tfc.util.OreDictionaryHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -106,6 +115,21 @@ public class CeramicsRegistry extends RecipeRegistry {
         recipes.add(KnappingHelper.addClayKnapping("ceramics_clay_bucket", false, new ItemStack(Ceramics.clayUnfired, 1, 0), "X   X", "X   X", "X   X", "XX XX", "  X  "));
         recipes.add(KnappingHelper.addClayKnapping("ceramics_clay_shears", false, new ItemStack(Ceramics.clayUnfired, 1, 1), "XX  X", "X  X ", " XX  ", " XX X", "X  XX"));
         recipes.add(KnappingHelper.addClayKnapping("ceramics_clay_plate", false, new ItemStack(Ceramics.clayUnfired, 1, 8), " XXX ", "X   X", "X   X", "X   X", " XXX "));
+        recipes.add(new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.porcelainBarrel, 1), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MODID, "porcelain_barrel"));
+
         return super.addKnappingRecipes(recipes);
+    }
+
+    @Override
+    public void onRightClick(PlayerInteractEvent.RightClickItem event) {
+        if(OreDictionaryHelper.doesStackMatchOre(event.getItemStack(), "porcelain"))
+        {
+            EntityPlayer player = event.getEntityPlayer();
+            World world = event.getWorld();
+            if (!world.isRemote && !player.isSneaking())
+            {
+                GuiHandler.openGui(world, player.getPosition(), player, GuiHandler.Type.PORCELAIN);
+            }
+        }
     }
 }

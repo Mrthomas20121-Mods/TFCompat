@@ -29,9 +29,9 @@ import net.minecraftforge.oredict.OreIngredient;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
-public class BWMRecipes extends RecipeRegistry {
+public class BWMRegistry extends RecipeRegistry {
 
-    public BWMRecipes()
+    public BWMRegistry()
     {
         super("bwm_registry");
     }

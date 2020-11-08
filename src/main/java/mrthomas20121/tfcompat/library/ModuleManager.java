@@ -20,6 +20,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
@@ -58,7 +59,7 @@ public class ModuleManager
         registerModule(new TechRebornModule());
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRegisterRecipesEvent(RegistryEvent.Register<IRecipe> event) {
         IForgeRegistry<IRecipe> r = event.getRegistry();
         IForgeRegistryModifiable<IRecipe> rec = (IForgeRegistryModifiable<IRecipe>)r;

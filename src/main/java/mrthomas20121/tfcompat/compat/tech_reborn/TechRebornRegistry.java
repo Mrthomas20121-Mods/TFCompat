@@ -2,7 +2,6 @@ package mrthomas20121.tfcompat.compat.tech_reborn;
 
 import mrthomas20121.rocksalt.utils.TFCUtils;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
-import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.api.types.Ore;
@@ -18,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.recipe.Recipes;
 import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
@@ -54,7 +54,8 @@ public class TechRebornRegistry extends RecipeRegistry {
             BlockLogTFC blockLogTFC = BlockLogTFC.get(tree);
             ItemLumberTFC itemLumberTFC = ItemLumberTFC.get(tree);
 
-            RecipeHandler.addRecipe(new IndustrialSawmillRecipe(new ItemStack(blockLogTFC, 1), FluidRegistry.getFluidStack("fresh_water", 1000), new ItemStack(itemLumberTFC, 1), (ItemStack)null, (ItemStack)null, 5, 4000, false));
+
+            RecipeHandler.addRecipe(new IndustrialSawmillRecipe(new ItemStack(blockLogTFC, 1), FluidRegistry.getFluidStack("fresh_water", 1000), new ItemStack(itemLumberTFC, 8), null, null, 50, 4000, false));
         }
     }
 
@@ -62,9 +63,12 @@ public class TechRebornRegistry extends RecipeRegistry {
     {
         for(Metal metal : TFCRegistries.METALS.getValuesCollection())
         {
-            ItemStack scrap = new ItemStack(ItemMetal.get(metal, Metal.ItemType.SCRAP), 1);
-            ItemStack wire = new ItemStack(ItemTechMetal.get(metal, ItemTechMetal.ItemType.WIRE), 2);
-            Recipes.wireMill.createRecipe().withInput(scrap).withOutput(wire).withEnergyCostPerTick(2).withOperationDuration(200).register();
+            if(checkMetal(metal))
+            {
+                ItemStack scrap = new ItemStack(ItemMetal.get(metal, Metal.ItemType.SCRAP), 1);
+                ItemStack wire = new ItemStack(ItemTechMetal.get(metal, ItemTechMetal.ItemType.WIRE), 2);
+                Recipes.wireMill.createRecipe().withInput(scrap).withOutput(wire).withEnergyCostPerTick(2).withOperationDuration(200).register();
+            }
         }
     }
 
@@ -76,9 +80,9 @@ public class TechRebornRegistry extends RecipeRegistry {
             {
                 Metal metal = ore.getMetal();
                 Item dust = ItemMetal.get(metal, Metal.ItemType.DUST);
-                ItemStack normal_ore = ItemOreTFC.get(ore, Ore.Grade.NORMAL, 2);
-                ItemStack poor_ore = ItemOreTFC.get(ore, Ore.Grade.POOR, 5);
-                ItemStack rich_ore = ItemOreTFC.get(ore, Ore.Grade.RICH, 1);
+                ItemStack normal_ore = ItemOreTFC.get(ore, Ore.Grade.NORMAL, 4);
+                ItemStack poor_ore = ItemOreTFC.get(ore, Ore.Grade.POOR, 6);
+                ItemStack rich_ore = ItemOreTFC.get(ore, Ore.Grade.RICH, 3);
                 ItemStack small_ore = ItemSmallOre.get(ore, 10);
                 Recipes.grinder.createRecipe().withInput(small_ore).withOutput(new ItemStack(dust, 1)).withEnergyCostPerTick(5).withOperationDuration(200).register();
                 Recipes.grinder.createRecipe().withInput(poor_ore).withOutput(new ItemStack(dust, 1)).withEnergyCostPerTick(5).withOperationDuration(200).register();
@@ -106,5 +110,10 @@ public class TechRebornRegistry extends RecipeRegistry {
     private void rollingMachineRecipes()
     {
 
+    }
+
+    private static boolean checkMetal(Metal metal)
+    {
+        return ObfuscationReflectionHelper.getPrivateValue(Metal.class, metal, "usable").equals(true);
     }
 }

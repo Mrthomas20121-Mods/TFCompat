@@ -1,6 +1,5 @@
 package mrthomas20121.tfcompat.compat.pyrotech;
 
-import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import mrthomas20121.tfcompat.library.ModuleCore;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

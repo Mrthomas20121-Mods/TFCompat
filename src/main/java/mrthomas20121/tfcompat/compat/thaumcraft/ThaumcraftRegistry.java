@@ -2,11 +2,9 @@ package mrthomas20121.tfcompat.compat.thaumcraft;
 
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import mrthomas20121.tfcompat.library.helpers.HeatHelper;
-import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 import thaumcraft.api.items.ItemsTC;
 
 import javax.annotation.Nonnull;

@@ -4,16 +4,11 @@ import mrthomas20121.rocksalt.utils.MetalUtils;
 import mrthomas20121.rocksalt.utils.OredictUtils;
 import mrthomas20121.tfcompat.compat.ArmorMaterialsTFCompat;
 import mrthomas20121.tfcompat.compat.ToolMaterialsTFCompat;
-import mrthomas20121.tfcompat.library.helpers.HeatHelper;
-import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import mrthomas20121.tfcompat.library.ModuleCore;
-import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.types.Metal;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
 public class ThaumcraftModule extends ModuleCore {
 
