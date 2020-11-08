@@ -41,17 +41,17 @@ public class TFCompatPlugin implements IModPlugin
                     .map(recipe -> new CompatKnappingRecipeWrapper(recipe, registry.getJeiHelpers().getGuiHelper()))
                     .collect(Collectors.toList());
             registry.addRecipes(porcelain_recipes, KNAP_PORCELAIN_UID);
-            NonNullList<ItemStack> ores = OreDictionary.getOres("porcelain");
+            NonNullList<ItemStack> ores = OreDictionary.getOres("clayPorcelain");
             for(ItemStack itemStack : ores)
             {
-                registry.addRecipeCatalyst(itemStack, KNAP_TANNED_LEATHER_UID);
+                registry.addRecipeCatalyst(itemStack, KNAP_PORCELAIN_UID);
             }
         }
 
         if(Loader.isModLoaded("improvedbackpacks"))
         {
             List<CompatKnappingRecipeWrapper> tanned_lether_recipes = TFCRegistries.KNAPPING.getValuesCollection().stream()
-                    .filter(recipe -> recipe.getType() == Types.PORCELAIN)
+                    .filter(recipe -> recipe.getType() == Types.TANNED_LEATHER)
                     .map(recipe -> new CompatKnappingRecipeWrapper(recipe, registry.getJeiHelpers().getGuiHelper()))
                     .collect(Collectors.toList());
             registry.addRecipes(tanned_lether_recipes, KNAP_TANNED_LEATHER_UID);

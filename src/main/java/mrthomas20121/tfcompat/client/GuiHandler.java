@@ -23,6 +23,8 @@ public class GuiHandler implements IGuiHandler {
 
     private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather.png");
     private static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation("ceramics:textures/blocks/porcelain_raw.png");
+    private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay.png");
+    private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay.png");
 
     public static void openGui(World world, BlockPos pos, EntityPlayer player, Type type)
     {
@@ -46,11 +48,16 @@ public class GuiHandler implements IGuiHandler {
             case TANNED_LEATHER:
                 return new ContainerKnapping(Types.TANNED_LEATHER, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "tannedLeather") ? stack : player.getHeldItemOffhand());
             case PORCELAIN:
-                return new ContainerKnapping(Types.PORCELAIN, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "porcelain") ? stack : player.getHeldItemOffhand());
+                return new ContainerKnapping(Types.PORCELAIN, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "clayPorcelain") ? stack : player.getHeldItemOffhand());
+            case FLINT_CLAY:
+                return new ContainerKnapping(Types.FLINT_CLAY, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "clayFlint") ? stack : player.getHeldItemOffhand());
+            case REFRACTORY_CLAY:
+                return new ContainerKnapping(Types.REFRACTORY_CLAY, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "clayRefractory") ? stack : player.getHeldItemOffhand());
             default:
                 return null;
         }
     }
+
     @Override
     @Nullable
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
@@ -63,6 +70,10 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiKnapping(container, player, Types.TANNED_LEATHER, TANNED_LEATHER_TEXTURE);
             case PORCELAIN:
                 return new GuiKnapping(container, player, Types.PORCELAIN, PORCELAIN_TEXTURE);
+            case FLINT_CLAY:
+                return new GuiKnapping(container, player, Types.FLINT_CLAY, FLINT_CLAY_TEXTURE);
+            case REFRACTORY_CLAY:
+                return new GuiKnapping(container, player, Types.REFRACTORY_CLAY, REFRACTORY_CLAY_TEXTURE);
             default :
                 return null;
         }
@@ -72,6 +83,8 @@ public class GuiHandler implements IGuiHandler {
     {
         TANNED_LEATHER,
         PORCELAIN,
+        FLINT_CLAY,
+        REFRACTORY_CLAY,
         NULL; // This is special, it is a non-null null.
 
         private static final Type[] values = values();
