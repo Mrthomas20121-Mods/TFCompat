@@ -37,15 +37,12 @@ public class ThermalRegistry extends RecipeRegistry {
     @Nonnull
     @Override
     public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-        if(TFCompatConfig.DefaultConfig.thermal_refinery_recipes)
-        {
-            barrelStillRecipes();
-        }
-        extruderRecipes();
-        precipiratorRecipes();
-        pulverizerRecipes();
-        sawmillRecipes();
-        redstoneFurnaceRecipes();
+        if(TFCompatConfig.DefaultConfig.thermal.thermal_refinery_recipes) barrelStillRecipes();
+        if(TFCompatConfig.DefaultConfig.thermal.extruder) extruderRecipes();
+        if(TFCompatConfig.DefaultConfig.thermal.precipitator) precipiratorRecipes();
+        if(TFCompatConfig.DefaultConfig.thermal.pulverizer) pulverizerRecipes();
+        if(TFCompatConfig.DefaultConfig.thermal.sawmill) sawmillRecipes();
+        if(TFCompatConfig.DefaultConfig.thermal.redstone_furnace) redstoneFurnaceRecipes();
         return super.addRecipes(recipes);
     }
 

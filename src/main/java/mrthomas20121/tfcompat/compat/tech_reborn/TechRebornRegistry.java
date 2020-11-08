@@ -1,6 +1,7 @@
 package mrthomas20121.tfcompat.compat.tech_reborn;
 
 import mrthomas20121.rocksalt.utils.TFCUtils;
+import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Metal;
@@ -38,12 +39,12 @@ public class TechRebornRegistry extends RecipeRegistry {
     @Nonnull
     @Override
     public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-        sawMillRecipes();
-        wireMillRecipes();
-        grinderRecipes();
-        extractorRecipes();
-        compressorRecipes();
-        rollingMachineRecipes();
+        if(TFCompatConfig.DefaultConfig.techreborn.sawmill) sawMillRecipes();
+        if(TFCompatConfig.DefaultConfig.techreborn.wiremill) wireMillRecipes();
+        if(TFCompatConfig.DefaultConfig.techreborn.grinder) grinderRecipes();
+        if(TFCompatConfig.DefaultConfig.techreborn.extractor) extractorRecipes();
+        if(TFCompatConfig.DefaultConfig.techreborn.compressor) compressorRecipes();
+        if(TFCompatConfig.DefaultConfig.techreborn.rollingmachine) rollingMachineRecipes();
         return super.addRecipes(recipes);
     }
 

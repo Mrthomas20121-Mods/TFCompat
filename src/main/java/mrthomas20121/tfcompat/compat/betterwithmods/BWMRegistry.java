@@ -4,6 +4,7 @@ import betterwithmods.common.BWRegistry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.block.recipe.BlockIngredient;
 import com.google.common.collect.Lists;
+import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import net.dries007.tfc.api.recipes.anvil.AnvilRecipe;
 import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
@@ -52,9 +53,9 @@ public class BWMRegistry extends RecipeRegistry {
     @Nonnull
     @Override
     public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-        millstoneRecipes();
-        sawRecipes();
-        cauldronRecipes();
+        if(TFCompatConfig.DefaultConfig.betterwithmods.millstone) millstoneRecipes();
+        if(TFCompatConfig.DefaultConfig.betterwithmods.saw) sawRecipes();
+        if(TFCompatConfig.DefaultConfig.betterwithmods.cauldron) cauldronRecipes();
         return recipes;
     }
 

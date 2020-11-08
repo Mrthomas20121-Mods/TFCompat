@@ -1,6 +1,7 @@
 package mrthomas20121.tfcompat.compat.mekanism;
 
 import mekanism.common.recipe.RecipeHandler;
+import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Metal;
@@ -26,9 +27,9 @@ public class MekanismRegistry extends RecipeRegistry {
     @Nonnull
     @Override
     public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-        sawMillRecipes();
-        crusherRecipes();
-        evaporationRecipes();
+        if(TFCompatConfig.DefaultConfig.mekanism.sawmill) sawMillRecipes();
+        if(TFCompatConfig.DefaultConfig.mekanism.crusher) crusherRecipes();
+        if(TFCompatConfig.DefaultConfig.mekanism.evaporation) evaporationRecipes();
         return super.addRecipes(recipes);
     }
 

@@ -12,6 +12,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.BrickOvenRecipe;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.StoneOvenRecipe;
 import com.codetaylor.mc.pyrotech.modules.tool.ModuleTool;
 import mrthomas20121.tfcompat.TFCompat;
+import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.client.GuiHandler;
 import mrthomas20121.tfcompat.compat.pyrotech.override.TFCBrickOvenRecipe;
 import mrthomas20121.tfcompat.compat.pyrotech.override.TFCStoneOvenRecipe;
@@ -67,7 +68,7 @@ public class PyrotechRegistry extends RecipeRegistry {
     }
 
     public void init(FMLInitializationEvent event) {
-        registerHammers();
+        if(TFCompatConfig.DefaultConfig.pyrotech.hammer) registerHammers();
 
         OreDictionary.registerOre("clayFlint", ItemMaterial.EnumType.FLINT_CLAY_BALL.asStack());
         OreDictionary.registerOre("clayRefractory", ItemMaterial.EnumType.REFRACTORY_CLAY_BALL.asStack());
@@ -101,11 +102,11 @@ public class PyrotechRegistry extends RecipeRegistry {
     @Nonnull
     @Override
     public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-        AnvilRecipes(ModuleTechBasic.Registries.ANVIL_RECIPE);
-        SoakingPotRecipes(ModuleTechBasic.Registries.SOAKING_POT_RECIPE);
-        CompactingBinRecipes(ModuleTechBasic.Registries.COMPACTING_BIN_RECIPE);
-        stoneOvenRecipes(ModuleTechMachine.Registries.STONE_OVEN_RECIPES);
-        brickOvenRecipes(ModuleTechMachine.Registries.BRICK_OVEN_RECIPES);
+        if(TFCompatConfig.DefaultConfig.pyrotech.anvil) AnvilRecipes(ModuleTechBasic.Registries.ANVIL_RECIPE);
+        if(TFCompatConfig.DefaultConfig.pyrotech.soaking_pot) SoakingPotRecipes(ModuleTechBasic.Registries.SOAKING_POT_RECIPE);
+        if(TFCompatConfig.DefaultConfig.pyrotech.compacting_bin) CompactingBinRecipes(ModuleTechBasic.Registries.COMPACTING_BIN_RECIPE);
+        if(TFCompatConfig.DefaultConfig.pyrotech.stone_oven) stoneOvenRecipes(ModuleTechMachine.Registries.STONE_OVEN_RECIPES);
+        if(TFCompatConfig.DefaultConfig.pyrotech.brick_oven) brickOvenRecipes(ModuleTechMachine.Registries.BRICK_OVEN_RECIPES);
 
         return super.addRecipes(recipes);
     }
