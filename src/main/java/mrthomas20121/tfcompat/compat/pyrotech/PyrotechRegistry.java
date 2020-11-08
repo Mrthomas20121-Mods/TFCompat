@@ -7,11 +7,16 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.AnvilRecipe;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CompactingBinRecipe;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.SoakingPotRecipe;
+import com.codetaylor.mc.pyrotech.modules.tech.machine.ModuleTechMachine;
+import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.BrickOvenRecipe;
+import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.StoneOvenRecipe;
 import com.codetaylor.mc.pyrotech.modules.tool.ModuleTool;
 import mrthomas20121.tfcompat.TFCompat;
+import mrthomas20121.tfcompat.client.GuiHandler;
+import mrthomas20121.tfcompat.compat.pyrotech.override.TFCBrickOvenRecipe;
+import mrthomas20121.tfcompat.compat.pyrotech.override.TFCStoneOvenRecipe;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import mrthomas20121.tfcompat.library.helpers.HeatHelper;
-import mrthomas20121.tfcompat.library.recipes.IHeatRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipeSimple;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
@@ -25,21 +30,29 @@ import net.dries007.tfc.objects.blocks.BlocksTFC;
 import net.dries007.tfc.objects.blocks.stone.BlockRockVariant;
 import net.dries007.tfc.objects.inventory.ingredient.IIngredient;
 import net.dries007.tfc.objects.items.ItemsTFC;
+import net.dries007.tfc.objects.items.food.ItemFoodTFC;
 import net.dries007.tfc.objects.items.metal.ItemMetal;
 import net.dries007.tfc.objects.items.rock.ItemBrickTFC;
 import net.dries007.tfc.objects.items.rock.ItemRock;
+import net.dries007.tfc.util.OreDictionaryHelper;
+import net.dries007.tfc.util.agriculture.Food;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryModifiable;
 import tfctech.objects.items.TechItems;
 
 import javax.annotation.Nonnull;
@@ -55,6 +68,9 @@ public class PyrotechRegistry extends RecipeRegistry {
 
     public void init(FMLInitializationEvent event) {
         registerHammers();
+
+        OreDictionary.registerOre("clayFlint", ItemMaterial.EnumType.FLINT_CLAY_BALL.asStack());
+        OreDictionary.registerOre("clayRefractory", ItemMaterial.EnumType.REFRACTORY_CLAY_BALL.asStack());
 
         HeatHelper.addItemHeat(ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack(), 600, 580);
         HeatHelper.addItemHeat(new ItemStack(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), 1500, 1700);
@@ -88,6 +104,9 @@ public class PyrotechRegistry extends RecipeRegistry {
         AnvilRecipes(ModuleTechBasic.Registries.ANVIL_RECIPE);
         SoakingPotRecipes(ModuleTechBasic.Registries.SOAKING_POT_RECIPE);
         CompactingBinRecipes(ModuleTechBasic.Registries.COMPACTING_BIN_RECIPE);
+        stoneOvenRecipes(ModuleTechMachine.Registries.STONE_OVEN_RECIPES);
+        brickOvenRecipes(ModuleTechMachine.Registries.BRICK_OVEN_RECIPES);
+
         return super.addRecipes(recipes);
     }
 
@@ -96,7 +115,33 @@ public class PyrotechRegistry extends RecipeRegistry {
     public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
         recipes.add(new ResourceLocation("pyrotech:bucket/bucket_clay_unfired"));
         recipes.add(new ResourceLocation("pyrotech:tool/unfired_clay_shears"));
+        recipes.add(new ResourceLocation("pyrotech:refractory_brick_block"));
+        recipes.add(new ResourceLocation("pyrotech:refractory_brick_unfired"));
+        recipes.add(new ResourceLocation("pyrotech:refractory_clay_ball_from_refractory_clay_lump"));
         return super.removeRecipes(recipes);
+    }
+
+    @Override
+    public void onRightClick(PlayerInteractEvent.RightClickItem event) {
+        EnumHand hand = event.getHand();
+        if(OreDictionaryHelper.doesStackMatchOre(event.getItemStack(), "clayFlint") && hand == EnumHand.MAIN_HAND)
+        {
+            EntityPlayer player = event.getEntityPlayer();
+            World world = event.getWorld();
+            if (!world.isRemote && !player.isSneaking())
+            {
+                GuiHandler.openGui(world, player.getPosition(), player, GuiHandler.Type.FLINT_CLAY);
+            }
+        }
+        else if(OreDictionaryHelper.doesStackMatchOre(event.getItemStack(), "clayRefractory") && hand == EnumHand.MAIN_HAND)
+        {
+            EntityPlayer player = event.getEntityPlayer();
+            World world = event.getWorld();
+            if (!world.isRemote && !player.isSneaking())
+            {
+                GuiHandler.openGui(world, player.getPosition(), player, GuiHandler.Type.REFRACTORY_CLAY);
+            }
+        }
     }
 
     private void registerHammers() {
@@ -299,16 +344,10 @@ public class PyrotechRegistry extends RecipeRegistry {
         }
     }
 
-    private void SoakingPotRecipes(IForgeRegistryModifiable<SoakingPotRecipe> r)
+    private void SoakingPotRecipes(IForgeRegistry<SoakingPotRecipe> r)
     {
-        r.register(createSoakingPotRecipe(
-                "tfc_tech_slaked_lime",
-                ItemMaterial.EnumType.SLAKED_LIME.asStack(1),
-                Ingredient.fromItem(TechItems.LIME),
-                FluidRegistry.getFluidStack("fresh_water", 125),
-                false,
-                7
-        ));
+        addSoakingPotRecipe(r, "tech_slaked_lime", ItemMaterial.EnumType.SLAKED_LIME.asStack(1), Ingredient.fromItem(TechItems.LIME),
+                FluidRegistry.getFluidStack("fresh_water", 125), false, 7);
 
     }
     private static void registerBinRecipe(IForgeRegistry<CompactingBinRecipe> r, String registryName, ItemStack output, ItemStack input, int time)
@@ -325,17 +364,54 @@ public class PyrotechRegistry extends RecipeRegistry {
         return recipe;
     }
 
-
-    private static SoakingPotRecipe createSoakingPotRecipe(String registryName, ItemStack output, Ingredient inputItem, FluidStack inputFluid, boolean campfire, int timeTicks)
+    private static void addSoakingPotRecipe(IForgeRegistry<SoakingPotRecipe> r, String registryName, ItemStack output, Ingredient inputItem, FluidStack inputFluid, boolean campfire, int timeTicks)
     {
         SoakingPotRecipe recipe = new SoakingPotRecipe(output, inputItem, inputFluid, campfire, timeTicks);
         recipe.setRegistryName(registryName);
-        return recipe;
+        r.register(recipe);
+    }
+
+    private static void stoneOvenRecipes(IForgeRegistry<StoneOvenRecipe> r)
+    {
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEAR)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEAR))).setRegistryName(TFCompat.MODID, "cooked_bear"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEEF)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEEF))).setRegistryName(TFCompat.MODID, "cooked_beef"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CALAMARI)), Ingredient.fromItem(ItemFoodTFC.get(Food.CALAMARI))).setRegistryName(TFCompat.MODID, "cooked_calamari"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CAMELIDAE)), Ingredient.fromItem(ItemFoodTFC.get(Food.CAMELIDAE))).setRegistryName(TFCompat.MODID, "cooked_camelidae"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CHICKEN)), Ingredient.fromItem(ItemFoodTFC.get(Food.CHICKEN))).setRegistryName(TFCompat.MODID, "cooked_chicken"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_FISH)), Ingredient.fromItem(ItemFoodTFC.get(Food.FISH))).setRegistryName(TFCompat.MODID, "cooked_fish"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_GRAN_FELINE)), Ingredient.fromItem(ItemFoodTFC.get(Food.GRAN_FELINE))).setRegistryName(TFCompat.MODID, "cooked_grançfeline"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_HORSE_MEAT)), Ingredient.fromItem(ItemFoodTFC.get(Food.HORSE_MEAT))).setRegistryName(TFCompat.MODID, "cooked_horse_meat"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MONGOOSE)), Ingredient.fromItem(ItemFoodTFC.get(Food.MONGOOSE))).setRegistryName(TFCompat.MODID, "cooked_mongoose"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MUTTON)), Ingredient.fromItem(ItemFoodTFC.get(Food.MUTTON))).setRegistryName(TFCompat.MODID, "cooked_mutton"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PHEASANT)), Ingredient.fromItem(ItemFoodTFC.get(Food.PHEASANT))).setRegistryName(TFCompat.MODID, "cooked_pheasant"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PORK)), Ingredient.fromItem(ItemFoodTFC.get(Food.PORK))).setRegistryName(TFCompat.MODID, "cooked_pork"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MODID, "cooked_rabbit"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MODID, "cooked_venison"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MODID, "cooked_wolf"));
+    }
+
+    private static void brickOvenRecipes(IForgeRegistry<BrickOvenRecipe> r)
+    {
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEAR)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEAR))).setRegistryName(TFCompat.MODID, "cooked_bear"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEEF)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEEF))).setRegistryName(TFCompat.MODID, "cooked_beef"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CALAMARI)), Ingredient.fromItem(ItemFoodTFC.get(Food.CALAMARI))).setRegistryName(TFCompat.MODID, "cooked_calamari"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CAMELIDAE)), Ingredient.fromItem(ItemFoodTFC.get(Food.CAMELIDAE))).setRegistryName(TFCompat.MODID, "cooked_camelidae"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CHICKEN)), Ingredient.fromItem(ItemFoodTFC.get(Food.CHICKEN))).setRegistryName(TFCompat.MODID, "cooked_chicken"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_FISH)), Ingredient.fromItem(ItemFoodTFC.get(Food.FISH))).setRegistryName(TFCompat.MODID, "cooked_fish"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_GRAN_FELINE)), Ingredient.fromItem(ItemFoodTFC.get(Food.GRAN_FELINE))).setRegistryName(TFCompat.MODID, "cooked_grançfeline"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_HORSE_MEAT)), Ingredient.fromItem(ItemFoodTFC.get(Food.HORSE_MEAT))).setRegistryName(TFCompat.MODID, "cooked_horse_meat"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MONGOOSE)), Ingredient.fromItem(ItemFoodTFC.get(Food.MONGOOSE))).setRegistryName(TFCompat.MODID, "cooked_mongoose"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MUTTON)), Ingredient.fromItem(ItemFoodTFC.get(Food.MUTTON))).setRegistryName(TFCompat.MODID, "cooked_mutton"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PHEASANT)), Ingredient.fromItem(ItemFoodTFC.get(Food.PHEASANT))).setRegistryName(TFCompat.MODID, "cooked_pheasant"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PORK)), Ingredient.fromItem(ItemFoodTFC.get(Food.PORK))).setRegistryName(TFCompat.MODID, "cooked_pork"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MODID, "cooked_rabbit"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MODID, "cooked_venison"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MODID, "cooked_wolf"));
+
     }
 
     private static boolean checkMetal(Metal metal)
     {
-        String metal_name = metal.getRegistryName().getPath();
-        return !(metal == Metal.UNKNOWN || metal_name.contains("high") || metal_name.contains("weak"));
+        return ObfuscationReflectionHelper.getPrivateValue(Metal.class, metal, "usable").equals(true);
     }
 }
