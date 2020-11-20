@@ -14,14 +14,19 @@ import mrthomas20121.tfcompat.compat.thermalexpansion.ThermalModule;
 import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
@@ -30,7 +35,6 @@ import java.util.ArrayList;
 @Mod.EventBusSubscriber(modid = TFCompat.MODID)
 public class ModuleManager
 {
-
     private static ArrayList<ModuleCore> modules = new ArrayList<>();
 
     public static void registerModule(ModuleCore module)
@@ -75,8 +79,8 @@ public class ModuleManager
                    removal = module.getRegistry().removeRecipes(removal);
                }
         }
-        recipes.forEach(recipe -> r.register(recipe));
-        removal.forEach(resourceLocation -> rec.remove(resourceLocation));
+        recipes.forEach(r::register);
+        removal.forEach(rec::remove);
     }
 
     @SubscribeEvent
@@ -93,7 +97,7 @@ public class ModuleManager
                 heatRecipes = module.getRegistry().addHeatRecipes(heatRecipes);
             }
         }
-        heatRecipes.forEach(recipe -> r.register(recipe));
+        heatRecipes.forEach(r::register);
     }
 
     @SubscribeEvent
@@ -110,7 +114,7 @@ public class ModuleManager
             }
         }
 
-        knappingRecipes.forEach(recipe -> r.register(recipe));
+        knappingRecipes.forEach(r::register);
     }
 
     @SubscribeEvent
@@ -127,7 +131,7 @@ public class ModuleManager
             }
         }
 
-        barrelRecipes.forEach(recipe -> r.register(recipe));
+        barrelRecipes.forEach(r::register);
     }
 
     @SubscribeEvent
@@ -138,6 +142,57 @@ public class ModuleManager
             if(module.getRegistry() != null)
             {
                 module.getRegistry().onRightClick(event);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRightClickBlockEvent(PlayerInteractEvent.RightClickBlock event)
+    {
+        for(ModuleCore module : modules)
+        {
+            if(module.getRegistry() != null)
+            {
+                module.getRegistry().onRightClickBlockEvent(event);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event)
+    {
+        IForgeRegistry<Item> registry = event.getRegistry();
+        for(ModuleCore module : modules)
+        {
+            if(module.getRegistry() != null)
+            {
+                module.getRegistry().registerItems(registry);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event)
+    {
+        IForgeRegistry<Block> registry = event.getRegistry();
+        for(ModuleCore module : modules)
+        {
+            if(module.getRegistry() != null)
+            {
+                module.getRegistry().registerBlocks(registry);
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event)
+    {
+        for(ModuleCore module : modules)
+        {
+            if(module.getRegistry() != null)
+            {
+                module.getRegistry().registerModels(event);
             }
         }
     }

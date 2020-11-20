@@ -16,6 +16,10 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
 
     private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather.png");
     private static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation("ceramics:textures/blocks/porcelain_raw.png");
+    private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
+    private static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
+    private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
+    private static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
 
     private static ResourceLocation getHighTexture(KnappingType type)
     {
@@ -27,18 +31,32 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
         {
             return TANNED_LEATHER_TEXTURE;
         }
+        else if(type == Types.FLINT_CLAY)
+        {
+            return FLINT_CLAY_TEXTURE;
+        }
+        else if(type == Types.REFRACTORY_CLAY)
+        {
+            return REFRACTORY_CLAY_TEXTURE;
+        }
+        return null;
+    }
+    private static ResourceLocation getLowTexture(KnappingType type)
+    {
+        if(type == Types.FLINT_CLAY)
+        {
+            return FLINT_CLAY_DISABLED_TEXTURE;
+        }
+        else if(type == Types.REFRACTORY_CLAY)
+        {
+            return REFRACTORY_CLAY_DISABLED_TEXTURE;
+        }
         return null;
     }
 
     public CompatKnappingRecipeWrapper(KnappingRecipe recipe, IGuiHelper helper)
     {
-        super(recipe, helper, getHighTexture(recipe.getType()), null);
+        super(recipe, helper, getHighTexture(recipe.getType()), getLowTexture(recipe.getType()));
 
-    }
-    @Override
-    public void getIngredients(IIngredients ingredients)
-    {
-        ItemStack output = recipe.getOutput(ItemStack.EMPTY);
-        ingredients.setOutput(VanillaTypes.ITEM, output);
     }
 }

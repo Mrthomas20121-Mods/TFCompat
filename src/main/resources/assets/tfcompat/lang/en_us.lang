@@ -40,3 +40,6 @@ tile.rustic.chair_kapok.name=Kapok Chair
 tile.rustic.table_kapok.name=Kapok Table
 tile.rustic.chair_hevea.name=Hevea Chair
 tile.rustic.table_hevea.name=Hevea Table
+
+# Unfired faucet
+item.tfcompat.unfired.refractory_faucet.name=Unfired Refractory Faucet

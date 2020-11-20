@@ -61,15 +61,14 @@ public class BWMRegistry extends RecipeRegistry {
 
     private void millstoneRecipes()
     {
+        // quern recipes
         for(QuernRecipe recipe: TFCRegistries.QUERN.getValuesCollection())
         {
             NonNullList<IIngredient<ItemStack>> ingredient = recipe.getIngredients();
-            NonNullList<ItemStack> outputs = recipe.getOutputs();
-            ItemStack output = outputs.get(0);
             NonNullList<ItemStack> stacks = ingredient.get(0).getValidIngredients();
             if(!stacks.contains(new ItemStack(Items.BONE, 1)) || !stacks.contains(new ItemStack(Blocks.BONE_BLOCK, 1)) )
             {
-                BWRegistry.MILLSTONE.addMillRecipe(this.convertStacks(stacks), output);
+                BWRegistry.MILLSTONE.addMillRecipe(this.convertStacks(stacks), recipe.getOutputItem(stacks.get(0)));
             }
         }
         // TFC Hides

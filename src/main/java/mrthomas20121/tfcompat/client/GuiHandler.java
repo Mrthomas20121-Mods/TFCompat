@@ -87,7 +87,7 @@ public class GuiHandler implements IGuiHandler {
         PORCELAIN,
         FLINT_CLAY,
         REFRACTORY_CLAY,
-        NULL; // This is special, it is a non-null null.
+        NULL;
 
         private static final Type[] values = values();
 

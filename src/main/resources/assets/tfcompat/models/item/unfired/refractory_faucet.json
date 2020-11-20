@@ -1,0 +1,7 @@
+{
+  "model": "pyrotech:faucet",
+  "textures": {
+    "texture": "tfcompat:items/faucet_stone",
+    "particle": "tfcompat:items/faucet_stone"
+  }
+}
