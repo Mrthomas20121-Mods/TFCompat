@@ -40,7 +40,7 @@ repositories {
     }
 }
 
-version = "1.1.4"
+version = "1.2.0"
 group = 'mrthomas20121.tfcompat'
 archivesBaseName = 'tfccompat'
 
@@ -59,6 +59,8 @@ dependencies {
     compile 'mezz.jei:jei_1.12.2:4.15.0.293'
     compile 'TechReborn:TechReborn-ModCompatibility-1.12.2:+:universal'
     compile 'RebornCore:RebornCore-1.12.2:+:universal'
+    compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.554"
+    compile "com.blamejared:MTLib:3.0.4.8"
     compile fileTree(include: ["*.jar"], dir: "libs")
 }
 
