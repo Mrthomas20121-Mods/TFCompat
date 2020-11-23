@@ -23,6 +23,11 @@ public class HeatHelper {
         CapabilityItemHeat.CUSTOM_ITEMS.put(IIngredient.of(stack), () -> new ItemHeatHandler(null, heatCap, meltTemp));
     }
 
+    public static void addItemHeat(ItemStack stack, float heatCap, float meltTemp)
+    {
+        CapabilityItemHeat.CUSTOM_ITEMS.put(IIngredient.of(stack), () -> new ItemHeatHandler(null, heatCap, meltTemp));
+    }
+
     public static HeatRecipe addRecipe(String recipeName, String oredict, ItemStack output, int transformTemp)
     {
         return new HeatRecipeSimple(IIngredient.of(oredict), output, transformTemp).setRegistryName(TFCUtils.getLoc(recipeName));

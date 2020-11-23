@@ -1,3 +1,10 @@
+# jei
+jei.category.tfcompat.knap.porcelain=Porcelain Knapping
+jei.category.tfcompat.knap.tanned_leather=Tanned leather Knapping
+jei.category.tfcompat.knap.flint_clay=Flint Clay Knapping
+jei.category.tfcompat.knap.refractory_clay=Refractory Clay Knapping
+
+
 # table and chair
 
 tile.rustic.chair_acacia.name=Acacia Chair
@@ -40,6 +47,3 @@ tile.rustic.chair_kapok.name=Kapok Chair
 tile.rustic.table_kapok.name=Kapok Table
 tile.rustic.chair_hevea.name=Hevea Chair
 tile.rustic.table_hevea.name=Hevea Table
-
-# Unfired faucet
-item.tfcompat.unfired.refractory_faucet.name=Unfired Refractory Faucet

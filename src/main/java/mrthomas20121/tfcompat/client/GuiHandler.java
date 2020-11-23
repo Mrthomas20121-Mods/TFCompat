@@ -22,11 +22,12 @@ import javax.annotation.Nullable;
 public class GuiHandler implements IGuiHandler {
 
     private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather_button.png");
-    private static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation("ceramics:textures/blocks/porcelain_raw.png");
-    private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
-    private static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
-    private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
-    private static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
+    public static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation(TFCompat.MODID,"textures/gui/knapping/porcelain_button.png");
+    public static final ResourceLocation PORCELAIN_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/porcelain_button_disabled.png");
+    public static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
+    public static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
+    public static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
+    public static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button_disabled.png");
 
     public static void openGui(World world, BlockPos pos, EntityPlayer player, Type type)
     {
@@ -69,13 +70,13 @@ public class GuiHandler implements IGuiHandler {
         switch (type)
         {
             case TANNED_LEATHER:
-                return new GuiKnapping(container, player, Types.TANNED_LEATHER, TANNED_LEATHER_TEXTURE);
+                return new CompatGuiKnapping(container, player, Types.TANNED_LEATHER, TANNED_LEATHER_TEXTURE);
             case PORCELAIN:
-                return new GuiKnapping(container, player, Types.PORCELAIN, PORCELAIN_TEXTURE);
+                return new CompatGuiKnapping(container, player, Types.PORCELAIN, PORCELAIN_TEXTURE);
             case FLINT_CLAY:
-                return new GuiKnapping(container, player, Types.FLINT_CLAY, FLINT_CLAY_TEXTURE);
+                return new CompatGuiKnapping(container, player, Types.FLINT_CLAY, FLINT_CLAY_TEXTURE);
             case REFRACTORY_CLAY:
-                return new GuiKnapping(container, player, Types.REFRACTORY_CLAY, REFRACTORY_CLAY_TEXTURE);
+                return new CompatGuiKnapping(container, player, Types.REFRACTORY_CLAY, REFRACTORY_CLAY_TEXTURE);
             default :
                 return null;
         }

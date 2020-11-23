@@ -8,6 +8,7 @@ import mrthomas20121.tfcompat.compat.forestry.ForestryModule;
 import mrthomas20121.tfcompat.compat.improvedbackpacks.BackpacksModule;
 import mrthomas20121.tfcompat.compat.mekanism.MekanismModule;
 import mrthomas20121.tfcompat.compat.pyrotech.PyrotechModule;
+import mrthomas20121.tfcompat.compat.rustic.RusticModule;
 import mrthomas20121.tfcompat.compat.tech_reborn.TechRebornModule;
 import mrthomas20121.tfcompat.compat.thaumcraft.ThaumcraftModule;
 import mrthomas20121.tfcompat.compat.thermalexpansion.ThermalModule;
@@ -61,6 +62,7 @@ public class ModuleManager
         registerModule(new ThaumcraftModule());
         registerModule(new ThermalModule());
         registerModule(new TechRebornModule());
+        registerModule(new RusticModule());
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

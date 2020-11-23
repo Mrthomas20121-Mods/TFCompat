@@ -14,15 +14,15 @@ import net.minecraft.util.ResourceLocation;
 
 public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
 
-    private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather.png");
-    private static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation("ceramics:textures/blocks/porcelain_raw.png");
+    private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather_button.png");
+    private static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation(TFCompat.MODID,"textures/gui/knapping/porcelain_button.png");
+    private static final ResourceLocation PORCELAIN_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/porcelain_button_disabled.png");
     private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
     private static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
     private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
     private static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
 
-    private static ResourceLocation getHighTexture(KnappingType type)
-    {
+    private static ResourceLocation getHighTexture(KnappingType type) {
         if(type == Types.PORCELAIN)
         {
             return PORCELAIN_TEXTURE;
@@ -41,8 +41,7 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
         }
         return null;
     }
-    private static ResourceLocation getLowTexture(KnappingType type)
-    {
+    private static ResourceLocation getLowTexture(KnappingType type) {
         if(type == Types.FLINT_CLAY)
         {
             return FLINT_CLAY_DISABLED_TEXTURE;
@@ -50,6 +49,10 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
         else if(type == Types.REFRACTORY_CLAY)
         {
             return REFRACTORY_CLAY_DISABLED_TEXTURE;
+        }
+        else if(type == Types.PORCELAIN)
+        {
+            return PORCELAIN_DISABLED_TEXTURE;
         }
         return null;
     }

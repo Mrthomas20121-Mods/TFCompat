@@ -2,6 +2,7 @@ package mrthomas20121.tfcompat.compat.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
+import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import mrthomas20121.tfcompat.api.knapping.Types;
@@ -17,6 +18,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModOnly("improvedbackpacks")
 @ZenRegister
 @ZenClass("mods.tfcompat.knapping.tanned_leather")
 public class CTTannedLeatherKnapping {

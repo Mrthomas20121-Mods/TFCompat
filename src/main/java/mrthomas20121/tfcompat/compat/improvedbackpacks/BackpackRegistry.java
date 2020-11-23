@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -35,6 +36,13 @@ public class BackpackRegistry extends RecipeRegistry {
         HeatHelper.addItemHeat(new ItemStack(ModItems.BOUND_LEATHER), 600, 580);
         HeatHelper.addItemHeat(new ItemStack(ModItems.TANNED_LEATHER), 600, 580);
         OreDictionary.registerOre("tannedLeather", ModItems.TANNED_LEATHER);
+    }
+
+    @Nonnull
+    @Override
+    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
+        recipes.add(new ResourceLocation("improvedbackpacks:item.backpack"));
+        return super.removeRecipes(recipes);
     }
 
     @Nonnull
