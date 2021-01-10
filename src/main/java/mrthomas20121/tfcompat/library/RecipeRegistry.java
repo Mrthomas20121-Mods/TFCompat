@@ -79,7 +79,6 @@ public abstract class RecipeRegistry {
 
     }
 
-
     public void registerBlocks(IForgeRegistry<Block> r)
     {
 
@@ -98,11 +97,5 @@ public abstract class RecipeRegistry {
     public void onRightClick(PlayerInteractEvent.RightClickItem event)
     {
 
-    }
-
-    public Ingredient convertStacks(NonNullList<ItemStack> stacks)
-    {
-        ItemStack[] stack = (ItemStack[]) stacks.toArray();
-        return Ingredient.fromStacks(stack);
     }
 }

@@ -19,7 +19,6 @@ public class RusticModule extends ModuleCore {
 
     @Override
     public void init(FMLInitializationEvent event) {
-        this.getRegistry().init(event);
     }
 
     @Override

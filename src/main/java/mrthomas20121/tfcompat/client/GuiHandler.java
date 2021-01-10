@@ -28,6 +28,8 @@ public class GuiHandler implements IGuiHandler {
     public static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
     public static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
     public static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button_disabled.png");
+    public static final ResourceLocation CAMINITE_BLEND_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/caminite_blend.png");
+    public static final ResourceLocation CAMINITE_BLEND_TEXTURE_DISABLED = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/caminite_blend_disabled.png");
 
     public static void openGui(World world, BlockPos pos, EntityPlayer player, Type type)
     {
@@ -56,6 +58,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerKnapping(Types.FLINT_CLAY, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "clayFlint") ? stack : player.getHeldItemOffhand());
             case REFRACTORY_CLAY:
                 return new ContainerKnapping(Types.REFRACTORY_CLAY, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "clayRefractory") ? stack : player.getHeldItemOffhand());
+            case CAMINITE_BLEND:
+                return new ContainerKnapping(Types.CAMINITE_BLEND, player.inventory,  OreDictionaryHelper.doesStackMatchOre(stack, "caminiteBlend") ? stack : player.getHeldItemOffhand());
             default:
                 return null;
         }
@@ -77,6 +81,8 @@ public class GuiHandler implements IGuiHandler {
                 return new CompatGuiKnapping(container, player, Types.FLINT_CLAY, FLINT_CLAY_TEXTURE);
             case REFRACTORY_CLAY:
                 return new CompatGuiKnapping(container, player, Types.REFRACTORY_CLAY, REFRACTORY_CLAY_TEXTURE);
+            case CAMINITE_BLEND:
+                return new CompatGuiKnapping(container, player, Types.CAMINITE_BLEND, CAMINITE_BLEND_TEXTURE);
             default :
                 return null;
         }
@@ -88,6 +94,7 @@ public class GuiHandler implements IGuiHandler {
         PORCELAIN,
         FLINT_CLAY,
         REFRACTORY_CLAY,
+        CAMINITE_BLEND,
         NULL;
 
         private static final Type[] values = values();

@@ -19,7 +19,6 @@ public class PyrotechModule extends ModuleCore {
 
     @Override
     public void init(FMLInitializationEvent event) {
-       getRegistry().init(event);
     }
 
     @Override

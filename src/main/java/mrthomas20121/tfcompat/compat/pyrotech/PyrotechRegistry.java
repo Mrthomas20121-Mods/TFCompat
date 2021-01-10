@@ -25,7 +25,6 @@ import mrthomas20121.tfcompat.api.knapping.Types;
 import mrthomas20121.tfcompat.client.GuiHandler;
 import mrthomas20121.tfcompat.compat.pyrotech.override.TFCBrickOvenRecipe;
 import mrthomas20121.tfcompat.compat.pyrotech.override.TFCStoneOvenRecipe;
-import mrthomas20121.tfcompat.library.BlockPotery;
 import mrthomas20121.tfcompat.library.ItemBlockPotery;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import mrthomas20121.tfcompat.library.helpers.HeatHelper;

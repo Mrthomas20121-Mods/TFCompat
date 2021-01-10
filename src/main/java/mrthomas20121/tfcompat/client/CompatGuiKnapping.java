@@ -2,9 +2,7 @@ package mrthomas20121.tfcompat.client;
 
 import mrthomas20121.tfcompat.api.knapping.Types;
 import net.dries007.tfc.api.recipes.knapping.KnappingType;
-import net.dries007.tfc.client.button.GuiButtonKnapping;
 import net.dries007.tfc.client.gui.GuiKnapping;
-import net.dries007.tfc.objects.container.ContainerKnapping;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,23 +23,14 @@ public class CompatGuiKnapping extends GuiKnapping {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        // Check if the container has been updated
-        if (inventorySlots instanceof ContainerKnapping && ((ContainerKnapping) inventorySlots).requiresReset)
-        {
-            for (GuiButton button : buttonList)
-            {
-                if (button instanceof GuiButtonKnapping)
-                {
-                    button.visible = ((ContainerKnapping) inventorySlots).getSlotState(button.id);
-                }
-            }
-            ((ContainerKnapping) inventorySlots).requiresReset = false;
-        }
         super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-        if (type == Types.FLINT_CLAY || type == Types.REFRACTORY_CLAY || type == Types.PORCELAIN)
+        if (type == Types.FLINT_CLAY || type == Types.REFRACTORY_CLAY || type == Types.PORCELAIN || type == Types.CAMINITE_BLEND)
         {
             GlStateManager.color(1, 1, 1, 1);
-            mc.getTextureManager().bindTexture(type == Types.FLINT_CLAY ? GuiHandler.FLINT_CLAY_DISABLED_TEXTURE : type == Types.REFRACTORY_CLAY ? GuiHandler.REFRACTORY_CLAY_DISABLED_TEXTURE : GuiHandler.PORCELAIN_DISABLED_TEXTURE);
+            if(type == Types.FLINT_CLAY) mc.getTextureManager().bindTexture(GuiHandler.FLINT_CLAY_DISABLED_TEXTURE);
+            else if(type == Types.REFRACTORY_CLAY) mc.getTextureManager().bindTexture(GuiHandler.REFRACTORY_CLAY_DISABLED_TEXTURE);
+            else if(type == Types.PORCELAIN) mc.getTextureManager().bindTexture(GuiHandler.PORCELAIN_DISABLED_TEXTURE);
+            else if(type == Types.CAMINITE_BLEND) mc.getTextureManager().bindTexture(GuiHandler.CAMINITE_BLEND_TEXTURE_DISABLED);
             for (GuiButton button : buttonList)
             {
                 if (!button.visible)

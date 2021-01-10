@@ -4,6 +4,8 @@ import mrthomas20121.tfcompat.TFCompat;
 import mrthomas20121.tfcompat.compat.actuallyadditions.AAModule;
 import mrthomas20121.tfcompat.compat.betterwithmods.BWMModule;
 import mrthomas20121.tfcompat.compat.ceramics.CeramicsModule;
+import mrthomas20121.tfcompat.compat.ember.EmberModule;
+import mrthomas20121.tfcompat.compat.ember.addons.SootModule;
 import mrthomas20121.tfcompat.compat.forestry.ForestryModule;
 import mrthomas20121.tfcompat.compat.improvedbackpacks.BackpacksModule;
 import mrthomas20121.tfcompat.compat.mekanism.MekanismModule;
@@ -63,6 +65,8 @@ public class ModuleManager
         registerModule(new ThermalModule());
         registerModule(new TechRebornModule());
         registerModule(new RusticModule());
+        registerModule(new EmberModule());
+        registerModule(new SootModule());
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

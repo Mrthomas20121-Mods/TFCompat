@@ -23,6 +23,7 @@ public class TFCompatPlugin implements IModPlugin
     public static final String KNAP_PORCELAIN_UID = TFCompat.MODID + ".knap.porcelain";
     public static final String KNAP_FLINT_CLAY_UID = TFCompat.MODID + ".knap.flint_clay";
     public static final String KNAP_REFRACTORY_CLAY_UID = TFCompat.MODID + ".knap.refractory_clay";
+    public static final String KNAP_CAMINITE_BLEND_UID = TFCompat.MODID + ".knap.caminite_blend";
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry)
@@ -32,6 +33,7 @@ public class TFCompatPlugin implements IModPlugin
         registry.addRecipeCategories(new KnappingCategory(registry.getJeiHelpers().getGuiHelper(), KNAP_PORCELAIN_UID));
         registry.addRecipeCategories(new KnappingCategory(registry.getJeiHelpers().getGuiHelper(), KNAP_FLINT_CLAY_UID));
         registry.addRecipeCategories(new KnappingCategory(registry.getJeiHelpers().getGuiHelper(), KNAP_REFRACTORY_CLAY_UID));
+        registry.addRecipeCategories(new KnappingCategory(registry.getJeiHelpers().getGuiHelper(), KNAP_CAMINITE_BLEND_UID));
     }
 
     @Override
@@ -80,6 +82,18 @@ public class TFCompatPlugin implements IModPlugin
         {
             registry.addRecipeCatalyst(itemStack, KNAP_FLINT_CLAY_UID);
         }
-        registry.addRecipeClickArea(CompatGuiKnapping.class, 97, 44, 22, 15, KNAP_PORCELAIN_UID, KNAP_TANNED_LEATHER_UID, KNAP_FLINT_CLAY_UID, KNAP_REFRACTORY_CLAY_UID);
+
+        List<CompatKnappingRecipeWrapper> caminiteBlendRecipes = TFCRegistries.KNAPPING.getValuesCollection().stream()
+                .filter(recipe -> recipe.getType() == Types.CAMINITE_BLEND)
+                .map(recipe -> new CompatKnappingRecipeWrapper(recipe, registry.getJeiHelpers().getGuiHelper()))
+                .collect(Collectors.toList());
+        registry.addRecipes(caminiteBlendRecipes, KNAP_CAMINITE_BLEND_UID);
+        NonNullList<ItemStack> caminiteBlend = OreDictionary.getOres("caminiteBlend");
+        for(ItemStack itemStack : caminiteBlend)
+        {
+            registry.addRecipeCatalyst(itemStack, KNAP_CAMINITE_BLEND_UID);
+        }
+
+        registry.addRecipeClickArea(CompatGuiKnapping.class, 97, 44, 22, 15, KNAP_PORCELAIN_UID, KNAP_TANNED_LEATHER_UID, KNAP_FLINT_CLAY_UID, KNAP_REFRACTORY_CLAY_UID, KNAP_CAMINITE_BLEND_UID);
     }
 }

@@ -22,7 +22,6 @@ public class CeramicsModule extends ModuleCore {
 
     @Override
     public void init(FMLInitializationEvent event) {
-        getRegistry().init(event);
     }
 
     @Override

@@ -20,7 +20,9 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
     private static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
     private static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
     private static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
-    private static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
+    private static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button_disabled.png");
+    private static final ResourceLocation CAMINITE_BLEND_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/caminite_blend.png");
+    private static final ResourceLocation CAMINITE_BLEND_TEXTURE_DISABLED = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/caminite_blend_disabled.png");
 
     private static ResourceLocation getHighTexture(KnappingType type) {
         if(type == Types.PORCELAIN)
@@ -39,6 +41,10 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
         {
             return REFRACTORY_CLAY_TEXTURE;
         }
+        else if(type == Types.CAMINITE_BLEND)
+        {
+            return CAMINITE_BLEND_TEXTURE;
+        }
         return null;
     }
     private static ResourceLocation getLowTexture(KnappingType type) {
@@ -53,6 +59,10 @@ public class CompatKnappingRecipeWrapper extends KnappingRecipeWrapper {
         else if(type == Types.PORCELAIN)
         {
             return PORCELAIN_DISABLED_TEXTURE;
+        }
+        else if(type == Types.CAMINITE_BLEND)
+        {
+            return CAMINITE_BLEND_TEXTURE_DISABLED;
         }
         return null;
     }
