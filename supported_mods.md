@@ -1,0 +1,13 @@
+## list of supported mods:
+- Embers Rekindled(new Knapping Type for Caminite Blend, Recipes support). Support Soot if installed.
+- Forestry(Recipes support)
+- Thermal expansion(Add Enderium, Signalum, Lumium as TFC Metal, Recipes support)
+- Thaumcraft(Add Thaumium and Void metal as TFC Metal)
+- Actually Additions(Add TFC Olive Oil to AA oil gen)
+- Tech Reborn(Add Refined Iron as TFC Metal, Recipes support)
+- Better With Mods(Recipes support)
+- Ceramics(new Knapping Type for Porcelain, Recipes support)
+- Rustic(Add new Rustic Chairs/Table from TFC Wood, Recipes support)
+- Mekanism(Add Refined Obsidian and Refined Glowstone as TFC Metal, use TFC Metallum For Osmium, Recipe support)
+- Improved Backpacks(new Knapping Type for Tanned Leather)
+- Pyrotech(new Knapping Types for Refractory and Flint Clay, Recipes support)
