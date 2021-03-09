@@ -22,6 +22,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.IForgeRegistry;
 import tfctech.objects.items.TechItems;
 
 import javax.annotation.Nonnull;
@@ -34,16 +35,14 @@ public class ThermalRegistry extends RecipeRegistry {
         super("thermal_registry");
     }
 
-    @Nonnull
     @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         if(TFCompatConfig.DefaultConfig.thermal.thermal_refinery_recipes) barrelStillRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.extruder) extruderRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.precipitator) precipiratorRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.pulverizer) pulverizerRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.sawmill) sawmillRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.redstone_furnace) redstoneFurnaceRecipes();
-        return super.addRecipes(recipes);
     }
 
     private void barrelStillRecipes()
