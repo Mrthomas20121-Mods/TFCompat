@@ -16,18 +16,20 @@ public class TFCompat
 {
     public static final String MODID = "tfcompat";
     public static final String NAME = "TFCompat";
-    public static final String VERSION = "1.2.1";
+    public static final String VERSION = "1.3.0";
     public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);"
             + "required-after:rocksalt@[1.0.1,);"
             + "required-after:tfc;"
-            + "after:tfcmetallum@[1.3.0,);"
-            + "after:tfctech@[1.2.13,);"
+            + "after:tfcmetallum;"
+            + "after:tfctech;"
+            + "after:firmalife;"
             + "after:betterwithmods;"
             + "after:pyrotech;"
             + "after:mekanism;"
             + "after:improvedbackpacks;"
             + "after:techreborn;"
             + "after:thermalexpansion;"
+            + "after:ironbackpacks;"
             + "after:thaumcraft;";
 
     @Mod.Instance
