@@ -80,8 +80,6 @@ public class ThermalRegistry extends RecipeRegistry {
             SawmillManager.addRecipe(1000,new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
             SawmillManager.addRecipe(1000,new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
             SawmillManager.addRecipe(1000,new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
-
-
         }
     }
     private void redstoneFurnaceRecipes()
