@@ -15,6 +15,7 @@ import net.dries007.tfc.util.OreDictionaryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -66,7 +67,10 @@ public class BackpacksRegistry extends RecipeRegistry {
             if (!world.isRemote && !player.isSneaking())
             {
                 GuiHandler.openGui(world, player.getPosition(), player, GuiHandler.Type.TANNED_LEATHER);
+                event.setCancellationResult(EnumActionResult.SUCCESS);
             }
+
         }
+        else event.setCancellationResult(EnumActionResult.FAIL);
     }
 }

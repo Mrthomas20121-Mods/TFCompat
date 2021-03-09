@@ -13,6 +13,7 @@ import net.dries007.tfc.objects.blocks.BlocksTFC;
 import net.dries007.tfc.objects.blocks.stone.BlockRockVariant;
 import net.dries007.tfc.objects.blocks.wood.*;
 import net.dries007.tfc.objects.inventory.ingredient.IIngredient;
+import net.dries007.tfc.objects.items.ItemsTFC;
 import net.dries007.tfc.objects.items.wood.ItemLumberTFC;
 import net.dries007.tfc.util.calendar.ICalendar;
 import net.minecraft.init.Blocks;
@@ -23,10 +24,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.IForgeRegistry;
-import tfctech.objects.items.TechItems;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
 
 public class ThermalRegistry extends RecipeRegistry {
 
@@ -77,12 +74,12 @@ public class ThermalRegistry extends RecipeRegistry {
     {
         for(Tree tree : TFCRegistries.TREES.getValuesCollection())
         {
-            SawmillManager.addRecipe(1000, new ItemStack(BlockLogTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 8), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockLogTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 8), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
 
 
         }

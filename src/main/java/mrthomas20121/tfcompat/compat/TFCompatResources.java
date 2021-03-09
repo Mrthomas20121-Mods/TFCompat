@@ -1,11 +1,15 @@
 package mrthomas20121.tfcompat.compat;
 
+import mrthomas20121.tfcompat.TFCompat;
 import net.dries007.tfc.TerraFirmaCraft;
 import net.dries007.tfc.api.registries.TFCRegistryEvent;
 import net.dries007.tfc.api.types.Metal;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
+@Mod.EventBusSubscriber(modid = TFCompat.MODID)
 public class TFCompatResources {
 
     // metals
@@ -27,7 +31,7 @@ public class TFCompatResources {
     // tech reborn metals
     public static ResourceLocation refined_iron = new ResourceLocation(TerraFirmaCraft.MOD_ID, "refined_iron");
 
-
+    @SubscribeEvent
     public static void registerMetals(TFCRegistryEvent.RegisterPreBlock<Metal> event) {
         IForgeRegistry<Metal> r = event.getRegistry();
         r.registerAll(
