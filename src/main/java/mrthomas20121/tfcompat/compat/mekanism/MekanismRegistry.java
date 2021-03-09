@@ -7,15 +7,13 @@ import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.api.types.Tree;
 import net.dries007.tfc.objects.blocks.wood.*;
+import net.dries007.tfc.objects.items.ItemsTFC;
 import net.dries007.tfc.objects.items.metal.ItemMetal;
 import net.dries007.tfc.objects.items.wood.ItemLumberTFC;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.FluidRegistry;
-import tfctech.objects.items.TechItems;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class MekanismRegistry extends RecipeRegistry {
 
@@ -24,25 +22,23 @@ public class MekanismRegistry extends RecipeRegistry {
         super("mekanism_registry");
     }
 
-    @Nonnull
     @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         if(TFCompatConfig.DefaultConfig.mekanism.sawmill) sawMillRecipes();
         if(TFCompatConfig.DefaultConfig.mekanism.crusher) crusherRecipes();
         if(TFCompatConfig.DefaultConfig.mekanism.evaporation) evaporationRecipes();
-        return super.addRecipes(recipes);
     }
 
     private void sawMillRecipes()
     {
         for(Tree tree : TFCRegistries.TREES.getValuesCollection())
         {
-            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockLogTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 8), new ItemStack(TechItems.WOOD_POWDER, 1), 0.2D);
-            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(TechItems.WOOD_POWDER, 1), 0.2D);
-            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 0.2D);
-            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 0.2D);
-            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(TechItems.WOOD_POWDER, 1), 0.2D);
-            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(TechItems.WOOD_POWDER, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockLogTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 8), new ItemStack(ItemsTFC.WOOD_ASH, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 0.2D);
+            RecipeHandler.addPrecisionSawmillRecipe(new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 0.2D);
         }
     }
     private void crusherRecipes()

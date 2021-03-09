@@ -19,7 +19,9 @@ public class CTKnapping {
         if(knappingType != null) {
             CTKnappingHelper.addRecipe(new ResourceLocation(TFCompat.MODID, name), knappingType, output, pattern);
         }
-        else CraftTweakerAPI.logError("Error Wrong Type name entered!");
+        else {
+            CraftTweakerAPI.logError("Error Wrong Type name entered!");
+        }
     }
 
     @ZenMethod

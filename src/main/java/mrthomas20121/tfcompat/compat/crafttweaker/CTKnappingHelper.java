@@ -11,7 +11,6 @@ import net.dries007.tfc.api.registries.TFCRegistries;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
-import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class CTKnappingHelper {
             public String describe()
             {
                 //noinspection ConstantConditions
-                return "Adding Tanned Leather knapping recipe " + recipe.getRegistryName().toString();
+                return "Adding Knapping recipe " + recipe.getRegistryName().toString();
             }
         });
     }

@@ -16,6 +16,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 import soot.Registry;
 import teamroots.embers.recipe.ItemStampingRecipe;
 
@@ -36,34 +38,21 @@ public class SootRegistry extends RecipeRegistry {
         HeatHelper.addItemHeat(new ItemStack(Registry.STAMP_NUGGET_RAW), 1.0F, 1599.0F);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
-        recipes.add(new ResourceLocation("addons:stamp_nugget_raw"));
-        recipes.add(new ResourceLocation("addons:caminite_clay"));
-        return super.removeRecipes(recipes);
+    public void removeRecipes(IForgeRegistryModifiable<IRecipe> r) {
+        r.remove(new ResourceLocation("addons:stamp_nugget_raw"));
+        r.remove(new ResourceLocation("addons:caminite_clay"));
     }
 
-    @Nonnull
     @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         for(Metal metal: TFCRegistries.METALS.getValuesCollection()) {
             if(metal.isUsable()) teamroots.embers.recipe.RecipeRegistry.stampingRecipes.add(new ItemStampingRecipe(Ingredient.EMPTY, FluidRegistry.getFluidStack(metal.getRegistryName().getPath().toLowerCase(), 16), Ingredient.fromItem(Registry.STAMP_NUGGET), new ItemStack(ItemMetal.get(metal, Metal.ItemType.NUGGET))));
         }
-        return super.addRecipes(recipes);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes) {
-        return super.addHeatRecipes(recipes);
-    }
-
-    @Nonnull
-    @Override
-    public ArrayList<KnappingRecipe> addKnappingRecipes(ArrayList<KnappingRecipe> recipes) {
-        recipes.add(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(Registry.STAMP_NUGGET_RAW), " XXX ", "XX XX", "X   X", "XX XX", " XXX ").setRegistryName(TFCUtils.getLoc("stamp_nugget")));
-        return super.addKnappingRecipes(recipes);
+    public void registerKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
+        r.register(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(Registry.STAMP_NUGGET_RAW), " XXX ", "XX XX", "X   X", "XX XX", " XXX ").setRegistryName(TFCUtils.getLoc("stamp_nugget")));
     }
 }

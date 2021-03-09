@@ -1,10 +1,12 @@
 package mrthomas20121.tfcompat.compat.thermalexpansion;
 
 import mrthomas20121.rocksalt.utils.MetalUtils;
+import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.compat.ArmorMaterialsTFCompat;
 import mrthomas20121.tfcompat.compat.ToolMaterialsTFCompat;
 import mrthomas20121.tfcompat.library.ModuleCore;
 import net.dries007.tfc.api.types.Metal;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -14,6 +16,11 @@ public class ThermalModule extends ModuleCore {
     public ThermalModule()
     {
         super("thermalexpansion");
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return Loader.isModLoaded(this.getDep()) && TFCompatConfig.DefaultConfig.modules.thermal;
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.codetaylor.mc.athenaeum.util.SoundHelper;
 import com.codetaylor.mc.pyrotech.ModPyrotech;
 import com.codetaylor.mc.pyrotech.PyrotechAPI;
 import com.codetaylor.mc.pyrotech.library.spi.block.IBlockIgnitableWithIgniterItem;
-import com.codetaylor.mc.pyrotech.library.util.Util;
 import com.codetaylor.mc.pyrotech.modules.bucket.ModuleBucket;
 import com.codetaylor.mc.pyrotech.modules.core.item.ItemMaterial;
 import com.codetaylor.mc.pyrotech.modules.ignition.ModuleIgnition;
@@ -23,6 +22,8 @@ import mrthomas20121.tfcompat.TFCompat;
 import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.api.knapping.Types;
 import mrthomas20121.tfcompat.client.GuiHandler;
+import mrthomas20121.tfcompat.compat.pyrotech.compat.CompatFirmaLife;
+import mrthomas20121.tfcompat.compat.pyrotech.compat.CompatTFCTech;
 import mrthomas20121.tfcompat.compat.pyrotech.override.TFCBrickOvenRecipe;
 import mrthomas20121.tfcompat.compat.pyrotech.override.TFCStoneOvenRecipe;
 import mrthomas20121.tfcompat.library.ItemBlockPotery;
@@ -66,17 +67,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
-import tfctech.objects.items.TechItems;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 @SuppressWarnings("ConstantConditions")
 public class PyrotechRegistry extends RecipeRegistry {
@@ -107,50 +105,41 @@ public class PyrotechRegistry extends RecipeRegistry {
         HeatHelper.addItemHeat(new ItemStack(ModuleStorage.Blocks.FAUCET_BRICK), 1.0F, 1599.0F);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes) {
-        recipes.add(new HeatRecipeSimple(IIngredient.of(ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack()), ItemMaterial.EnumType.REFRACTORY_BRICK.asStack(), 480).setRegistryName(new ResourceLocation(TerraFirmaCraft.MOD_ID, "unfired_refractory_brick")));
-        recipes.add(new HeatRecipeSimple(IIngredient.of(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), new ItemStack(ModuleBucket.Items.BUCKET_CLAY, 1), 1500).setRegistryName(new ResourceLocation(TerraFirmaCraft.MOD_ID, "unfired_clay_bucket")));
-        recipes.add(new HeatRecipeSimple(IIngredient.of(ModuleTool.Items.UNFIRED_CLAY_SHEARS), new ItemStack(ModuleTool.Items.CLAY_SHEARS, 1), 1500).setRegistryName(new ResourceLocation(TerraFirmaCraft.MOD_ID, "unfired_clay_shears")));
-
-		return super.addHeatRecipes(recipes);
+    public void registerHeatRecipes(IForgeRegistry<HeatRecipe> r) {
+        r.registerAll(
+                new HeatRecipeSimple(IIngredient.of(ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack()), ItemMaterial.EnumType.REFRACTORY_BRICK.asStack(), 480).setRegistryName(new ResourceLocation(TerraFirmaCraft.MOD_ID, "unfired_refractory_brick")),
+                new HeatRecipeSimple(IIngredient.of(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), new ItemStack(ModuleBucket.Items.BUCKET_CLAY, 1), 1500).setRegistryName(new ResourceLocation(TerraFirmaCraft.MOD_ID, "unfired_clay_bucket")),
+                new HeatRecipeSimple(IIngredient.of(ModuleTool.Items.UNFIRED_CLAY_SHEARS), new ItemStack(ModuleTool.Items.CLAY_SHEARS, 1), 1500).setRegistryName(new ResourceLocation(TerraFirmaCraft.MOD_ID, "unfired_clay_shears"))
+        );
     }
 
-    @Nonnull
     @Override
-    public ArrayList<KnappingRecipe> addKnappingRecipes(ArrayList<KnappingRecipe> recipes) {
-        recipes.add(new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), "X   X", "X   X", "X   X", "XX XX", "  X  ").setRegistryName("pyrotech_unfired_clay_bucket"));
-        recipes.add(new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleTool.Items.UNFIRED_CLAY_SHEARS), "XX  X", "X  X ", " XX  ", " XX X", "X  XX").setRegistryName("pyrotech_unfired_clay_shears"));
-
-        recipes.add(new KnappingRecipeSimple(Types.REFRACTORY_CLAY, true, ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack(2), "XXXXX", "     ", "XXXXX", "     ", "XXXXX").setRegistryName("pyrotech_unfired_refractory_brick"));
-
-
-        return super.addKnappingRecipes(recipes);
+    public void registerKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
+        r.registerAll(
+                new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleBucket.Items.BUCKET_CLAY_UNFIRED), "X   X", "X   X", "X   X", "XX XX", "  X  ").setRegistryName("pyrotech_unfired_clay_bucket"),
+                new KnappingRecipeSimple(KnappingType.CLAY, true, new ItemStack(ModuleTool.Items.UNFIRED_CLAY_SHEARS), "XX  X", "X  X ", " XX  ", " XX X", "X  XX").setRegistryName("pyrotech_unfired_clay_shears"),
+                new KnappingRecipeSimple(Types.REFRACTORY_CLAY, true, ItemMaterial.EnumType.UNFIRED_REFRACTORY_BRICK.asStack(2), "XXXXX", "     ", "XXXXX", "     ", "XXXXX").setRegistryName("pyrotech_unfired_refractory_brick")
+        );
     }
 
-    @Nonnull
     @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         if(TFCompatConfig.DefaultConfig.pyrotech.anvil) AnvilRecipes(ModuleTechBasic.Registries.ANVIL_RECIPE);
         if(TFCompatConfig.DefaultConfig.pyrotech.soaking_pot) SoakingPotRecipes(ModuleTechBasic.Registries.SOAKING_POT_RECIPE);
         if(TFCompatConfig.DefaultConfig.pyrotech.compacting_bin) CompactingBinRecipes(ModuleTechBasic.Registries.COMPACTING_BIN_RECIPE);
         if(TFCompatConfig.DefaultConfig.pyrotech.stone_oven) stoneOvenRecipes(ModuleTechMachine.Registries.STONE_OVEN_RECIPES);
         if(TFCompatConfig.DefaultConfig.pyrotech.brick_oven) brickOvenRecipes(ModuleTechMachine.Registries.BRICK_OVEN_RECIPES);
-
-        return super.addRecipes(recipes);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
-        recipes.add(new ResourceLocation("pyrotech:bucket/bucket_clay_unfired"));
-        recipes.add(new ResourceLocation("pyrotech:tool/unfired_clay_shears"));
-        recipes.add(new ResourceLocation("pyrotech:refractory_brick_block"));
-        recipes.add(new ResourceLocation("pyrotech:refractory_brick_unfired"));
-        recipes.add(new ResourceLocation("pyrotech:refractory_clay_ball_from_refractory_clay_lump"));
-        recipes.add(new ResourceLocation("pyrotech:refractory_brick_unfired"));
-        return super.removeRecipes(recipes);
+    public void removeRecipes(IForgeRegistryModifiable<IRecipe> r) {
+        r.remove(new ResourceLocation("pyrotech:bucket/bucket_clay_unfired"));
+        r.remove(new ResourceLocation("pyrotech:tool/unfired_clay_shears"));
+        r.remove(new ResourceLocation("pyrotech:refractory_brick_block"));
+        r.remove(new ResourceLocation("pyrotech:refractory_brick_unfired"));
+        r.remove(new ResourceLocation("pyrotech:refractory_clay_ball_from_refractory_clay_lump"));
+        r.remove(new ResourceLocation("pyrotech:refractory_brick_unfired"));
     }
 
     @Override
@@ -327,8 +316,9 @@ public class PyrotechRegistry extends RecipeRegistry {
 
     private void SoakingPotRecipes(IForgeRegistry<SoakingPotRecipe> r)
     {
-        addSoakingPotRecipe(r, "tech_slaked_lime", ItemMaterial.EnumType.SLAKED_LIME.asStack(1), Ingredient.fromItem(TechItems.LIME),
-                FluidRegistry.getFluidStack("fresh_water", 125), false, 7);
+        if(Loader.isModLoaded("tfctech")) {
+            CompatTFCTech.registerSoakingPotRecipes(r);
+        }
 
     }
     private static void registerBinRecipe(IForgeRegistry<CompactingBinRecipe> r, String registryName, ItemStack output, ItemStack input, int time)
@@ -369,6 +359,11 @@ public class PyrotechRegistry extends RecipeRegistry {
         r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MODID, "cooked_rabbit"));
         r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MODID, "cooked_venison"));
         r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MODID, "cooked_wolf"));
+
+        if(Loader.isModLoaded("firmalife") && TFCompatConfig.DefaultConfig.tfc_addons.firmalife) {
+            CompatFirmaLife.registerStoneOvenRecipes(r);
+        }
+
     }
 
     private static void brickOvenRecipes(IForgeRegistry<BrickOvenRecipe> r)
@@ -388,6 +383,10 @@ public class PyrotechRegistry extends RecipeRegistry {
         r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MODID, "cooked_rabbit"));
         r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MODID, "cooked_venison"));
         r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MODID, "cooked_wolf"));
+
+        if(Loader.isModLoaded("firmalife") && TFCompatConfig.DefaultConfig.tfc_addons.firmalife) {
+            CompatFirmaLife.registerBrickOvenRecipes(r);
+        }
 
     }
 

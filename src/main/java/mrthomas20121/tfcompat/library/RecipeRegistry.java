@@ -1,36 +1,35 @@
 package mrthomas20121.tfcompat.library;
 
+import mrthomas20121.tfcompat.TFCompat;
 import net.dries007.tfc.api.recipes.anvil.AnvilRecipe;
 import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 public abstract class RecipeRegistry {
 
-    private String name;
+    private ResourceLocation registryName;
 
-    public RecipeRegistry(String name)
+    public RecipeRegistry(ResourceLocation registryName)
     {
-        this.name=name;
+        this.registryName=registryName;
     }
 
-    @Nonnull
-    public String getName() {
-        return name;
+    public RecipeRegistry(String registryName) {
+        this(new ResourceLocation(TFCompat.MODID, registryName));
+    }
+
+    public ResourceLocation getRegistryName() {
+        return registryName;
     }
 
     public void init(FMLInitializationEvent event)
@@ -38,40 +37,27 @@ public abstract class RecipeRegistry {
 
     }
 
-    @Nonnull
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes)
-    {
-        return recipes;
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
+
     }
 
-    @Nonnull
-    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes)
+    public void removeRecipes(IForgeRegistryModifiable<IRecipe> r)
     {
-        return recipes;
     }
 
-    @Nonnull
-    public ArrayList<KnappingRecipe> addKnappingRecipes(ArrayList<KnappingRecipe> recipes)
-    {
-        return recipes;
+    public void registerKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
+
     }
 
-    @Nonnull
-    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes)
-    {
-        return recipes;
+    public void registerHeatRecipes(IForgeRegistry<HeatRecipe> r) {
     }
 
-    @Nonnull
-    public ArrayList<BarrelRecipe> addBarrelRecipes(ArrayList<BarrelRecipe> recipes)
-    {
-        return recipes;
+    public void registerBarrelRecipes(IForgeRegistry<BarrelRecipe> r) {
+
     }
 
-    @Nonnull
-    public ArrayList<AnvilRecipe> addAvilRecipes(ArrayList<AnvilRecipe> recipes)
-    {
-        return recipes;
+    public void registerAnvilRecipes(IForgeRegistry<AnvilRecipe> r) {
+
     }
 
     public void registerItems(IForgeRegistry<Item> r)

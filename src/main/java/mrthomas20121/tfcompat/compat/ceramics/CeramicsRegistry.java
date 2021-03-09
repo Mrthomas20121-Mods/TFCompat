@@ -17,6 +17,7 @@ import net.dries007.tfc.util.OreDictionaryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -25,6 +26,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -60,73 +62,70 @@ public class CeramicsRegistry extends RecipeRegistry {
         HeatHelper.addItemHeat(new ItemStack(Ceramics.clayBucket, 1), 1.0F, 1599.0F);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
+    public void removeRecipes(IForgeRegistryModifiable<IRecipe> r) {
         for(EnumDyeColor color : EnumDyeColor.values())
         {
             String dyeName = color == EnumDyeColor.SILVER ? "light_gray" : color.getName();
-            recipes.add(new ResourceLocation("ceramics:barrels/stained_barrel/"+dyeName));
-            recipes.add(new ResourceLocation("ceramics:barrels/stained_barrel/"+dyeName+"_alt"));
-            recipes.add(new ResourceLocation("ceramics:barrels/porcelain_barrel/"+dyeName));
-            recipes.add(new ResourceLocation("ceramics:barrels/porcelain_barrel/"+dyeName+"_alt"));
-            recipes.add(new ResourceLocation("ceramics:decoration/porcelain/"+dyeName));
+            r.remove(new ResourceLocation("ceramics:barrels/stained_barrel/"+dyeName));
+            r.remove(new ResourceLocation("ceramics:barrels/stained_barrel/"+dyeName+"_alt"));
+            r.remove(new ResourceLocation("ceramics:barrels/porcelain_barrel/"+dyeName));
+            r.remove(new ResourceLocation("ceramics:barrels/porcelain_barrel/"+dyeName+"_alt"));
+            r.remove(new ResourceLocation("ceramics:decoration/porcelain/"+dyeName));
         }
-        recipes.add(new ResourceLocation("ceramics:tools/unfired_clay_bucket"));
-        recipes.add(new ResourceLocation("ceramics:tools/unfired_clay_shears"));
-        recipes.add(new ResourceLocation("ceramics:armor/unfired_clay_plate"));
-        recipes.add(new ResourceLocation("ceramics:barrels/unfired_clay_barrel"));
-        recipes.add(new ResourceLocation("ceramics:barrels/unfired_clay_barrel_extension"));
-        recipes.add(new ResourceLocation("ceramics:barrels/unfired_porcelain_barrel"));
-        recipes.add(new ResourceLocation("ceramics:barrels/unfired_porcelain_extension"));
-        recipes.add(new ResourceLocation("ceramics:faucet"));
-        recipes.add(new ResourceLocation("ceramics:channel"));
-        return super.removeRecipes(recipes);
+        r.remove(new ResourceLocation("ceramics:tools/unfired_clay_bucket"));
+        r.remove(new ResourceLocation("ceramics:tools/unfired_clay_shears"));
+        r.remove(new ResourceLocation("ceramics:armor/unfired_clay_plate"));
+        r.remove(new ResourceLocation("ceramics:barrels/unfired_clay_barrel"));
+        r.remove(new ResourceLocation("ceramics:barrels/unfired_clay_barrel_extension"));
+        r.remove(new ResourceLocation("ceramics:barrels/unfired_porcelain_barrel"));
+        r.remove(new ResourceLocation("ceramics:barrels/unfired_porcelain_extension"));
+        r.remove(new ResourceLocation("ceramics:faucet"));
+        r.remove(new ResourceLocation("ceramics:channel"));
     }
 
-    @Nonnull
     @Override
-    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes) {
-        recipes.add(HeatHelper.addRecipe("ceramics_clay_plate", new ItemStack(Ceramics.clayUnfired, 1, 8), new ItemStack(Ceramics.clayUnfired, 1, 9), 1599));
-        recipes.add(HeatHelper.addRecipe("ceramics_clay_bucket", new ItemStack(Ceramics.clayUnfired, 1), new ItemStack(Ceramics.clayBucket, 1), 1599));
-        recipes.add(HeatHelper.addRecipe("ceramics_clay_shears", new ItemStack(Ceramics.clayUnfired, 1, 1), new ItemStack(Ceramics.clayShears, 1), 1599));
-        recipes.add(HeatHelper.addRecipe("ceramics_porcelain_barrel", new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), new ItemStack(Ceramics.porcelainBarrel, 1), 1599));
-        return super.addHeatRecipes(recipes);
+    public void registerHeatRecipes(IForgeRegistry<HeatRecipe> r) {
+        r.registerAll(
+                HeatHelper.addRecipe("ceramics_clay_plate", new ItemStack(Ceramics.clayUnfired, 1, 8), new ItemStack(Ceramics.clayUnfired, 1, 9), 1599),
+                HeatHelper.addRecipe("ceramics_clay_bucket", new ItemStack(Ceramics.clayUnfired, 1), new ItemStack(Ceramics.clayBucket, 1), 1599),
+                HeatHelper.addRecipe("ceramics_clay_shears", new ItemStack(Ceramics.clayUnfired, 1, 1), new ItemStack(Ceramics.clayShears, 1), 1599),
+                HeatHelper.addRecipe("ceramics_porcelain_barrel", new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), new ItemStack(Ceramics.porcelainBarrel, 1), 1599)
+        );
     }
 
-    @Nonnull
     @Override
-    public ArrayList<BarrelRecipe> addBarrelRecipes(ArrayList<BarrelRecipe> recipes) {
+    public void registerBarrelRecipes(IForgeRegistry<BarrelRecipe> r) {
         for(EnumDyeColor color : EnumDyeColor.values())
         {
             String dyeName = color == EnumDyeColor.SILVER ? "light_gray" : color.getName();
             int meta = color.getMetadata();
             Fluid fluid = FluidsTFC.getFluidFromDye(color).get();
 
-            // porcelaine
-            recipes.add(BarrelHelper.addRecipe(dyeName+"_porcelaine", fluid, 125, "porcelain", new ItemStack(Ceramics.porcelain, 1, meta), 1));
-            recipes.add(BarrelHelper.addRecipe(dyeName+"_porcelaine_barrel", fluid, 125, "porcelainBarrel", new ItemStack(Ceramics.porcelainBarrel, 1, meta), 1));
-            recipes.add(BarrelHelper.addRecipe(dyeName+"_porcelaine_barrel_extension", fluid, 125, "porcelainBarrelExtension", new ItemStack(Ceramics.porcelainBarrelExtension, 1, meta), 1));
-            // clay
-            recipes.add(BarrelHelper.addRecipe(dyeName+"_clay_barrel", fluid, 125, "clayBarrel", new ItemStack(Ceramics.clayBarrelStained, 1, meta), 1));
-            recipes.add(BarrelHelper.addRecipe(dyeName+"_clay_barrel_extension", fluid, 125, "clayBarrelExtension", new ItemStack(Ceramics.clayBarrelStainedExtension, 1, meta), 1));
+            r.registerAll(
+                    // porcelaine
+                    BarrelHelper.addRecipe(dyeName+"_porcelaine", fluid, 125, "porcelain", new ItemStack(Ceramics.porcelain, 1, meta), 1),
+                    BarrelHelper.addRecipe(dyeName+"_porcelaine_barrel", fluid, 125, "porcelainBarrel", new ItemStack(Ceramics.porcelainBarrel, 1, meta), 1),
+                    BarrelHelper.addRecipe(dyeName+"_porcelaine_barrel_extension", fluid, 125, "porcelainBarrelExtension", new ItemStack(Ceramics.porcelainBarrelExtension, 1, meta), 1),
+                    // clay
+                    BarrelHelper.addRecipe(dyeName+"_clay_barrel", fluid, 125, "clayBarrel", new ItemStack(Ceramics.clayBarrelStained, 1, meta), 1),
+                    BarrelHelper.addRecipe(dyeName+"_clay_barrel_extension", fluid, 125, "clayBarrelExtension", new ItemStack(Ceramics.clayBarrelStainedExtension, 1, meta), 1)
+            );
         }
-        return super.addBarrelRecipes(recipes);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<KnappingRecipe> addKnappingRecipes(ArrayList<KnappingRecipe> recipes) {
-        recipes.add(KnappingHelper.addClayKnapping("ceramics_clay_bucket", false, new ItemStack(Ceramics.clayUnfired, 1, 0), "X   X", "X   X", "X   X", "XX XX", "  X  "));
-        recipes.add(KnappingHelper.addClayKnapping("ceramics_clay_shears", false, new ItemStack(Ceramics.clayUnfired, 1, 1), "XX  X", "X  X ", " XX  ", " XX X", "X  XX"));
-        recipes.add(KnappingHelper.addClayKnapping("ceramics_clay_plate", false, new ItemStack(Ceramics.clayUnfired, 1, 8), " XXX ", "X   X", "X   X", "X   X", " XXX "));
+    public void registerKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
+        r.registerAll(
+                KnappingHelper.addClayKnapping("ceramics_clay_bucket", false, new ItemStack(Ceramics.clayUnfired, 1, 0), "X   X", "X   X", "X   X", "XX XX", "  X  "),
+                KnappingHelper.addClayKnapping("ceramics_clay_shears", false, new ItemStack(Ceramics.clayUnfired, 1, 1), "XX  X", "X  X ", " XX  ", " XX X", "X  XX"),
+                KnappingHelper.addClayKnapping("ceramics_clay_plate", false, new ItemStack(Ceramics.clayUnfired, 1, 8), " XXX ", "X   X", "X   X", "X   X", " XXX "),
+                // porcelain knapping
+                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MODID, "unfired_porcelain_barrel"),
+                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 6), " X X ", "  X  ").setRegistryName(TFCompat.MODID, "unfired_faucet"),
+                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 7), " X X ", " XXX ").setRegistryName(TFCompat.MODID, "unfired_channel")
+        );
 
-        // porcelain knapping
-        recipes.add(new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MODID, "unfired_porcelain_barrel"));
-        recipes.add(new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 6), " X X ", "  X  ").setRegistryName(TFCompat.MODID, "unfired_faucet"));
-        recipes.add(new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 7), " X X ", " XXX ").setRegistryName(TFCompat.MODID, "unfired_channel"));
-
-        return super.addKnappingRecipes(recipes);
     }
 
     @Override

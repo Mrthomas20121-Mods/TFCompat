@@ -19,6 +19,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.IForgeRegistry;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.recipe.Recipes;
 import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
@@ -36,16 +37,14 @@ public class TechRebornRegistry extends RecipeRegistry {
         super("techreborn_registry");
     }
 
-    @Nonnull
     @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         if(TFCompatConfig.DefaultConfig.techreborn.sawmill) sawMillRecipes();
         if(TFCompatConfig.DefaultConfig.techreborn.wiremill) wireMillRecipes();
         if(TFCompatConfig.DefaultConfig.techreborn.grinder) grinderRecipes();
         if(TFCompatConfig.DefaultConfig.techreborn.extractor) extractorRecipes();
         if(TFCompatConfig.DefaultConfig.techreborn.compressor) compressorRecipes();
         if(TFCompatConfig.DefaultConfig.techreborn.rollingmachine) rollingMachineRecipes();
-        return super.addRecipes(recipes);
     }
 
     private void sawMillRecipes()
@@ -64,7 +63,7 @@ public class TechRebornRegistry extends RecipeRegistry {
     {
         for(Metal metal : TFCRegistries.METALS.getValuesCollection())
         {
-            if(checkMetal(metal))
+            if(metal.isUsable())
             {
                 ItemStack scrap = new ItemStack(ItemMetal.get(metal, Metal.ItemType.SCRAP), 1);
                 ItemStack wire = new ItemStack(ItemTechMetal.get(metal, ItemTechMetal.ItemType.WIRE), 2);
@@ -111,10 +110,5 @@ public class TechRebornRegistry extends RecipeRegistry {
     private void rollingMachineRecipes()
     {
 
-    }
-
-    private static boolean checkMetal(Metal metal)
-    {
-        return ObfuscationReflectionHelper.getPrivateValue(Metal.class, metal, "usable").equals(true);
     }
 }

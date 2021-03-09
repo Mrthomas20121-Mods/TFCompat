@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
+import net.minecraftforge.registries.IForgeRegistry;
 import teamroots.embers.RegistryManager;
 import teamroots.embers.recipe.ItemMeltingRecipe;
 
@@ -47,16 +48,8 @@ public class EmberRegistry extends RecipeRegistry {
         HeatHelper.addItemHeat(new ItemStack(RegistryManager.plate_caminite_raw), 1.0F, 1599.0F);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
-        return super.removeRecipes(recipes);
-    }
-
-    @Nonnull
-    @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
-
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         for(Metal metal: TFCRegistries.METALS.getValuesCollection()) {
             teamroots.embers.recipe.RecipeRegistry.meltingRecipes.add(new ItemMeltingRecipe(new OreIngredient(OreDictionaryHelper.toString("ingot", metal.getRegistryName().getPath())), FluidRegistry.getFluidStack(metal.getRegistryName().getPath().toLowerCase(), 144)));
             if(metal.isUsable()) {
@@ -64,30 +57,28 @@ public class EmberRegistry extends RecipeRegistry {
                 teamroots.embers.recipe.RecipeRegistry.meltingRecipes.add(new ItemMeltingRecipe(new OreIngredient(OreDictionaryHelper.toString("nugget", metal.getRegistryName().getPath())), FluidRegistry.getFluidStack(metal.getRegistryName().getPath().toLowerCase(), 144)));
             }
         }
-
-        return super.addRecipes(recipes);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes) {
-        recipes.add(new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_flat_raw), new ItemStack(RegistryManager.stamp_flat), 1500).setRegistryName(TFCUtils.getLoc("stamp")));
-        recipes.add(new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_bar_raw), new ItemStack(RegistryManager.stamp_bar), 1500).setRegistryName(TFCUtils.getLoc("stamp_bar")));
-        recipes.add(new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_gear_raw), new ItemStack(RegistryManager.stamp_gear), 1500).setRegistryName(TFCUtils.getLoc("stamp_gear")));
-        recipes.add(new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_plate_raw), new ItemStack(RegistryManager.stamp_plate), 1500).setRegistryName(TFCUtils.getLoc("stamp_plate")));
-        recipes.add(new HeatRecipeSimple(IIngredient.of(RegistryManager.plate_caminite_raw), new ItemStack(RegistryManager.plate_caminite), 1500).setRegistryName(TFCUtils.getLoc("plate")));
-        return super.addHeatRecipes(recipes);
+    public void registerHeatRecipes(IForgeRegistry<HeatRecipe> r) {
+        r.registerAll(
+                new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_flat_raw), new ItemStack(RegistryManager.stamp_flat), 1500).setRegistryName(TFCUtils.getLoc("stamp")),
+                new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_bar_raw), new ItemStack(RegistryManager.stamp_bar), 1500).setRegistryName(TFCUtils.getLoc("stamp_bar")),
+                new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_gear_raw), new ItemStack(RegistryManager.stamp_gear), 1500).setRegistryName(TFCUtils.getLoc("stamp_gear")),
+                new HeatRecipeSimple(IIngredient.of(RegistryManager.stamp_plate_raw), new ItemStack(RegistryManager.stamp_plate), 1500).setRegistryName(TFCUtils.getLoc("stamp_plate")),
+                new HeatRecipeSimple(IIngredient.of(RegistryManager.plate_caminite_raw), new ItemStack(RegistryManager.plate_caminite), 1500).setRegistryName(TFCUtils.getLoc("plate"))
+        );
     }
 
-    @Nonnull
     @Override
-    public ArrayList<KnappingRecipe> addKnappingRecipes(ArrayList<KnappingRecipe> recipes) {
-        recipes.add(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.plate_caminite_raw), "XXX  ", "     ", "     ", "     ", "  XXX").setRegistryName(TFCUtils.getLoc("plate")));
-        recipes.add(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_flat_raw), "     ", "     ", "  X  ", "     ", "     ").setRegistryName(TFCUtils.getLoc("stamp_flat")));
-        recipes.add(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_bar_raw), "X   X", "     ", " XXX ", "     ", "X   X").setRegistryName(TFCUtils.getLoc("stamp_bar")));
-        recipes.add(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_gear_raw), "X X X", " XXX ", "XX XX", " XXX ", "X X X").setRegistryName(TFCUtils.getLoc("stamp_gear")));
-        recipes.add(new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_plate_raw), "     ", "XXXXX", "XXXXX", "XXXXX", "     ").setRegistryName(TFCUtils.getLoc("stamp_plate")));
-        return super.addKnappingRecipes(recipes);
+    public void registerKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
+        r.registerAll(
+                new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.plate_caminite_raw), "XXX  ", "     ", "     ", "     ", "  XXX").setRegistryName(TFCUtils.getLoc("plate")),
+                new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_flat_raw), "     ", "     ", "  X  ", "     ", "     ").setRegistryName(TFCUtils.getLoc("stamp_flat")),
+                new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_bar_raw), "X   X", "     ", " XXX ", "     ", "X   X").setRegistryName(TFCUtils.getLoc("stamp_bar")),
+                new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_gear_raw), "X X X", " XXX ", "XX XX", " XXX ", "X X X").setRegistryName(TFCUtils.getLoc("stamp_gear")),
+                new KnappingRecipeSimple(Types.CAMINITE_BLEND, true, new ItemStack(RegistryManager.stamp_plate_raw), "     ", "XXXXX", "XXXXX", "XXXXX", "     ").setRegistryName(TFCUtils.getLoc("stamp_plate"))
+        );
     }
 
     @Override

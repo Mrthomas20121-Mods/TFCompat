@@ -8,6 +8,7 @@ import mrthomas20121.tfcompat.compat.ember.EmberModule;
 import mrthomas20121.tfcompat.compat.ember.addons.SootModule;
 import mrthomas20121.tfcompat.compat.forestry.ForestryModule;
 import mrthomas20121.tfcompat.compat.improvedbackpacks.BackpacksModule;
+import mrthomas20121.tfcompat.compat.iron_backpacks.IronBackpackModule;
 import mrthomas20121.tfcompat.compat.mekanism.MekanismModule;
 import mrthomas20121.tfcompat.compat.pyrotech.PyrotechModule;
 import mrthomas20121.tfcompat.compat.rustic.RusticModule;
@@ -19,8 +20,7 @@ import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.knapping.KnappingRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.crafting.IRecipe;;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -57,7 +57,10 @@ public class ModuleManager
         registerModule(new AAModule());
         registerModule(new BWMModule());
         registerModule(new CeramicsModule());
+        registerModule(new EmberModule());
+        registerModule(new SootModule());
         registerModule(new ForestryModule());
+        registerModule(new IronBackpackModule());
         registerModule(new BackpacksModule());
         registerModule(new MekanismModule());
         registerModule(new PyrotechModule());
@@ -65,8 +68,6 @@ public class ModuleManager
         registerModule(new ThermalModule());
         registerModule(new TechRebornModule());
         registerModule(new RusticModule());
-        registerModule(new EmberModule());
-        registerModule(new SootModule());
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -74,19 +75,14 @@ public class ModuleManager
         IForgeRegistry<IRecipe> r = event.getRegistry();
         IForgeRegistryModifiable<IRecipe> rec = (IForgeRegistryModifiable<IRecipe>)r;
 
-        ArrayList<IRecipe> recipes = new ArrayList<>();
-        ArrayList<ResourceLocation> removal = new ArrayList<>();
-
         for(ModuleCore module : modules)
         {
                if(module.getRegistry() != null)
                {
-                   recipes = module.getRegistry().addRecipes(recipes);
-                   removal = module.getRegistry().removeRecipes(removal);
+                   module.getRegistry().registerRecipes(r);
+                   module.getRegistry().removeRecipes(rec);
                }
         }
-        recipes.forEach(r::register);
-        removal.forEach(rec::remove);
     }
 
     @SubscribeEvent
@@ -94,16 +90,13 @@ public class ModuleManager
     {
         IForgeRegistry<HeatRecipe> r = event.getRegistry();
 
-        ArrayList<HeatRecipe> heatRecipes = new ArrayList<>();
-
         for(ModuleCore module : modules)
         {
             if(module.getRegistry() != null)
             {
-                heatRecipes = module.getRegistry().addHeatRecipes(heatRecipes);
+                module.getRegistry().registerHeatRecipes(r);
             }
         }
-        heatRecipes.forEach(r::register);
     }
 
     @SubscribeEvent
@@ -111,16 +104,13 @@ public class ModuleManager
     {
         IForgeRegistry<KnappingRecipe> r = event.getRegistry();
 
-        ArrayList<KnappingRecipe> knappingRecipes = new ArrayList<>();
         for(ModuleCore module : modules)
         {
             if(module.getRegistry() != null)
             {
-                knappingRecipes = module.getRegistry().addKnappingRecipes(knappingRecipes);
+                module.getRegistry().registerKnappingRecipes(r);
             }
         }
-
-        knappingRecipes.forEach(r::register);
     }
 
     @SubscribeEvent
@@ -128,16 +118,13 @@ public class ModuleManager
     {
         IForgeRegistry<BarrelRecipe> r = event.getRegistry();
 
-        ArrayList<BarrelRecipe> barrelRecipes = new ArrayList<>();
         for(ModuleCore module : modules)
         {
             if(module.getRegistry() != null)
             {
-                barrelRecipes = module.getRegistry().addBarrelRecipes(barrelRecipes);
+                module.getRegistry().registerBarrelRecipes(r);
             }
         }
-
-        barrelRecipes.forEach(r::register);
     }
 
     @SubscribeEvent

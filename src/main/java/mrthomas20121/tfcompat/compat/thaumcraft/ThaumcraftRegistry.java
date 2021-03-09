@@ -5,6 +5,7 @@ import mrthomas20121.tfcompat.library.helpers.HeatHelper;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 import thaumcraft.api.items.ItemsTC;
 
 import javax.annotation.Nonnull;
@@ -14,7 +15,7 @@ public class ThaumcraftRegistry extends RecipeRegistry {
 
     public ThaumcraftRegistry()
     {
-        super("");
+        super("thaumcraft_registry");
     }
 
     @Override
@@ -24,10 +25,8 @@ public class ThaumcraftRegistry extends RecipeRegistry {
         HeatHelper.addItemHeat(new ItemStack(ItemsTC.quicksilver), 600, 600);
     }
 
-    @Nonnull
     @Override
-    public ArrayList<HeatRecipe> addHeatRecipes(ArrayList<HeatRecipe> recipes) {
-        recipes.add(HeatHelper.addRecipe("cinnabar_to_quicksilver", "gemCinnabar", new ItemStack(ItemsTC.quicksilver), 500));
-        return super.addHeatRecipes(recipes);
+    public void registerHeatRecipes(IForgeRegistry<HeatRecipe> r) {
+        r.register(HeatHelper.addRecipe("cinnabar_to_quicksilver", "gemCinnabar", new ItemStack(ItemsTC.quicksilver), 500));
     }
 }

@@ -28,6 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -41,25 +43,16 @@ public class BWMRegistry extends RecipeRegistry {
     }
 
     @Override
-    public void init(FMLInitializationEvent event) {
-
+    public void removeRecipes(IForgeRegistryModifiable<IRecipe> r) {
+        r.remove(new ResourceLocation("tfc:gunpowder"));
+        r.remove(new ResourceLocation("tfc:gunpowder_graphite"));
     }
 
-    @Nonnull
     @Override
-    public ArrayList<ResourceLocation> removeRecipes(ArrayList<ResourceLocation> recipes) {
-        recipes.add(new ResourceLocation("tfc:gunpowder"));
-        recipes.add(new ResourceLocation("tfc:gunpowder_graphite"));
-        return recipes;
-    }
-
-    @Nonnull
-    @Override
-    public ArrayList<IRecipe> addRecipes(ArrayList<IRecipe> recipes) {
+    public void registerRecipes(IForgeRegistry<IRecipe> r) {
         if(TFCompatConfig.DefaultConfig.betterwithmods.millstone) millstoneRecipes();
         if(TFCompatConfig.DefaultConfig.betterwithmods.saw) sawRecipes();
         if(TFCompatConfig.DefaultConfig.betterwithmods.cauldron) cauldronRecipes();
-        return recipes;
     }
 
     private void millstoneRecipes()
