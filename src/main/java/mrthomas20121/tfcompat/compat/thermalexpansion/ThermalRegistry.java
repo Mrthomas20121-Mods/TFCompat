@@ -84,7 +84,7 @@ public class ThermalRegistry extends RecipeRegistry {
     }
     private void redstoneFurnaceRecipes()
     {
-        for(HeatRecipe heatRecipe :TFCRegistries.HEAT.getValuesCollection())
+        for(HeatRecipe heatRecipe : TFCRegistries.HEAT.getValuesCollection())
         {
             NonNullList<IIngredient<ItemStack>> r = heatRecipe.getIngredients();
             if(r.size() > 0)
