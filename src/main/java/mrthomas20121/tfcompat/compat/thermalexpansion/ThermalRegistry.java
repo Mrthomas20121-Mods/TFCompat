@@ -1,12 +1,17 @@
 package mrthomas20121.tfcompat.compat.thermalexpansion;
 
 import cofh.thermalexpansion.util.managers.machine.*;
+import mrthomas20121.rocksalt.utils.MetalUtils;
 import mrthomas20121.tfcompat.TFCompatConfig;
+import mrthomas20121.tfcompat.compat.TFCompatResources;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
+import mrthomas20121.tfcompat.library.helpers.MetalHelper;
+import mrthomas20121.tfcompat.library.helpers.TFCMetals;
 import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.quern.QuernRecipe;
 import net.dries007.tfc.api.registries.TFCRegistries;
+import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.api.types.Rock;
 import net.dries007.tfc.api.types.Tree;
 import net.dries007.tfc.objects.blocks.BlocksTFC;
@@ -34,7 +39,6 @@ public class ThermalRegistry extends RecipeRegistry {
 
     @Override
     public void registerRecipes(IForgeRegistry<IRecipe> r) {
-        if(TFCompatConfig.DefaultConfig.thermal.thermal_refinery_recipes) barrelStillRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.extruder) extruderRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.precipitator) precipiratorRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.pulverizer) pulverizerRecipes();
@@ -42,17 +46,25 @@ public class ThermalRegistry extends RecipeRegistry {
         if(TFCompatConfig.DefaultConfig.thermal.redstone_furnace) redstoneFurnaceRecipes();
     }
 
-    private void barrelStillRecipes()
-    {
-        RefineryManager.RefineryRecipe[] recipes = RefineryManager.getRecipeList();
-        for(RefineryManager.RefineryRecipe recipe : recipes)
-        {
-            FluidStack input = recipe.getInput();
-            FluidStack output = recipe.getOutputFluid();
-            ItemStack outputItem = recipe.getOutputItem();
-            TFCRegistries.BARREL.register(new BarrelRecipe(IIngredient.of(input), IIngredient.of(ItemStack.EMPTY), output, outputItem.isEmpty() ? ItemStack.EMPTY : outputItem, 61* ICalendar.TICKS_IN_DAY).setRegistryName("still_"+input.getFluid().getName()));
+    @Override
+    public void registerBarrelRecipes(IForgeRegistry<BarrelRecipe> r) {
+        if(TFCompatConfig.DefaultConfig.thermal.thermal_refinery_recipes) {
+            RefineryManager.RefineryRecipe[] recipes = RefineryManager.getRecipeList();
+            for(RefineryManager.RefineryRecipe recipe : recipes)
+            {
+                FluidStack input = recipe.getInput();
+                FluidStack output = recipe.getOutputFluid();
+                ItemStack outputItem = recipe.getOutputItem();
+                r.register(new BarrelRecipe(IIngredient.of(input), IIngredient.of(ItemStack.EMPTY), output, outputItem.isEmpty() ? ItemStack.EMPTY : outputItem, 61* ICalendar.TICKS_IN_DAY).setRegistryName("still_"+input.getFluid().getName()));
+            }
         }
+
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("ender"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCompatResources.enderium_base, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.enderium, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY));
+
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("redstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.sterling_silver, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY));
+
     }
+
     private void extruderRecipes()
     {
         for(Rock rock : TFCRegistries.ROCKS.getValuesCollection())
@@ -61,6 +73,7 @@ public class ThermalRegistry extends RecipeRegistry {
             ExtruderManager.addRecipeSedimentary(1000, new ItemStack(BlockRockVariant.get(rock, Rock.Type.SAND)), FluidRegistry.getFluidStack("lava", 1000), FluidRegistry.getFluidStack("fresh_water", 1000));
         }
     }
+
     private void precipiratorRecipes()
     {
         PrecipitatorManager.addRecipe(800, new ItemStack(Items.SNOWBALL, 4), FluidRegistry.getFluidStack("fresh_water", 500));
@@ -70,39 +83,52 @@ public class ThermalRegistry extends RecipeRegistry {
         PrecipitatorManager.addRecipe(1600, new ItemStack(Blocks.PACKED_ICE, 1), FluidRegistry.getFluidStack("fresh_water", 1000));
         PrecipitatorManager.addRecipe(1600, new ItemStack(BlocksTFC.SEA_ICE, 1), FluidRegistry.getFluidStack("salt_water", 1000));
     }
+
     private void sawmillRecipes()
     {
         for(Tree tree : TFCRegistries.TREES.getValuesCollection())
         {
             SawmillManager.addRecipe(1000, new ItemStack(BlockLogTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 8), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
-            SawmillManager.addRecipe(1000,new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockPlanksTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockDoorTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+            SawmillManager.addRecipe(1000, new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
         }
     }
+
     private void redstoneFurnaceRecipes()
     {
+        // remove default redstone furnace recipes
+        FurnaceManager.FurnaceRecipe[] recipes = FurnaceManager.getRecipeList(false);
+        for(FurnaceManager.FurnaceRecipe recipe: recipes) {
+            FurnaceManager.removeRecipe(recipe.getInput());
+        }
+
+        // for each TFC Heat Recipe, add it to the redstone Furnace Manager.
         for(HeatRecipe heatRecipe : TFCRegistries.HEAT.getValuesCollection())
         {
             NonNullList<IIngredient<ItemStack>> r = heatRecipe.getIngredients();
-            if(r.size() > 0)
+            if(r.size() > 0 && heatRecipe.getTransformTemp() < 1599f)
             {
                 NonNullList<ItemStack> ingredient = r.get(0).getValidIngredients();
-                FurnaceManager.addRecipe(1000, ingredient.get(0), heatRecipe.getOutputs().get(0));
+                ItemStack output = heatRecipe.getOutputs().get(0);
+                for(ItemStack stack: ingredient) {
+                    FurnaceManager.addRecipe(1000, stack, output);
+                }
             }
         }
     }
-    private void pulverizerRecipes()
-    {
+
+    private void pulverizerRecipes() {
+        // remove default Pulverizer recipes
         PulverizerManager.PulverizerRecipe[] recipes = PulverizerManager.getRecipeList();
-        for(PulverizerManager.PulverizerRecipe pulverizerRecipe: recipes)
-        {
+        for(PulverizerManager.PulverizerRecipe pulverizerRecipe: recipes) {
             PulverizerManager.removeRecipe(pulverizerRecipe.getInput());
         }
-        for(QuernRecipe recipe : TFCRegistries.QUERN.getValuesCollection())
-        {
+
+        // for each TFC Quern Recipe, add it to the Pulverizer Manager.
+        for(QuernRecipe recipe : TFCRegistries.QUERN.getValuesCollection()) {
             NonNullList<IIngredient<ItemStack>> ingredient = recipe.getIngredients();
             NonNullList<ItemStack> outputs = recipe.getOutputs();
             ItemStack output = outputs.get(0);
