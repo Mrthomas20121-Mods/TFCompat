@@ -3,7 +3,7 @@ buildscript {
         jcenter()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "http://maven.minecraftforge.net"
         }
     }
     dependencies {
@@ -38,6 +38,7 @@ repositories {
         name "Jared"
         url "http://maven.blamejared.com/"
     }
+    removeIf { it instanceof MavenArtifactRepository && it.url.host == 'files.minecraftforge.net' }
 }
 
 version = "1.3.0"
