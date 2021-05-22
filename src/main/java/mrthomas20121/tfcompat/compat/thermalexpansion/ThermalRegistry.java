@@ -44,6 +44,7 @@ public class ThermalRegistry extends RecipeRegistry {
         if(TFCompatConfig.DefaultConfig.thermal.pulverizer) pulverizerRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.sawmill) sawmillRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.redstone_furnace) redstoneFurnaceRecipes();
+        fluidTransposerRecipes();
     }
 
     @Override
@@ -59,10 +60,37 @@ public class ThermalRegistry extends RecipeRegistry {
             }
         }
 
-        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("ender"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCompatResources.enderium_base, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.enderium, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY));
+        // enderium
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("ender"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.blue_steel, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.enderium, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY).setRegistryName("enderium_ingot"));
 
-        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("redstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.sterling_silver, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY));
+        // signalum
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("redstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.black_steel, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY).setRegistryName("signalum_ingot"));
 
+        // lumium
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("glowstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.red_steel, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY).setRegistryName("lumium_ingot"));
+
+    }
+
+    /**
+     * add a fluid transposer recipe for each fluid that matc
+     */
+    private void fluidTransposerRecipes() {
+        for(BarrelRecipe recipe: TFCRegistries.BARREL.getValuesCollection()) {
+            NonNullList<FluidStack> fluidStack = recipe.getFluidIngredient().getValidIngredients();
+            FluidStack output = recipe.getOutputFluid();
+            if(!fluidStack.isEmpty()) {
+                for(ItemStack stack : recipe.getItemIngredient().getValidIngredients()) {
+                    TransposerManager.addExtractRecipe(1000, stack,recipe.getOutputStack(), fluidStack.get(0), 1, false);
+                }
+            }
+            else if(output != null) {
+                if(!recipe.getItemIngredient().getValidIngredients().isEmpty()) {
+                    for(ItemStack stack : recipe.getItemIngredient().getValidIngredients()) {
+                        TransposerManager.addFillRecipe(1000, stack, recipe.getOutputStack(), output, false);
+                    }
+                }
+            }
+        }
     }
 
     private void extruderRecipes()
