@@ -214,8 +214,8 @@ public class PyrotechRegistry extends RecipeRegistry {
     }
 
     private Block register(IForgeRegistry<Block> registry, Block block, String name) {
-        block.setRegistryName(TFCompat.MODID, name);
-        block.setTranslationKey(TFCompat.MODID+"."+name.replace("/", "."));
+        block.setRegistryName(TFCompat.MOD_ID, name);
+        block.setTranslationKey(TFCompat.MOD_ID +"."+name.replace("/", "."));
         block.setCreativeTab(CreativeTabsTFC.CT_POTTERY);
         registry.register(block);
         return block;
@@ -331,7 +331,7 @@ public class PyrotechRegistry extends RecipeRegistry {
     private static void addAnvilRecipe(IForgeRegistry<AnvilRecipe> r, String registryName, ItemStack output, ItemStack input, int hit, AnvilRecipe.EnumType type, AnvilRecipe.EnumTier tier)
     {
         AnvilRecipe recipe = new AnvilRecipe(output, Ingredient.fromStacks(input), hit, type, tier);
-        recipe.setRegistryName(TFCompat.MODID, registryName);
+        recipe.setRegistryName(TFCompat.MOD_ID, registryName);
         r.register(recipe);
     }
 
@@ -344,21 +344,21 @@ public class PyrotechRegistry extends RecipeRegistry {
 
     private static void stoneOvenRecipes(IForgeRegistry<StoneOvenRecipe> r)
     {
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEAR)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEAR))).setRegistryName(TFCompat.MODID, "cooked_bear"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEEF)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEEF))).setRegistryName(TFCompat.MODID, "cooked_beef"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CALAMARI)), Ingredient.fromItem(ItemFoodTFC.get(Food.CALAMARI))).setRegistryName(TFCompat.MODID, "cooked_calamari"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CAMELIDAE)), Ingredient.fromItem(ItemFoodTFC.get(Food.CAMELIDAE))).setRegistryName(TFCompat.MODID, "cooked_camelidae"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CHICKEN)), Ingredient.fromItem(ItemFoodTFC.get(Food.CHICKEN))).setRegistryName(TFCompat.MODID, "cooked_chicken"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_FISH)), Ingredient.fromItem(ItemFoodTFC.get(Food.FISH))).setRegistryName(TFCompat.MODID, "cooked_fish"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_GRAN_FELINE)), Ingredient.fromItem(ItemFoodTFC.get(Food.GRAN_FELINE))).setRegistryName(TFCompat.MODID, "cooked_grançfeline"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_HORSE_MEAT)), Ingredient.fromItem(ItemFoodTFC.get(Food.HORSE_MEAT))).setRegistryName(TFCompat.MODID, "cooked_horse_meat"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MONGOOSE)), Ingredient.fromItem(ItemFoodTFC.get(Food.MONGOOSE))).setRegistryName(TFCompat.MODID, "cooked_mongoose"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MUTTON)), Ingredient.fromItem(ItemFoodTFC.get(Food.MUTTON))).setRegistryName(TFCompat.MODID, "cooked_mutton"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PHEASANT)), Ingredient.fromItem(ItemFoodTFC.get(Food.PHEASANT))).setRegistryName(TFCompat.MODID, "cooked_pheasant"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PORK)), Ingredient.fromItem(ItemFoodTFC.get(Food.PORK))).setRegistryName(TFCompat.MODID, "cooked_pork"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MODID, "cooked_rabbit"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MODID, "cooked_venison"));
-        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MODID, "cooked_wolf"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEAR)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEAR))).setRegistryName(TFCompat.MOD_ID, "cooked_bear"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEEF)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEEF))).setRegistryName(TFCompat.MOD_ID, "cooked_beef"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CALAMARI)), Ingredient.fromItem(ItemFoodTFC.get(Food.CALAMARI))).setRegistryName(TFCompat.MOD_ID, "cooked_calamari"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CAMELIDAE)), Ingredient.fromItem(ItemFoodTFC.get(Food.CAMELIDAE))).setRegistryName(TFCompat.MOD_ID, "cooked_camelidae"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CHICKEN)), Ingredient.fromItem(ItemFoodTFC.get(Food.CHICKEN))).setRegistryName(TFCompat.MOD_ID, "cooked_chicken"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_FISH)), Ingredient.fromItem(ItemFoodTFC.get(Food.FISH))).setRegistryName(TFCompat.MOD_ID, "cooked_fish"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_GRAN_FELINE)), Ingredient.fromItem(ItemFoodTFC.get(Food.GRAN_FELINE))).setRegistryName(TFCompat.MOD_ID, "cooked_grançfeline"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_HORSE_MEAT)), Ingredient.fromItem(ItemFoodTFC.get(Food.HORSE_MEAT))).setRegistryName(TFCompat.MOD_ID, "cooked_horse_meat"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MONGOOSE)), Ingredient.fromItem(ItemFoodTFC.get(Food.MONGOOSE))).setRegistryName(TFCompat.MOD_ID, "cooked_mongoose"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MUTTON)), Ingredient.fromItem(ItemFoodTFC.get(Food.MUTTON))).setRegistryName(TFCompat.MOD_ID, "cooked_mutton"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PHEASANT)), Ingredient.fromItem(ItemFoodTFC.get(Food.PHEASANT))).setRegistryName(TFCompat.MOD_ID, "cooked_pheasant"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PORK)), Ingredient.fromItem(ItemFoodTFC.get(Food.PORK))).setRegistryName(TFCompat.MOD_ID, "cooked_pork"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MOD_ID, "cooked_rabbit"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MOD_ID, "cooked_venison"));
+        r.register(new TFCStoneOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MOD_ID, "cooked_wolf"));
 
         if(Loader.isModLoaded("firmalife") && TFCompatConfig.DefaultConfig.tfc_addons.firmalife) {
             CompatFirmaLife.registerStoneOvenRecipes(r);
@@ -368,21 +368,21 @@ public class PyrotechRegistry extends RecipeRegistry {
 
     private static void brickOvenRecipes(IForgeRegistry<BrickOvenRecipe> r)
     {
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEAR)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEAR))).setRegistryName(TFCompat.MODID, "cooked_bear"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEEF)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEEF))).setRegistryName(TFCompat.MODID, "cooked_beef"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CALAMARI)), Ingredient.fromItem(ItemFoodTFC.get(Food.CALAMARI))).setRegistryName(TFCompat.MODID, "cooked_calamari"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CAMELIDAE)), Ingredient.fromItem(ItemFoodTFC.get(Food.CAMELIDAE))).setRegistryName(TFCompat.MODID, "cooked_camelidae"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CHICKEN)), Ingredient.fromItem(ItemFoodTFC.get(Food.CHICKEN))).setRegistryName(TFCompat.MODID, "cooked_chicken"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_FISH)), Ingredient.fromItem(ItemFoodTFC.get(Food.FISH))).setRegistryName(TFCompat.MODID, "cooked_fish"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_GRAN_FELINE)), Ingredient.fromItem(ItemFoodTFC.get(Food.GRAN_FELINE))).setRegistryName(TFCompat.MODID, "cooked_grançfeline"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_HORSE_MEAT)), Ingredient.fromItem(ItemFoodTFC.get(Food.HORSE_MEAT))).setRegistryName(TFCompat.MODID, "cooked_horse_meat"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MONGOOSE)), Ingredient.fromItem(ItemFoodTFC.get(Food.MONGOOSE))).setRegistryName(TFCompat.MODID, "cooked_mongoose"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MUTTON)), Ingredient.fromItem(ItemFoodTFC.get(Food.MUTTON))).setRegistryName(TFCompat.MODID, "cooked_mutton"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PHEASANT)), Ingredient.fromItem(ItemFoodTFC.get(Food.PHEASANT))).setRegistryName(TFCompat.MODID, "cooked_pheasant"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PORK)), Ingredient.fromItem(ItemFoodTFC.get(Food.PORK))).setRegistryName(TFCompat.MODID, "cooked_pork"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MODID, "cooked_rabbit"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MODID, "cooked_venison"));
-        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MODID, "cooked_wolf"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEAR)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEAR))).setRegistryName(TFCompat.MOD_ID, "cooked_bear"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_BEEF)), Ingredient.fromItem(ItemFoodTFC.get(Food.BEEF))).setRegistryName(TFCompat.MOD_ID, "cooked_beef"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CALAMARI)), Ingredient.fromItem(ItemFoodTFC.get(Food.CALAMARI))).setRegistryName(TFCompat.MOD_ID, "cooked_calamari"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CAMELIDAE)), Ingredient.fromItem(ItemFoodTFC.get(Food.CAMELIDAE))).setRegistryName(TFCompat.MOD_ID, "cooked_camelidae"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_CHICKEN)), Ingredient.fromItem(ItemFoodTFC.get(Food.CHICKEN))).setRegistryName(TFCompat.MOD_ID, "cooked_chicken"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_FISH)), Ingredient.fromItem(ItemFoodTFC.get(Food.FISH))).setRegistryName(TFCompat.MOD_ID, "cooked_fish"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_GRAN_FELINE)), Ingredient.fromItem(ItemFoodTFC.get(Food.GRAN_FELINE))).setRegistryName(TFCompat.MOD_ID, "cooked_grançfeline"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_HORSE_MEAT)), Ingredient.fromItem(ItemFoodTFC.get(Food.HORSE_MEAT))).setRegistryName(TFCompat.MOD_ID, "cooked_horse_meat"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MONGOOSE)), Ingredient.fromItem(ItemFoodTFC.get(Food.MONGOOSE))).setRegistryName(TFCompat.MOD_ID, "cooked_mongoose"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_MUTTON)), Ingredient.fromItem(ItemFoodTFC.get(Food.MUTTON))).setRegistryName(TFCompat.MOD_ID, "cooked_mutton"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PHEASANT)), Ingredient.fromItem(ItemFoodTFC.get(Food.PHEASANT))).setRegistryName(TFCompat.MOD_ID, "cooked_pheasant"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_PORK)), Ingredient.fromItem(ItemFoodTFC.get(Food.PORK))).setRegistryName(TFCompat.MOD_ID, "cooked_pork"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_RABBIT)), Ingredient.fromItem(ItemFoodTFC.get(Food.RABBIT))).setRegistryName(TFCompat.MOD_ID, "cooked_rabbit"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_VENISON)), Ingredient.fromItem(ItemFoodTFC.get(Food.VENISON))).setRegistryName(TFCompat.MOD_ID, "cooked_venison"));
+        r.register(new TFCBrickOvenRecipe(new ItemStack(ItemFoodTFC.get(Food.COOKED_WOLF)), Ingredient.fromItem(ItemFoodTFC.get(Food.WOLF))).setRegistryName(TFCompat.MOD_ID, "cooked_wolf"));
 
         if(Loader.isModLoaded("firmalife") && TFCompatConfig.DefaultConfig.tfc_addons.firmalife) {
             CompatFirmaLife.registerBrickOvenRecipes(r);

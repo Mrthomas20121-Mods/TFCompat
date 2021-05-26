@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod.EventBusSubscriber(modid = TFCompat.MODID)
+@Mod.EventBusSubscriber(modid = TFCompat.MOD_ID)
 public class TFCompatResources {
 
     // metals

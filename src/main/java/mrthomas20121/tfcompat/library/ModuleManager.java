@@ -36,7 +36,7 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 import java.util.ArrayList;
 
-@Mod.EventBusSubscriber(modid = TFCompat.MODID)
+@Mod.EventBusSubscriber(modid = TFCompat.MOD_ID)
 public class ModuleManager
 {
     private static ArrayList<ModuleCore> modules = new ArrayList<>();

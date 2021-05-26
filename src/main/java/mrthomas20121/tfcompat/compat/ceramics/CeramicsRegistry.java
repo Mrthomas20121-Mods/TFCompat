@@ -18,7 +18,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -27,9 +26,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
 
 public class CeramicsRegistry extends RecipeRegistry {
 
@@ -121,9 +117,9 @@ public class CeramicsRegistry extends RecipeRegistry {
                 KnappingHelper.addClayKnapping("ceramics_clay_shears", false, new ItemStack(Ceramics.clayUnfired, 1, 1), "XX  X", "X  X ", " XX  ", " XX X", "X  XX"),
                 KnappingHelper.addClayKnapping("ceramics_clay_plate", false, new ItemStack(Ceramics.clayUnfired, 1, 8), " XXX ", "X   X", "X   X", "X   X", " XXX "),
                 // porcelain knapping
-                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MODID, "unfired_porcelain_barrel"),
-                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 6), " X X ", "  X  ").setRegistryName(TFCompat.MODID, "unfired_faucet"),
-                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 7), " X X ", " XXX ").setRegistryName(TFCompat.MODID, "unfired_channel")
+                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MOD_ID, "unfired_porcelain_barrel"),
+                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 6), " X X ", "  X  ").setRegistryName(TFCompat.MOD_ID, "unfired_faucet"),
+                new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 7), " X X ", " XXX ").setRegistryName(TFCompat.MOD_ID, "unfired_channel")
         );
 
     }

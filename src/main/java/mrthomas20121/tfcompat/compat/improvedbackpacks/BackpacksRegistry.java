@@ -16,8 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -26,9 +24,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import ru.poopycoders.improvedbackpacks.init.ModItems;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
 
 public class BackpacksRegistry extends RecipeRegistry {
 
@@ -50,12 +45,12 @@ public class BackpacksRegistry extends RecipeRegistry {
 
     @Override
     public void registerHeatRecipes(IForgeRegistry<HeatRecipe> r) {
-        r.register(new HeatRecipeSimple(IIngredient.of(new ItemStack(ModItems.BOUND_LEATHER)), new ItemStack(ModItems.TANNED_LEATHER), 500).setRegistryName(TFCompat.MODID, "tanned_leather"));
+        r.register(new HeatRecipeSimple(IIngredient.of(new ItemStack(ModItems.BOUND_LEATHER)), new ItemStack(ModItems.TANNED_LEATHER), 500).setRegistryName(TFCompat.MOD_ID, "tanned_leather"));
     }
 
     @Override
     public void registerKnappingRecipes(IForgeRegistry<KnappingRecipe> r) {
-        r.register(new KnappingRecipeSimple(Types.TANNED_LEATHER, false, new ItemStack(ModItems.BACKPACK, 1), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MODID, "backpack"));
+        r.register(new KnappingRecipeSimple(Types.TANNED_LEATHER, false, new ItemStack(ModItems.BACKPACK, 1), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MOD_ID, "backpack"));
     }
 
     @Override

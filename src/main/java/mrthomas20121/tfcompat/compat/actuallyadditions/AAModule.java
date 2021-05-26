@@ -25,7 +25,7 @@ public class AAModule extends ModuleCore {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         //OreUtils.registerOre("blackquartz", false, 5d, 5d);
-        //VeinLoader.preInit(TFCompat.MODID, event.getModConfigurationDirectory(), "tfcompat_aa_ores.json");
+        //VeinLoader.preInit(TFCompat.MOD_ID, event.getModConfigurationDirectory(), "tfcompat_aa_ores.json");
         addRegistry(new AARegistry());
     }
 

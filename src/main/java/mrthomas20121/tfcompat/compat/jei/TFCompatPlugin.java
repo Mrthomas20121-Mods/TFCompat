@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @JEIPlugin
 public class TFCompatPlugin implements IModPlugin
 {
-    public static final String KNAP_TANNED_LEATHER_UID = TFCompat.MODID + ".knap.tanned_leather";
-    public static final String KNAP_PORCELAIN_UID = TFCompat.MODID + ".knap.porcelain";
-    public static final String KNAP_FLINT_CLAY_UID = TFCompat.MODID + ".knap.flint_clay";
-    public static final String KNAP_REFRACTORY_CLAY_UID = TFCompat.MODID + ".knap.refractory_clay";
-    public static final String KNAP_CAMINITE_BLEND_UID = TFCompat.MODID + ".knap.caminite_blend";
+    public static final String KNAP_TANNED_LEATHER_UID = TFCompat.MOD_ID + ".knap.tanned_leather";
+    public static final String KNAP_PORCELAIN_UID = TFCompat.MOD_ID + ".knap.porcelain";
+    public static final String KNAP_FLINT_CLAY_UID = TFCompat.MOD_ID + ".knap.flint_clay";
+    public static final String KNAP_REFRACTORY_CLAY_UID = TFCompat.MOD_ID + ".knap.refractory_clay";
+    public static final String KNAP_CAMINITE_BLEND_UID = TFCompat.MOD_ID + ".knap.caminite_blend";
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry)

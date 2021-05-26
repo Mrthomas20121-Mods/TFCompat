@@ -25,7 +25,7 @@ public abstract class RecipeRegistry {
     }
 
     public RecipeRegistry(String registryName) {
-        this(new ResourceLocation(TFCompat.MODID, registryName));
+        this(new ResourceLocation(TFCompat.MOD_ID, registryName));
     }
 
     public ResourceLocation getRegistryName() {

@@ -3,7 +3,6 @@ package mrthomas20121.tfcompat.client;
 import mrthomas20121.tfcompat.TFCompat;
 import mrthomas20121.tfcompat.api.knapping.Types;
 
-import net.dries007.tfc.client.gui.*;
 import net.dries007.tfc.objects.container.*;
 
 import net.dries007.tfc.util.OreDictionaryHelper;
@@ -21,15 +20,15 @@ import javax.annotation.Nullable;
 
 public class GuiHandler implements IGuiHandler {
 
-    private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/tanned_leather_button.png");
-    public static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation(TFCompat.MODID,"textures/gui/knapping/porcelain_button.png");
-    public static final ResourceLocation PORCELAIN_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/porcelain_button_disabled.png");
-    public static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button.png");
-    public static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/flint_clay_button_disabled.png");
-    public static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button.png");
-    public static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/refractory_clay_button_disabled.png");
-    public static final ResourceLocation CAMINITE_BLEND_TEXTURE = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/caminite_blend.png");
-    public static final ResourceLocation CAMINITE_BLEND_TEXTURE_DISABLED = new ResourceLocation(TFCompat.MODID, "textures/gui/knapping/caminite_blend_disabled.png");
+    private static final ResourceLocation TANNED_LEATHER_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/tanned_leather_button.png");
+    public static final ResourceLocation PORCELAIN_TEXTURE = new ResourceLocation(TFCompat.MOD_ID,"textures/gui/knapping/porcelain_button.png");
+    public static final ResourceLocation PORCELAIN_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/porcelain_button_disabled.png");
+    public static final ResourceLocation FLINT_CLAY_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/flint_clay_button.png");
+    public static final ResourceLocation FLINT_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/flint_clay_button_disabled.png");
+    public static final ResourceLocation REFRACTORY_CLAY_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/refractory_clay_button.png");
+    public static final ResourceLocation REFRACTORY_CLAY_DISABLED_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/refractory_clay_button_disabled.png");
+    public static final ResourceLocation CAMINITE_BLEND_TEXTURE = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/caminite_blend.png");
+    public static final ResourceLocation CAMINITE_BLEND_TEXTURE_DISABLED = new ResourceLocation(TFCompat.MOD_ID, "textures/gui/knapping/caminite_blend_disabled.png");
 
     public static void openGui(World world, BlockPos pos, EntityPlayer player, Type type)
     {

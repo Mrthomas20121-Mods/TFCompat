@@ -18,7 +18,6 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
@@ -48,8 +47,8 @@ public class ItemDaggerOfSacrifice extends ItemTFC implements IMetalItem {
     public ItemDaggerOfSacrifice(Metal metal) {
         this.metal = metal;
 
-        this.setRegistryName(TFCompat.MODID, metal.getRegistryName().getPath()+"/dagger_of_sacrifice");
-        this.setTranslationKey(TFCompat.MODID+"_"+this.getRegistryName().getPath().replace("/", "_"));
+        this.setRegistryName(TFCompat.MOD_ID, metal.getRegistryName().getPath()+"/dagger_of_sacrifice");
+        this.setTranslationKey(TFCompat.MOD_ID +"_"+this.getRegistryName().getPath().replace("/", "_"));
 
         this.setCreativeTab(CreativeTabsTFC.CT_METAL);
 

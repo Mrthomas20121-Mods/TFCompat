@@ -7,13 +7,10 @@ import WayofTime.bloodmagic.orb.BloodOrb;
 import mrthomas20121.tfcompat.TFCompat;
 import mrthomas20121.tfcompat.client.ClientEvents;
 import mrthomas20121.tfcompat.compat.bloodmagic.items.ItemDaggerOfSacrifice;
-import mrthomas20121.tfcompat.compat.bloodmagic.recipes.AlchemyTableRecipeTFC;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
 import net.dries007.tfc.api.registries.TFCRegistries;
 import net.dries007.tfc.api.types.Metal;
-import net.dries007.tfc.objects.items.food.ItemFoodTFC;
 import net.dries007.tfc.objects.items.metal.ItemMetalTool;
-import net.dries007.tfc.util.agriculture.Food;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -64,7 +61,7 @@ public class BloodMagicRegistry extends RecipeRegistry {
         for(Metal metal: TFCRegistries.METALS.getValuesCollection()) {
             if(metal.isUsable() && metal.isToolMetal()) {
                 ItemDaggerOfSacrifice itemDaggerOfSacrifice = ItemDaggerOfSacrifice.get(metal);
-                ModelLoader.setCustomModelResourceLocation(itemDaggerOfSacrifice, 0, new ModelResourceLocation(new ResourceLocation(TFCompat.MODID, "dagger_of_sacrifice"), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(itemDaggerOfSacrifice, 0, new ModelResourceLocation(new ResourceLocation(TFCompat.MOD_ID, "dagger_of_sacrifice"), "inventory"));
             }
         }
     }

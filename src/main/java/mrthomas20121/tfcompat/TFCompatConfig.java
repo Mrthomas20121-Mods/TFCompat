@@ -10,13 +10,13 @@ public class TFCompatConfig {
     @SubscribeEvent
     public static void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if (event.getModID().equals(TFCompat.MODID))
+        if (event.getModID().equals(TFCompat.MOD_ID))
         {
-            ConfigManager.sync(TFCompat.MODID, Config.Type.INSTANCE);
+            ConfigManager.sync(TFCompat.MOD_ID, Config.Type.INSTANCE);
         }
     }
 
-    @Config(modid = TFCompat.MODID, name = TFCompat.MODID+"/"+TFCompat.MODID)
+    @Config(modid = TFCompat.MOD_ID, name = TFCompat.MOD_ID +"/"+TFCompat.MOD_ID)
     public static class DefaultConfig {
 
         @Config.Comment("Modules Settings")

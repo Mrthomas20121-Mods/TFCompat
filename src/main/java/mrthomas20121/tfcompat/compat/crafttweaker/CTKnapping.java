@@ -17,7 +17,7 @@ public class CTKnapping {
     public static void add(String type, String name, IItemStack output, String... pattern) {
         KnappingType knappingType = CTKnappingHelper.getType(type);
         if(knappingType != null) {
-            CTKnappingHelper.addRecipe(new ResourceLocation(TFCompat.MODID, name), knappingType, output, pattern);
+            CTKnappingHelper.addRecipe(new ResourceLocation(TFCompat.MOD_ID, name), knappingType, output, pattern);
         }
         else {
             CraftTweakerAPI.logError("Error Wrong Type name entered!");

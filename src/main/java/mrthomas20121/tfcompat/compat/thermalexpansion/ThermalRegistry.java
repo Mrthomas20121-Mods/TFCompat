@@ -1,7 +1,8 @@
 package mrthomas20121.tfcompat.compat.thermalexpansion;
 
+import cofh.thermalexpansion.util.managers.dynamo.NumismaticManager;
 import cofh.thermalexpansion.util.managers.machine.*;
-import mrthomas20121.rocksalt.utils.MetalUtils;
+import cofh.thermalfoundation.init.TFItems;
 import mrthomas20121.tfcompat.TFCompatConfig;
 import mrthomas20121.tfcompat.compat.TFCompatResources;
 import mrthomas20121.tfcompat.library.RecipeRegistry;
@@ -11,15 +12,22 @@ import net.dries007.tfc.api.recipes.barrel.BarrelRecipe;
 import net.dries007.tfc.api.recipes.heat.HeatRecipe;
 import net.dries007.tfc.api.recipes.quern.QuernRecipe;
 import net.dries007.tfc.api.registries.TFCRegistries;
+import net.dries007.tfc.api.types.ICrop;
 import net.dries007.tfc.api.types.Metal;
 import net.dries007.tfc.api.types.Rock;
 import net.dries007.tfc.api.types.Tree;
+import net.dries007.tfc.objects.Gem;
 import net.dries007.tfc.objects.blocks.BlocksTFC;
 import net.dries007.tfc.objects.blocks.stone.BlockRockVariant;
 import net.dries007.tfc.objects.blocks.wood.*;
 import net.dries007.tfc.objects.inventory.ingredient.IIngredient;
+import net.dries007.tfc.objects.items.ItemGem;
+import net.dries007.tfc.objects.items.ItemSeedsTFC;
 import net.dries007.tfc.objects.items.ItemsTFC;
+import net.dries007.tfc.objects.items.metal.ItemOreTFC;
 import net.dries007.tfc.objects.items.wood.ItemLumberTFC;
+import net.dries007.tfc.types.DefaultMetals;
+import net.dries007.tfc.util.agriculture.Crop;
 import net.dries007.tfc.util.calendar.ICalendar;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -45,6 +53,8 @@ public class ThermalRegistry extends RecipeRegistry {
         if(TFCompatConfig.DefaultConfig.thermal.sawmill) sawmillRecipes();
         if(TFCompatConfig.DefaultConfig.thermal.redstone_furnace) redstoneFurnaceRecipes();
         fluidTransposerRecipes();
+        pyrolyticConversionRecipes();
+        lapidaryRecipes();
     }
 
     @Override
@@ -61,18 +71,18 @@ public class ThermalRegistry extends RecipeRegistry {
         }
 
         // enderium
-        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("ender"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.blue_steel, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.enderium, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY).setRegistryName("enderium_ingot"));
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("ender"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.blue_steel, Metal.ItemType.SCRAP, 1)), null, MetalHelper.getMetalItem(TFCompatResources.enderium, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_HOUR).setRegistryName("enderium_ingot"));
 
         // signalum
-        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("redstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.black_steel, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY).setRegistryName("signalum_ingot"));
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("redstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.black_steel, Metal.ItemType.SCRAP, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_HOUR).setRegistryName("signalum_ingot"));
 
         // lumium
-        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("glowstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.red_steel, Metal.ItemType.INGOT, 1)), null, MetalHelper.getMetalItem(TFCompatResources.signalum, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_DAY).setRegistryName("lumium_ingot"));
+        r.register(new BarrelRecipe(IIngredient.of(FluidRegistry.getFluid("glowstone"), 1000), IIngredient.of(MetalHelper.getMetalItem(TFCMetals.red_steel, Metal.ItemType.SCRAP, 1)), null, MetalHelper.getMetalItem(TFCompatResources.lumium, Metal.ItemType.INGOT, 1), 8*ICalendar.TICKS_IN_HOUR).setRegistryName("lumium_ingot"));
 
     }
 
     /**
-     * add a fluid transposer recipe for each fluid that matc
+     * add a fluid transposer recipe for each fluid that match
      */
     private void fluidTransposerRecipes() {
         for(BarrelRecipe recipe: TFCRegistries.BARREL.getValuesCollection()) {
@@ -83,13 +93,48 @@ public class ThermalRegistry extends RecipeRegistry {
                     TransposerManager.addExtractRecipe(1000, stack,recipe.getOutputStack(), fluidStack.get(0), 1, false);
                 }
             }
-            else if(output != null) {
+            if(output != null && fluidStack.isEmpty()) {
                 if(!recipe.getItemIngredient().getValidIngredients().isEmpty()) {
                     for(ItemStack stack : recipe.getItemIngredient().getValidIngredients()) {
                         TransposerManager.addFillRecipe(1000, stack, recipe.getOutputStack(), output, false);
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Pyrolytic Conversion Augment Recipes
+     */
+    private void pyrolyticConversionRecipes() {
+        FurnaceManager.addRecipePyrolysis(3000, new ItemStack(ItemOreTFC.get(TFCRegistries.ORES.getValue(DefaultMetals.BITUMINOUS_COAL))), new ItemStack(TFItems.itemMaterial, 1, 802), 250);
+        FurnaceManager.addRecipePyrolysis(3000, new ItemStack(ItemOreTFC.get(TFCRegistries.ORES.getValue(DefaultMetals.LIGNITE))), new ItemStack(TFItems.itemMaterial, 1, 802), 250);
+        FurnaceManager.addRecipePyrolysis(3000, new ItemStack(ItemOreTFC.get(TFCRegistries.ORES.getValue(DefaultMetals.PETRIFIED_WOOD))), new ItemStack(TFItems.itemMaterial, 1, 802), 200);
+    }
+
+    /**
+     * Lapidary Calibration Augment Recipes
+     */
+    private void lapidaryRecipes() {
+        NumismaticManager.removeGemFuel(new ItemStack(Items.DIAMOND));
+        NumismaticManager.removeGemFuel(new ItemStack(Items.QUARTZ));
+        NumismaticManager.removeGemFuel(new ItemStack(Items.EMERALD));
+        NumismaticManager.removeGemFuel(new ItemStack(Items.DYE, 1, 4));
+        NumismaticManager.removeGemFuel(new ItemStack(Items.PRISMARINE_SHARD));
+        NumismaticManager.removeGemFuel(ItemGem.get(Gem.AMETHYST, Gem.Grade.NORMAL, 1));
+
+        for(Gem gem: Gem.values()) {
+            ItemStack chippedGem = ItemGem.get(gem, Gem.Grade.CHIPPED, 1);
+            ItemStack flawedGem = ItemGem.get(gem, Gem.Grade.FLAWED, 1);
+            ItemStack normalGem = ItemGem.get(gem, Gem.Grade.NORMAL, 1);
+            ItemStack flawlessGem = ItemGem.get(gem, Gem.Grade.FLAWLESS, 1);
+            ItemStack exquisiteGem = ItemGem.get(gem, Gem.Grade.EXQUISITE, 1);
+
+            NumismaticManager.addGemFuel(chippedGem, 50000);
+            NumismaticManager.addGemFuel(flawedGem, 100000);
+            NumismaticManager.addGemFuel(normalGem, 150000);
+            NumismaticManager.addGemFuel(flawlessGem, 200000);
+            NumismaticManager.addGemFuel(exquisiteGem, 250000);
         }
     }
 
@@ -122,6 +167,13 @@ public class ThermalRegistry extends RecipeRegistry {
             SawmillManager.addRecipe(1000, new ItemStack(BlockTrapDoorWoodTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
             SawmillManager.addRecipe(1000, new ItemStack(BlockFenceTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 3), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
             SawmillManager.addRecipe(1000, new ItemStack(BlockFenceGateTFC.get(tree), 1), new ItemStack(ItemLumberTFC.get(tree), 4), new ItemStack(ItemsTFC.WOOD_ASH, 1), 20);
+        }
+
+        for(ICrop crop: Crop.values()) {
+            ItemStack seed = ItemSeedsTFC.get(crop, 1);
+            ItemStack foodDrop = crop.getFoodDrop(1);
+
+            SawmillManager.addRecipe(2000, foodDrop, new ItemStack(TFItems.itemMaterial, 1, 816), seed, 50);
         }
     }
 
