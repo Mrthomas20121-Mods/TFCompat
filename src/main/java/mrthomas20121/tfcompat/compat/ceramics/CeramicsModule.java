@@ -10,10 +10,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class CeramicsModule extends ModuleCore {
 
-    KnappingType porcelaine = new KnappingType(2, true);
+    KnappingType porcelain = new KnappingType(2, true);
 
-    public CeramicsModule()
-    {
+    public CeramicsModule() {
         super("ceramics");
     }
 
@@ -33,6 +32,5 @@ public class CeramicsModule extends ModuleCore {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-
     }
 }
