@@ -151,10 +151,10 @@ public class CeramicsRegistry extends RecipeRegistry {
             KnappingHelper.addClayKnapping("unfired_clay_bucket_block", false, new ItemStack(Ceramics.clayBucketBlock, 1), "X   X", "X   X", "X   X", "XX XX", "  X  "),
             KnappingHelper.addClayKnapping("unfired_clay_plate", false, new ItemStack(Ceramics.clayUnfired, 1, 8), "     ", " XXX ", " XXX ", " XXX ", "     "),
             KnappingHelper.addClayKnapping("unfired_clay_shears", false, new ItemStack(Ceramics.clayUnfired, 1, 1), "  XX ", " XX X", "X  XX", "X  X ", " XX  "),
-            KnappingHelper.addClayKnapping("unfired_clay_barrel", false, new ItemStack(Ceramics.clayBarrelUnfired, 1), "X   X", "X   X", "X   X", "X   X", "XXXXX"),
+            KnappingHelper.addClayKnapping("unfired_clay_barrel", false, new ItemStack(Ceramics.clayBarrelUnfired, 1), "X   X", "X   X", "X   X", "XXXXX", "XXXXX"),
             KnappingHelper.addClayKnapping("unfired_clay_barrel_extension", false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 1), "X   X", "X   X", "X   X", "X   X", "X   X"),
             // porcelain knapping
-            new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), "X   X", "X   X", "X   X", "X   X", "XXXXX").setRegistryName(TFCompat.MOD_ID, "unfired_porcelain_barrel"),
+            new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 2), "X   X", "X   X", "X   X", "XXXXX", "XXXXX").setRegistryName(TFCompat.MOD_ID, "unfired_porcelain_barrel"),
             new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayBarrelUnfired, 1, 3), "X   X", "X   X", "X   X", "X   X", "X   X").setRegistryName(TFCompat.MOD_ID, "unfired_porcelain_barrel_extension"),
             new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 6), " X X ", "  X  ").setRegistryName(TFCompat.MOD_ID, "unfired_faucet"),
             new KnappingRecipeSimple(Types.PORCELAIN, false, new ItemStack(Ceramics.clayUnfired, 1, 7), " X X ", " XXX ").setRegistryName(TFCompat.MOD_ID, "unfired_channel")
