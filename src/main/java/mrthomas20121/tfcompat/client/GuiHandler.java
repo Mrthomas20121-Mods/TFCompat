@@ -1,7 +1,7 @@
 package mrthomas20121.tfcompat.client;
 
 import mrthomas20121.tfcompat.TFCompat;
-import mrthomas20121.tfcompat.api.knapping.Types;
+import mrthomas20121.tfcompat.api.Types;
 
 import net.dries007.tfc.objects.container.*;
 
